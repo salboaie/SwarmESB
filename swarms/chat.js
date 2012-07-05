@@ -35,10 +35,12 @@ var addChatMsgSwarming =
     getPage:{
         node:"ChatPersistence",
         code : function (){
-            getPage(this.roomId,this.pageNumber,this.pageSize,function(pageArray){
-                this.pageArray = pageArray;
-                this.swarm("pageAnswer",this.requester);
-            }.bind(this);
+
+           var f = function(pageArray){
+               this.pageArray = pageArray;
+               this.swarm("pageAnswer",this.requester);
+           };
+            getPage(this.roomId,this.pageNumber,this.pageSize,f.bind(this));
         }
     },
     notifyAll:{   //phase

@@ -5,13 +5,8 @@
  * Time: 10:52 PM
  * To change this template use File | Settings | File Templates.
  */
-process.on('uncaughtException', function(err) {
-        console.log("" + err);
-        console.log(err.stack);
-});
 
 var thisAdaptor;
-
 
 process.on('message', function(m){
      redisPort       = m.redisPort;

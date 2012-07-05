@@ -1,14 +1,5 @@
-/**
- * Created with JetBrains WebStorm.
- * User: sinica
- * Date: 6/7/12
- * Time: 9:06 PM
- * To change this template use File | Settings | File Templates.
- */
-
 /*
- Arguments: scriptsFolder redisHost redisPort
-
+ Arguments: configFile
 */
 
 
@@ -46,7 +37,7 @@ var forkOptions;
 for(var i=0;i<cfg.adaptors.length;i++){
     forkOptions = {
         cwd:process.cwd(),
-        env:process.env,
+        env:process.env
     };
     var n = childForker.fork(cfg.adaptors[i],null,forkOptions);
     n.on('message', function(m) {
