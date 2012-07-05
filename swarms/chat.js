@@ -10,13 +10,7 @@ var addChatMsgSwarming =
         debug:"swarm1",
         action:null
     },
-    functions:{
-        getPageCallback:function(pageArray){
-            this.pageArray = pageArray;
-            this.swarm("pageAnswer",this.requester);
-        }
-    },
-    start_Save:function(roomId,userId,date,message,userFriendlyRoomName){
+    ctorSave:function(roomId,userId,date,message,userFriendlyRoomName){
         this.userFriendlyRoomName = userFriendlyRoomName;
         this.roomId     = roomId;
         this.userId     = userId;
@@ -24,7 +18,7 @@ var addChatMsgSwarming =
         this.message    = message;
         this.swarm("recordMsg");
     },
-    start_getPage:function(requester, roomId, pageNumber, pageSize){
+    ctorGetPage:function(requester, roomId, pageNumber, pageSize){
         this.roomId     = roomId;
         this.pageNumber = pageNumber;
         this.pageSize   = pageSize;
@@ -34,14 +28,17 @@ var addChatMsgSwarming =
     recordMsg:{
         node:"ChatPersistence",
         code : function (){
-            this.saveChat(this.roomId,this.userId,this.date,this.message);
+            saveChat(this.roomId,this.userId,this.date,this.message);
             this.swarm("notifyAll");
         }
     },
     getPage:{
         node:"ChatPersistence",
         code : function (){
-            this.getPage(this.roomId,this.pageNumber,this.pageSize,this.getPageCallback);
+            getPage(this.roomId,this.pageNumber,this.pageSize,function(pageArray){
+                this.pageArray = pageArray;
+                this.swarm("pageAnswer",this.requester);
+            }.bind(this);
         }
     },
     notifyAll:{   //phase

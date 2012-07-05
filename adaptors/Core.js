@@ -11,36 +11,44 @@
 
 */
 
-var descriptionsFolder   = "waves";
+
 var redisHost       = "localhost";
 var redisPort       = 6379;
 
-if(process.argv.length != 5){
-    console.log("Usage: "+ process.argv[1] + " wavesFolder redisHost redisPort");
-    console.log("Using default values:"+ "waves localhost 6379");
-}
-else{
-    descriptionsFolder     = process.argv[1];
-    redisHost       = process.argv[2];
-    redisPort       = process.argv[3];
+var basicConfigFile =  "etc/core";
+
+if(process.argv.length >= 3){
+
+    if(process.argv[2] == "help"){
+     console.log("core [config file]");
+     process.exit(-1);
+    }
+    else{
+        basicConfigFile = process.argv[2];
+    }
 }
 
-var adaptor = require('./Adaptor.js').init("Core",redisHost,redisPort);
-adaptor.uploadDescriptions(descriptionsFolder);
-adaptor.loadSwarmingCode();
+var cfg             = require('swarmutil').readConfig(basicConfigFile);
+descriptionsFolder  = cfg.swarmsfolder;
+redisHost           = cfg.redisHost;
+redisPort           = cfg.redisPort;
 
-var cfg = adaptor.readConfig(descriptionsFolder+"/../etc/");
-//console.log(cfg);
+
+var adaptor = require('swarmutil').createAdaptor("Core",redisHost,redisPort,descriptionsFolder);
+
+
+
 var childForker = require('child_process');
 
-var forkOptions={
-    cwd:process.cwd(),
-    env:process.env
-};
+var forkOptions;
 
 
-for(var i=0;i<cfg.processes.length;i++){
-    var n = childForker.fork(cfg.processes[i],null,forkOptions);
+for(var i=0;i<cfg.adaptors.length;i++){
+    forkOptions = {
+        cwd:process.cwd(),
+        env:process.env,
+    };
+    var n = childForker.fork(cfg.adaptors[i],null,forkOptions);
     n.on('message', function(m) {
         console.log('PARENT got message:', m);
     });
@@ -49,8 +57,8 @@ for(var i=0;i<cfg.processes.length;i++){
 
 setTimeout(
     function(){
-        adaptor.swarmBegin("LaunchingTest.js");
-        adaptor.swarmBegin("BenchMark.js",10000);
+        startSwarm("LaunchingTest.js","start");
+        startSwarm("BenchMark.js","start",10000);
     },
 1000);
 

@@ -15,14 +15,14 @@ var launchingTest =
         begin:{ //phase
             node:"Core",
             code : function (){
-                    this.message="Hello World!"+" The swarming has began! ";
+                    this.message="Hello World!"+" The swarming has begun! ";
                     this.swarm("endTest");
                 }
         },
         endTest:{   //phase
-            node:"Core",
+            node:"Logger",
             code : function (){
-                    console.log(this.message);
+                    cprint(this.message);
                 }
         }
 };

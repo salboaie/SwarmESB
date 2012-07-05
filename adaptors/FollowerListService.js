@@ -21,11 +21,8 @@ function getFollowers(resurceId,callback) {
 }
 
 process.on('message', function(m){
-    thisAdaptor = require('./Adaptor.js').init("FollowerListService",m.redisHost, m.redisPort);
+    thisAdaptor = require('swarmutil').createAdaptor("FollowerListService",m.redisHost, m.redisPort);
     client = redis.createClient(m.redisPort,m.redisHost);
-    thisAdaptor.loadSwarmingCode();
-    thisAdaptor.addAPIFunction("follow", follow);
-    thisAdaptor.addAPIFunction("getFollowers", getFollowers);
 });
 
 

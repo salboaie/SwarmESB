@@ -12,12 +12,10 @@ process.on('uncaughtException', function(err) {
 
 var thisAdaptor;
 
+
 process.on('message', function(m){
      redisPort       = m.redisPort;
-    thisAdaptor = require('./Adaptor.js').init("Logger",m.redisHost, m.redisPort);
-    thisAdaptor.loadSwarmingCode();
-
-    thisAdaptor.addAPIFunction("print", console.log);
+    thisAdaptor = require('swarmutil').createAdaptor("Logger",m.redisHost, m.redisPort);
 });
 
 

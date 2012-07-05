@@ -9,12 +9,13 @@ var thisAdaptor;
 var redis = require("redis");
 var client;
 
-function saveChatMessage(roomId,userId,date,message){
+saveChatMessage = function(roomId,userId,date,message){
     var jso={"roomId":roomId,"userId":userId,"date":date,"message":message};
     client.lpush(roomId,JSON.stringify(jso));
 }
 
-function getPage(roomId, pageNumber, pageLines,callBack) {
+
+getPage = function(roomId, pageNumber, pageLines,callBack) {
     client.lrange(roomId,pageNumber*pageLines,(pageNumber+1)*pageLines,function (err, replies){
             callBack(replies);
         }
@@ -22,11 +23,10 @@ function getPage(roomId, pageNumber, pageLines,callBack) {
 }
 
 process.on('message', function(m){
-    thisAdaptor = require('./Adaptor.js').init("ChatPersistence",m.redisHost, m.redisPort);
+    thisAdaptor = require('swarmutil').createAdaptor("ChatPersistence",m.redisHost, m.redisPort);
     client = redis.createClient(m.redisPort,m.redisHost);
-    thisAdaptor.loadSwarmingCode();
-    thisAdaptor.addAPIFunction("saveChatMessage", saveChatMessage);
-    thisAdaptor.addAPIFunction("getPage", getPage);
+    //thisAdaptor.addAPIFunction("saveChatMessage", saveChatMessage);
+    //thisAdaptor.addAPIFunction("getPage", getPage);
 });
 
 

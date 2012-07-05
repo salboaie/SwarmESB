@@ -12,8 +12,6 @@ var thisAdaptor;
 var serverPort      = 3000;
 
 
-
-
 function ClientTcpServer(port,adaptor){
     console.log("Starting client server on 3000");
     var net   	= require('net');
@@ -29,9 +27,7 @@ process.on('message', function(m){
     //console.log('CHILD got message:', m);
     redisHost       = m.redisHost;
     redisPort       = m.redisPort;
-    thisAdaptor = require('./Adaptor.js').init("ClientAdaptor",redisHost,redisPort);
-    thisAdaptor.addAPI("log", console.log);
-    thisAdaptor.loadSwarmingCode();
+    thisAdaptor     = require('swarmutil').createAdaptor("ClientAdaptor",redisHost,redisPort);
     thisAdaptor.loginSwarmingName = "login.js";
     new ClientTcpServer(serverPort);
 });

@@ -1,13 +1,17 @@
 {
-"processes":[
-        "src/ClientAdaptor.js",
-        "src/ChatPersistence.js",
-        "src/FollowerListService.js",
-        "src/Logger.js"
+"adaptors":[
+        "adaptors/ClientAdaptor.js",
+        "adaptors/ChatPersistence.js",
+        "adaptors/FollowerListService.js",
+        "adaptors/Logger.js"
        ],
+ "xadaptors":[
+          "adaptors/ClientAdaptor.js"
+         ],
  "redisHost":"localhost",
  "redisPort":6379,
- "verboseLoading":"false"
+ "verbose":"false",
+ "swarmsfolder":"swarms"
 }
 
 
