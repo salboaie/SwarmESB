@@ -42,6 +42,7 @@ var loginSwarming =
     failed:{   //phase
         node:"ClientAdaptor",
         code : function (){
+            console.log("Failed to login:" + this.userId);
             thisAdaptor.findOutlet(this.sessionId).close();
         }
     }

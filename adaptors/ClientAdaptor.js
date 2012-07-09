@@ -18,7 +18,7 @@ function ClientTcpServer(port,adaptor){
     var net   	= require('net');
     this.server = net.createServer(
         function (socket){
-            sutil.newOutlet(socket);
+            sutil.createOutlet(socket,thisAdaptor);
         }
     );
     this.server.listen(port);

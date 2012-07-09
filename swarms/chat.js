@@ -2,12 +2,11 @@
 var addChatMsgSwarming =
 {
     vars:{
-        /*userId:false,
+        userId:false,
         date:null,
         message:null,
         roomId:null,
-        */
-        debug:"swarm1",
+        debug:"true",
         action:null
     },
     ctorSave:function(roomId,userId,date,message,userFriendlyRoomName){
@@ -17,6 +16,7 @@ var addChatMsgSwarming =
         this.date       = date;
         this.message    = message;
         this.swarm("recordMsg");
+        console.log("Got message: "+ message);
     },
     ctorGetPage:function(requester, roomId, pageNumber, pageSize){
         this.roomId     = roomId;
@@ -30,6 +30,9 @@ var addChatMsgSwarming =
         code : function (){
             saveChat(this.roomId,this.userId,this.date,this.message);
             this.swarm("notifyAll");
+            if(debug == true) {
+                console.log(this.message);
+            }
         }
     },
     getPage:{

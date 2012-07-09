@@ -24,10 +24,7 @@ descriptionsFolder  = cfg.swarmsfolder;
 redisHost           = cfg.redisHost;
 redisPort           = cfg.redisPort;
 
-
 var adaptor = require('swarmutil').createAdaptor("Core",redisHost,redisPort,descriptionsFolder);
-
-
 
 var childForker = require('child_process');
 
@@ -48,8 +45,8 @@ for(var i=0;i<cfg.adaptors.length;i++){
 
 setTimeout(
     function(){
-        startSwarm("LaunchingTest.js","start");
-        startSwarm("BenchMark.js","start",10000);
+//        startSwarm("LaunchingTest.js","start");
+//        startSwarm("BenchMark.js","start",10000);
     },
 1000);
 
