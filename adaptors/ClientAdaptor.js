@@ -11,13 +11,14 @@ var redisPort       = 6379;
 var thisAdaptor;
 var serverPort      = 3000;
 
+var sutil = require('swarmutil');
 
 function ClientTcpServer(port,adaptor){
     console.log("Starting client server on 3000");
     var net   	= require('net');
     this.server = net.createServer(
         function (socket){
-            thisAdaptor.newOutlet(socket);
+            sutil.newOutlet(socket);
         }
     );
     this.server.listen(port);
@@ -27,7 +28,7 @@ process.on('message', function(m){
     //console.log('CHILD got message:', m);
     redisHost       = m.redisHost;
     redisPort       = m.redisPort;
-    thisAdaptor     = require('swarmutil').createAdaptor("ClientAdaptor",redisHost,redisPort);
+    thisAdaptor     = sutil.createAdaptor("ClientAdaptor",redisHost,redisPort);
     thisAdaptor.loginSwarmingName = "login.js";
     new ClientTcpServer(serverPort);
 });
