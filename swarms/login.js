@@ -4,7 +4,7 @@ var loginSwarming =
     vars:{
         isOk:false,
         sessionId:null,
-        debug:"true"
+        debug:"true1"
     },
     start:function(clientSessionId,userId,authorisationToken){
         this.isOk=false;
