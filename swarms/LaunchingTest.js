@@ -6,12 +6,17 @@
 var launchingTest =
 {
         vars:{
-            message:"Hello World"
+            message:"Hello World",
+            debug:"phase"
         },
         start:function(){
                     this.message+="!";
                     this.swarm("begin");
                 },
+        clientCtor:function(){
+            this.message+="!";
+            this.swarm("concatPhase");
+        },
         begin:{ //phase
             node:"Core",
             code : function (){
@@ -24,7 +29,20 @@ var launchingTest =
             code : function (){
                     cprint(this.message);
                 }
+        },
+        concatPhase:{ //phase
+        node:"Core",
+        code : function (){
+            this.message="Client swarming!";
+            this.swarm("onClient",this.sessionId);
+        },
+        onClient:{ //phase
+            node:"$client",
+            code : null
         }
+
+
+    }
 };
 
 launchingTest;
