@@ -1,10 +1,11 @@
 
 var adaptorPort      = 3000;
 var adaptorHost      = "localhost";
-
-var net = require("net");
 var util = require("swarmutil");
 var assert = require('assert');
+
+var net = require("net");
+
 
 var client1 = createConnection("client1",receiveCommand,"ok");
 var client2 = createConnection("client2",receiveCommand,"ok");
