@@ -6,7 +6,7 @@ var addChatMsgSwarming =
         date:null,
         message:null,
         roomId:null,
-        debug:"true",
+        debug:"swarm",
         action:null
     },
     ctorSave:function(roomId,userId,date,message,userFriendlyRoomName){
