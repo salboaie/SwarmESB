@@ -4,10 +4,10 @@ var adaptorHost      = "localhost";
 var util = require("swarmutil");
 var assert = require('assert');
 
-var client1 = util.createClient(adaptorHost, adaptorPort,"Client1", "Client1", "ok");
-var client2 = util.createClient(adaptorHost, adaptorPort,"Client2", "Client2", "ok");
-var client3 = util.createClient(adaptorHost, adaptorPort,"Client3", "Client3", "ok");
-var client4 = util.createClient(adaptorHost, adaptorPort,"Client4", "Client4", "!ok");
+var client1 = util.createClient(adaptorHost, adaptorPort, "Client1", "ok");
+var client2 = util.createClient(adaptorHost, adaptorPort, "Client2", "ok");
+var client3 = util.createClient(adaptorHost, adaptorPort, "Client3", "ok");
+var client4 = util.createClient(adaptorHost, adaptorPort, "Client4", "!ok");
 
 client1.on("login.js",successLogin);
 client1.on("close",onClose);

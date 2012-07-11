@@ -4,7 +4,7 @@ var adaptorHost         = "localhost";
 var util                = require("swarmutil");
 var assert              = require('assert');
 
-var client             = util.createClient(adaptorHost, adaptorPort,"Client1", "Client1", "ok");
+var client             = util.createClient(adaptorHost, adaptorPort, "user", "ok");
 
 
 
@@ -23,4 +23,4 @@ setTimeout (
         assert.equal(msg,"Client swarming!");
         process.exit(1);
     },
-    3000);
+    1000);

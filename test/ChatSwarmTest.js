@@ -5,10 +5,10 @@ var assert              = require('assert');
 var util                = require("swarmutil");
 
 
-var client1             = util.createClient(adaptorHost, adaptorPort,"sess1", "user1", "ok");
-var client2             = util.createClient(adaptorHost, adaptorPort,"sess2", "user2", "ok");
-var client3             = util.createClient(adaptorHost, adaptorPort,"sess3", "user3", "ok");
-var client4             = util.createClient(adaptorHost, adaptorPort,"sess4", "user4", "ok");
+var client1             = util.createClient(adaptorHost, adaptorPort, "user1", "ok");
+var client2             = util.createClient(adaptorHost, adaptorPort, "user2", "ok");
+var client3             = util.createClient(adaptorHost, adaptorPort, "user3", "ok");
+var client4             = util.createClient(adaptorHost, adaptorPort, "user4", "ok");
 
 
 var roomId = "room1";
