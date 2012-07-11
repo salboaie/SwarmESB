@@ -6,8 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 
-var redisHost       = "localhost";
-var redisPort       = 6379;
+var redisHost;
+var redisPort;
 var thisAdaptor;
 var serverPort      = 3000;
 
@@ -18,11 +18,20 @@ function ClientTcpServer(port,adaptor){
     var net   	= require('net');
     this.server = net.createServer(
         function (socket){
-            sutil.newOutlet(socket,thisAdaptor);
+            sutil.newOutlet(socket,thisAdaptor,loginCallback);
         }
     );
     this.server.listen(port);
 };
+
+var map = {};
+function loginCallback(outlet){
+    map[outlet.userId] = outlet;
+}
+
+findConnectedClientByUserId = function (userId){
+    return map[userId].sessionId;
+}
 
 process.on('message', function(m){
     //console.log('CHILD got message:', m);

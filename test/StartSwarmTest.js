@@ -23,4 +23,4 @@ setTimeout (
         assert.equal(msg,"Client swarming!");
         process.exit(1);
     },
-    1000);
+    3000);

@@ -6,17 +6,19 @@ var addChatMsgSwarming =
         date:null,
         message:null,
         roomId:null,
-        debug:"swarm",
+        debug:"true1",
         action:null
     },
-    ctorSave:function(roomId,userId,date,message,userFriendlyRoomName){
+    ctorNewMessage:function(roomId,userId,date,message,userFriendlyRoomName){
         this.userFriendlyRoomName = userFriendlyRoomName;
         this.roomId     = roomId;
         this.userId     = userId;
         this.date       = date;
         this.message    = message;
+
+        this.swarm("watchRoom");
         this.swarm("recordMsg");
-        console.log("Got message: "+ message);
+
     },
     ctorGetPage:function(requester, roomId, pageNumber, pageSize){
         this.roomId     = roomId;
@@ -28,17 +30,19 @@ var addChatMsgSwarming =
     recordMsg:{
         node:"ChatPersistence",
         code : function (){
-            saveChat(this.roomId,this.userId,this.date,this.message);
+            saveChatMessage(this.roomId,this.userId,this.date,this.message);
             this.swarm("notifyAll");
-            if(debug == true) {
-                console.log(this.message);
-            }
+        }
+    },
+    watchRoom:{
+        node: "FollowerListService",
+        code: function (){
+            follow(this.roomId, this.userId);
         }
     },
     getPage:{
         node:"ChatPersistence",
         code : function (){
-
            var f = function(pageArray){
                this.pageArray = pageArray;
                this.swarm("pageAnswer",this.requester);
@@ -49,21 +53,24 @@ var addChatMsgSwarming =
     notifyAll:{   //phase
         node:"FollowerListService",
         code : function (){
-            var followers = getFollowers(this.roomId);
-            for (var i in followers){
-                this.currentTargetUser = i;
-                if(i != this.userId){
-                    this.swarm("directNotification",i);
+            getFollowers(this.roomId, function(reply){
+                for(var i=0;i<reply.length;i++) {
+                    this.currentTargetUser = reply[i];
+                    if(this.currentTargetUser != this.userId) {
+                        this.swarm("directNotification");
+                    }
                 }
-            }
+
+            }.bind(this) );
         }
     },
     directNotification:{   //notify connected clients
         node:"ClientAdaptor",
         code : function (){
-            var clientNodeName = this.findConnectedClientByUserId(this.currentTargetUser);
-            if(clientNodeName){
-                this.swarm("notifyChatMessage",clientNodeName);
+            var clientSessionId = findConnectedClientByUserId(this.currentTargetUser);
+            console.log("Swarming to user " + this.currentTargetUser + " " + clientSessionId);
+            if(clientSessionId){
+                this.swarm("notifyChatMessage",clientSessionId);
             }
             /*else {
                 this.swarm("mailNotification");

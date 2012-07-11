@@ -9,15 +9,24 @@ var thisAdaptor;
 var redis = require("redis");
 var client;
 
-function follow(resurceId,userId){
-    client.lpush(resurceId,userId);
+function getFSUri(resId){
+    return "FollowerListService://"+resId;
 }
 
-function getFollowers(resurceId,callback) {
-    client.lrange(resurceId,0,100,function (err, replies){
-            callBack(replies);
+follow = function (resurceId,userId){
+    client.sadd(getFSUri(resurceId),userId);
+    console.log("Follow " + resurceId + " " + userId);
+}
+
+getFollowers = function (resurceId,callback) {
+    client.SMEMBERS(getFSUri(resurceId),function (err, replies){
+        if(err != null){
+            perror(err);
         }
-    );
+        else{
+            callback(replies);
+        }
+    });
 }
 
 process.on('message', function(m){
