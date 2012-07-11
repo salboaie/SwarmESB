@@ -33,6 +33,15 @@ findConnectedClientByUserId = function (userId){
     return map[userId].sessionId;
 }
 
+var net = require("net");
+
+net.createServer(
+    function(socket){
+        sutil.writePolicy(socket);
+    }
+).listen(843);
+
+
 process.on('message', function(m){
     //console.log('CHILD got message:', m);
     redisHost       = m.redisHost;

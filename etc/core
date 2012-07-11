@@ -8,7 +8,8 @@
  "xadaptors":[
           "adaptors/ClientAdaptor.js"
          ],
- "redisHost":"localhost",
+ "redisHost1":"192.168.1.48",
+ "redisHost":"127.0.0.1",
  "redisPort":6379,
  "verbose":"false",
  "swarmsfolder":"swarms"
