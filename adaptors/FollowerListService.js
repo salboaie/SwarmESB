@@ -8,14 +8,24 @@
 var thisAdaptor;
 var redis = require("redis");
 var client;
+var debug = true;
 
 function getFSUri(resId){
     return "FollowerListService://"+resId;
 }
 
-follow = function (resurceId,userId){
-    client.sadd(getFSUri(resurceId),userId);
-    console.log("Follow " + resurceId + " " + userId);
+follow = function (resourceId,userId){
+    client.sadd(getFSUri(resourceId),userId);
+    if(debug) {
+        console.log("Follow " + resourceId + " " + userId);
+    }
+}
+
+unfollow = function (resourceId, userId) {
+    client.srem(getFSUri(resourceId), userId);
+    if(debug) {
+        console.log("Unfollow " + resourceId + " " + userId);
+    }
 }
 
 getFollowers = function (resurceId,callback) {

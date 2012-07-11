@@ -15,10 +15,7 @@ var addChatMsgSwarming =
         this.userId     = userId;
         this.date       = date;
         this.message    = message;
-
-        this.swarm("watchRoom");
         this.swarm("recordMsg");
-
     },
     ctorGetPage:function(requester, roomId, pageNumber, pageSize){
         this.roomId     = roomId;
@@ -32,12 +29,6 @@ var addChatMsgSwarming =
         code : function (){
             saveChatMessage(this.roomId,this.userId,this.date,this.message);
             this.swarm("notifyAll");
-        }
-    },
-    watchRoom:{
-        node: "FollowerListService",
-        code: function (){
-            follow(this.roomId, this.userId);
         }
     },
     getPage:{
