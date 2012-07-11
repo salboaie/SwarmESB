@@ -9,14 +9,18 @@ var thisAdaptor;
 var redis = require("redis");
 var client;
 
+function getRoomUri(roomId){
+    return "ChatPersistence://"+roomId;
+}
+
 saveChatMessage = function(roomId,userId,date,message){
     var jso={"roomId":roomId,"userId":userId,"date":date,"message":message};
-    client.lpush(roomId,JSON.stringify(jso));
+    client.lpush(getRoomUri(roomId),JSON.stringify(jso));
 }
 
 
 getPage = function(roomId, pageNumber, pageLines,callBack) {
-    client.lrange(roomId,pageNumber*pageLines,(pageNumber+1)*pageLines,function (err, replies){
+    client.lrange(getRoomUri(roomId),pageNumber*pageLines,(pageNumber+1)*pageLines,function (err, replies){
             callBack(replies);
         }
     );
