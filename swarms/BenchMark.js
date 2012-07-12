@@ -59,10 +59,10 @@ var benchmark =     //swarming description
 
                 var speed = "Not enough phases requested!";
                 if(diff != 0){
-                    speed = "" + Math.ceil(max / diff) + " phases per second!";
+                    speed = "" + Math.ceil(2*max / diff) + " phases per second!";
                 }
 
-                console.log("Benchmark results: " + speed + " Time spent: " + diff + "seconds");
+                console.log("Benchmark results: " + speed + " Time spent: " + diff + "seconds ");
             }
         }
 };
