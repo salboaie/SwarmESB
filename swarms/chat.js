@@ -17,11 +17,10 @@ var addChatMsgSwarming =
         this.message    = message;
         this.swarm("recordMsg");
     },
-    ctorGetPage:function(requester, roomId, pageNumber, pageSize){
+    ctorGetPage:function(roomId, pageNumber, pageSize){
         this.roomId     = roomId;
         this.pageNumber = pageNumber;
         this.pageSize   = pageSize;
-        this.requester  = requester;
         this.swarm("getPage");
     },
     recordMsg:{
@@ -34,11 +33,11 @@ var addChatMsgSwarming =
     getPage:{
         node:"ChatPersistence",
         code : function (){
-           var f = function(pageArray){
-               this.pageArray = pageArray;
-               this.swarm("pageAnswer",this.requester);
-           };
-            getPage(this.roomId,this.pageNumber,this.pageSize,f.bind(this));
+            var f = function(pageArray){
+                this.pageArray = pageArray;
+                this.swarm("pageAnswer",this.sessionId);
+            }.bind(this);
+            getPage(this.roomId,this.pageNumber,this.pageSize,f);
         }
     },
     notifyAll:{   //phase
@@ -51,7 +50,6 @@ var addChatMsgSwarming =
                         this.swarm("directNotification");
                     }
                 }
-
             }.bind(this) );
         }
     },
@@ -64,8 +62,8 @@ var addChatMsgSwarming =
                 this.swarm("notifyChatMessage",clientSessionId);
             }
             /*else {
-                this.swarm("mailNotification");
-            }*/
+             this.swarm("mailNotification");
+             }*/
         }
     },
     notifyChatMessage:{ //notify different clients about a new chat message
