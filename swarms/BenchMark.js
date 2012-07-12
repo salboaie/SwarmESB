@@ -6,44 +6,52 @@
 var benchmark =     //swarming description
 {
         vars:{
-            count:0,
             maxCount:0,
             startTime:0,
+            tickTackCount:0,
             debug:"true1"
         },
-        start:function(maxCount){
+        ctor:function(phases){
                     this.startTime = Date.now();
-                    this.maxCount = maxCount;
-                    console.log("Starting benchmark for " + maxCount + " phases!");
-                    this.swarm("tick");
+                    this.maxCount = phases/2;
+                    console.log("Starting benchmark for " + phases + " phases!");
+                    for(var i=0;i< phases/6;i++){
+                        this.swarm("tickCore");
+                        this.swarm("tackLogger");
+                        this.swarm("clank");
+                    }
                 },
-        tick:{          //phase
+        tickCore:{          //phase
             node:"Core",
             code : function (){
-                    this.count      = parseInt(this.count);
-                    this.maxCount   = parseInt(this.maxCount);
-                    this.count++;
-                    if(this.count < this.maxCount){
-                        //console.log("Core tick "+this.count);
-                        this.swarm("ClientAdaptorTick");
-                    }
-                    else{
-                        this.swarm("printResults");
-                    }
+                    this.swarm("count");
                 }
         },
-        ClientAdaptorTick:{  //phase
-            node:"ClientAdaptor",
+        tackLogger:{  //phase
+            node:"Logger",
             code : function (){
-                this.count      = parseInt(this.count);
+                this.swarm("count");
+            }
+        },
+        clank:{  //phase
+            node:"ClientAdaptor",
+                code : function (){
+                this.swarm("count");
+            }
+        },
+        count:{  //phase
+        node:"SharedAdaptor",
+            code : function (){
+                incr("benchmark","counter");
+                var v           = get("benchmark","counter");
                 this.maxCount   = parseInt(this.maxCount);
-                this.count++;
-                //console.log("CA tick "+this.count);
-                this.swarm("tick");
+                if(v >= this.maxCount){
+                    this.swarm("printResults");
+                }
             }
         },
         printResults:{ //final phase
-            node:"ClientAdaptor",
+            node:"Logger",
             code : function (){
                 var ct = Date.now();
                 var max = parseInt(this.maxCount);
@@ -51,7 +59,7 @@ var benchmark =     //swarming description
 
                 var speed = "Not enough phases requested!";
                 if(diff != 0){
-                    speed = "" + Math.ceil(max / diff) + " phase changes per second!";
+                    speed = "" + Math.ceil(max / diff) + " phases per second!";
                 }
 
                 console.log("Benchmark results: " + speed + " Time spent: " + diff + "seconds");

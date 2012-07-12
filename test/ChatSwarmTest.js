@@ -14,7 +14,7 @@ var noOfClients = 5;
 for (var i = 0; i < noOfClients; i++) {
     user = "user"+ i;
     var client = util.createClient(adaptorHost, adaptorPort, user, "ok");
-    client.startSwarm("chat.js", "ctorNewMessage", roomId, user, date, "message1", "blueRoom");
+    client.startSwarm("chat.js", "ctorNewMessage", roomId, user, date, "message "+i, "blueRoom");
     client.startSwarm("Follower.js","ctorFollow", roomId, user);
     client.on("chat.js", getGreetings.bind(client));
 }

@@ -3,7 +3,8 @@
         "adaptors/ClientAdaptor.js",
         "adaptors/ChatPersistence.js",
         "adaptors/FollowerListService.js",
-        "adaptors/Logger.js"
+        "adaptors/Logger.js",
+        "adaptors/SharedAdaptor.js"
        ],
  "xadaptors":[
           "adaptors/ClientAdaptor.js"

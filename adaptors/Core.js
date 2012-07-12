@@ -46,7 +46,7 @@ for(var i=0;i<cfg.adaptors.length;i++){
 setTimeout(
     function(){
         startSwarm("LaunchingTest.js","start");
-        startSwarm("BenchMark.js","start",10000);
+        startSwarm("BenchMark.js","ctor",30000);
     },
 1000);
 
