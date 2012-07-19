@@ -7,7 +7,7 @@ var launchingTest =
 {
         vars:{
             message:"Hello World",
-            debug:"phase"
+            debugSwarm:"false"
         },
         start:function(){
                     this.message+="!";

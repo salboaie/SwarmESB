@@ -44,8 +44,9 @@ var benchmark =     //swarming description
             code : function (){
                 incr("benchmark","counter");
                 var v           = get("benchmark","counter");
-                this.maxCount   = parseInt(this.maxCount);
-                if(v >= this.maxCount){
+                this.maxCount   = parseInt(this.maxCount);// - 5;
+                if(v >= this.maxCount ){
+                    this.realCount = v;
                     this.swarm("printResults");
                 }
             }
@@ -62,7 +63,7 @@ var benchmark =     //swarming description
                     speed = "" + Math.ceil(2*max / diff) + " phases per second!";
                 }
 
-                console.log("Benchmark results: " + speed + " Time spent: " + diff + "seconds ");
+                console.log("Benchmark results: " + speed + " Time spent: " + diff + "seconds " + this.realCount);
             }
         }
 };

@@ -14,7 +14,7 @@ var serverPort      = 3000;
 var sutil = require('swarmutil');
 
 function ClientTcpServer(port,adaptor){
-    console.log("Starting client server on 3000");
+    console.log("Starting server on 3000");
     var net   	= require('net');
     this.server = net.createServer(
         function (socket){
@@ -37,7 +37,7 @@ var net = require("net");
 
 net.createServer(
     function(socket){
-        sutil.writePolicy(socket);
+        writePolicy(socket);
     }
 ).listen(843);
 
