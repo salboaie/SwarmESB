@@ -7,6 +7,7 @@ var addChatMsgSwarming =
         message:null,
         roomId:null,
         debug:"true1",
+        debugSwarm:"true1",
         action:null
     },
     ctorNewMessage:function(roomId,userId,date,message,userFriendlyRoomName){
@@ -43,12 +44,11 @@ var addChatMsgSwarming =
     notifyAll:{   //phase
         node:"FollowerListService",
         code : function (){
-            getFollowers(this.roomId, function(reply){
+            getFollowers(this.roomId, function(reply)
+            {
                 for(var i=0;i<reply.length;i++) {
                     this.currentTargetUser = reply[i];
-                    if(this.currentTargetUser != this.userId) {
                         this.swarm("directNotification");
-                    }
                 }
             }.bind(this) );
         }
@@ -57,13 +57,7 @@ var addChatMsgSwarming =
         node:"ClientAdaptor",
         code : function (){
             var clientSessionId = findConnectedClientByUserId(this.currentTargetUser);
-            console.log("Swarming to user " + this.currentTargetUser + " " + clientSessionId);
-            if(clientSessionId){
-                this.swarm("notifyChatMessage",clientSessionId);
-            }
-            /*else {
-             this.swarm("mailNotification");
-             }*/
+            this.swarm("notifyChatMessage",clientSessionId);
         }
     },
     notifyChatMessage:{ //notify different clients about a new chat message

@@ -30,7 +30,12 @@ function loginCallback(outlet){
 }
 
 findConnectedClientByUserId = function (userId){
-    return map[userId].sessionId;
+    var o = map[userId];
+    if(o != null && o != undefined){
+        return o.sessionId;
+    }
+    //cprint("Error finding connection to user " + userId);
+    return "Null*";
 }
 
 var net = require("net");
