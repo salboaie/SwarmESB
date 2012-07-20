@@ -23,8 +23,9 @@ var cfg             = require('swarmutil').readConfig(basicConfigFile);
 descriptionsFolder  = cfg.swarmsfolder;
 redisHost           = cfg.redisHost;
 redisPort           = cfg.redisPort;
+shardId             = cfg.shardId;
 
-var adaptor = require('swarmutil').createAdaptor("Core",redisHost,redisPort,descriptionsFolder);
+var adaptor = require('swarmutil').createAdaptor("Core",redisHost,redisPort,shardId,descriptionsFolder);
 
 var childForker = require('child_process');
 
@@ -40,15 +41,15 @@ for(var i=0;i<cfg.adaptors.length;i++){
     n.on('message', function(m) {
         console.log('PARENT got message:', m);
     });
-    n.send({ "redisHost": redisHost,"redisPort":redisPort });
+    n.send({ "redisHost": redisHost,"redisPort":redisPort,"shardId":shardId});
 }
 
 setTimeout(
     function(){
         startSwarm("LaunchingTest.js","start");
-        startSwarm("BenchMark.js","ctor",24000);
+        startSwarm("BenchMark.js","ctor",48000);
     },
-1000);
+2000);
 
 
 

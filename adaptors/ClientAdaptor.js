@@ -51,7 +51,7 @@ process.on('message', function(m){
     //console.log('CHILD got message:', m);
     redisHost       = m.redisHost;
     redisPort       = m.redisPort;
-    thisAdaptor     = sutil.createAdaptor("ClientAdaptor",redisHost,redisPort);
+    thisAdaptor     = sutil.createAdaptor("ClientAdaptor", redisHost, redisPort, m.shardId);
     thisAdaptor.loginSwarmingName = "login.js";
     new ClientTcpServer(serverPort);
 });

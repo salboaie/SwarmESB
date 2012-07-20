@@ -10,7 +10,7 @@ var thisAdaptor;
 
 process.on('message', function(m){
     redisPort       = m.redisPort;
-    thisAdaptor = require('swarmutil').createAdaptor("Null*",m.redisHost, m.redisPort);
+    thisAdaptor = require('swarmutil').createAdaptor("Null*",m.redisHost, m.redisPort, m.shardId);
 });
 
 

@@ -40,7 +40,7 @@ getFollowers = function (resurceId,callback) {
 }
 
 process.on('message', function(m){
-    thisAdaptor = require('swarmutil').createAdaptor("FollowerListService",m.redisHost, m.redisPort);
+    thisAdaptor = require('swarmutil').createAdaptor("FollowerListService",m.redisHost, m.redisPort, m.shardId);
     client = redis.createClient(m.redisPort,m.redisHost);
 });
 

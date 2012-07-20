@@ -10,11 +10,12 @@
  "xadaptors":[
           "adaptors/ClientAdaptor.js"
          ],
- "redisHost":"192.168.20.61",
+ "redisHost":"localhost",
  "redisPort":6379,
  "verbose":"false",
  "swarmsfolder":"swarms",
- "debugSockets":true
+ "debugSockets":true,
+ "shardId":"2214997C-D258-11E1-9F72-B01D6288709B"
 }
 
 
