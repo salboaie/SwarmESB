@@ -72,7 +72,7 @@ Imagine: each node could be on a different continent!  Check other swarms for pa
 
         node adaptors/Core.js       //loads swarm descriptions
         node adaptors/Logger.js     //errors and infos get here
-        node adaptors/Launcher.js   //starts running for other adaptors
+        node adaptors/Launcher.js   //starting more adaptors
         
 10. Create new swarms and adaptors. Play with it.
 
