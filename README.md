@@ -10,8 +10,8 @@ We claim that by using swarming, someone can get the benefits of asynchronous me
 Please, check our claims!
 
     SwarmESB ca be also used as a light, open source, ESB replacement for your enterprise applications.
-    Instead of message oriented communication or web services, you describe your communication between "nodes" in
-what we call "swarm descriptions" or simple "swarms".
+    Instead of message oriented communication or web services, you describe your communication between "nodes" in what
+    we call "swarm descriptions" or simple "swarms".
     "Nodes" can be adaptors to various servers or clients connected to the "swarming middleware" :SwarmESB.
     Your adaptors can use web services as a particular case of providing some specific API in a node.
 
@@ -21,32 +21,30 @@ what we call "swarm descriptions" or simple "swarms".
 
     A swarm description is basically Java Script and is composed from:  variable declarations (for defaults),
     constructors (functions that get called on the adaptor that starts a swarm) and phases (code that get executed
-    remotely, usually in another node)
+    remotely, usually in another node) 
+    
+    The swarm described bellow will magically get executed without any other programming efforts in 3 different nodes:
 
-
-The swarm described bellow will magically get executed without any other programming efforts in 3 different nodes:
-
-{
-        vars:{
-            message:"Hello World",
-        },
-        start:function(){ //constructor  that can be executed in any adaptor
-                    this.swarm("concat");  // swarm is a "primitive" used to invoke execution in a phase
-                },
-        concat:{ // phase that get executed in "Core" adaptor
-            node:"Core",
-            code : function (){
-                    this.message=this.message + " The swarming has begun! ";
-                    this.swarm("print");    //move again
-                }
-        },
-        print:{ //print phase executed in "Logger" adaptor
-        node:"Logger",
-        code : function (){
-            cprint(this.message);    //use of some api, specific only to the Logger node
+            vars:{
+                message:"Hello World",
             },
-        }
- }
+            start:function(){ //constructor  that can be executed in any adaptor
+                        this.swarm("concat");  // swarm is a "primitive" used to invoke execution in a phase
+                    },
+            concat:{ // phase that get executed in "Core" adaptor
+                node:"Core",
+                code : function (){
+                        this.message=this.message + " The swarming has begun! ";
+                        this.swarm("print");    //move again
+                    }
+            },
+            print:{ //print phase executed in "Logger" adaptor
+            node:"Logger",
+            code : function (){
+                cprint(this.message);    //use of some api, specific only to the Logger node
+                },
+            }
+ 
 
     Each node could be on a different continent! Check other swarms for parallel execution examples.
 
