@@ -1,0 +1,19 @@
+{
+"verbose":false,
+"Core":{
+     "coreId":"WTF://",
+     "redisHost":"localhost",
+     "redisPort":6379,
+     "swarmsfolder":"swarms"
+    },
+"Logger":{},
+"Launcher":{
+           "autorun":[
+                       "adaptors/Null.js",
+                       "adaptors/ClientAdaptor.js",
+                       "adaptors/ChatPersistence.js",
+                       "adaptors/FollowerListService.js",
+                       "adaptors/SharedAdaptor.js"
+           ]
+    }
+}

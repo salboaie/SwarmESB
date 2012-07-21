@@ -12,7 +12,7 @@ We claim that by using SwarmESB, you can get the benefits of asynchronous messag
 SwarmESB ca be also used as a light, open source, ESB replacement for your enterprise applications.
 Instead of message oriented communication or web services, you describe your communication between "nodes" in what
 we call "swarm descriptions" or simple "swarms".
-"Nodes" can be adaptors to various servers or clients connected to the "swarming middleware" :SwarmESB.
+"Nodes" can be adaptors to various servers or clients connected to the "swarming middleware": SwarmESB.
 
 Your adaptors can use web services as a particular case of providing some specific API in a node.
 
