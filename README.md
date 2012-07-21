@@ -1,5 +1,5 @@
-SwarmESB  (beta version)
-========================
+## SwarmESB  (beta version)
+
 Warning: Never before has been so easy to create scalable, complex, distributed and highly parallel systems.
 In a few hours you can have your maintainable system working!
 All the communication and how services get composed is described in the simplest way!
@@ -16,8 +16,8 @@ what we call "swarm descriptions" or simple "swarms".
     Your adaptors can use web services as a particular case of providing some specific API in a node.
 
 
-Examples
-========
+## Examples
+
 
     A swarm description is basically Java Script and is composed from:  variable declarations (for defaults),
     constructors (functions that get called on the adaptor that starts a swarm) and phases (code that get executed
@@ -52,8 +52,8 @@ The swarm described bellow will magically get executed without any other program
 
 
 
-Installation
-============
+## Installation
+
 1. Install Node.js
 2. Install and run a Redis server
 2. Get SwarmESB (with git) in a folder, ex : c:\work\SwarmESB
@@ -75,8 +75,8 @@ Installation
 11.It works. Got the idea. Great! Send me an email with your opinions, improvements ideas, dislikes, etc.
 
 
-Conclusions:
-============
+## Conclusions:
+
     1. Maintainable code: Open/closed principle, no threads get abused (ever), simple
     2. High performance: We are using node.js and his asynchronous capabilities revealed no throughput degradation in
     our benchmarks. Network latency have no effect in capability of the system to execute things in parallel.
@@ -84,6 +84,6 @@ Conclusions:
     4. High availability: Still at the research level but looks promising
 
 
-License:
-============
+## License:
+
 LGPL
