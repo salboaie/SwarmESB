@@ -5,20 +5,19 @@ In a few hours you can have your maintainable system working!
 All the communication and how services get composed is described in the simplest way!
 The essence of swarming idea is that offer a practical way to describe communication and to structure your code for a
 distributed application in a maintainable, easy to understand way.
-We claim that by using swarming, someone can get the benefits of asynchronous message passing without paying the price.
+We claim that by using SwarmESB, you can get the benefits of asynchronous message passing without paying the price.
 
-Please, check our claims!
+Please, check our claims :) !
 
-    SwarmESB ca be also used as a light, open source, ESB replacement for your enterprise applications.
-    Instead of message oriented communication or web services, you describe your communication between "nodes" in what
-    we call "swarm descriptions" or simple "swarms".
-    "Nodes" can be adaptors to various servers or clients connected to the "swarming middleware" :SwarmESB.
-    Your adaptors can use web services as a particular case of providing some specific API in a node.
+SwarmESB ca be also used as a light, open source, ESB replacement for your enterprise applications.
+Instead of message oriented communication or web services, you describe your communication between "nodes" in what
+we call "swarm descriptions" or simple "swarms".
+"Nodes" can be adaptors to various servers or clients connected to the "swarming middleware" :SwarmESB.
+Your adaptors can use web services as a particular case of providing some specific API in a node.
 
 
 ## Examples
-
-
+    
     A swarm description is basically Java Script and is composed from:  variable declarations (for defaults),
     constructors (functions that get called on the adaptor that starts a swarm) and phases (code that get executed
     remotely, usually in another node) 
@@ -46,7 +45,8 @@ Please, check our claims!
             }
  
 
-    Each node could be on a different continent! Check other swarms for parallel execution examples.
+    Imagine: each node could be on a different continent! 
+    Check other swarms for parallel execution examples.
 
 
 
