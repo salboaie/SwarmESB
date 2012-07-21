@@ -19,11 +19,11 @@ Your adaptors can use web services as a particular case of providing some specif
 
 ## Examples
     
-A swarm description is basically Java Script and is composed from:  variable declarations (for defaults),
+A swarm description is writen in Java Script and is composed from:  variable declarations (for defaults),
 constructors (functions that get called on the adaptor that starts a swarm) and phases (code that get executed
 remotely, usually in another node) 
     
-The swarm described bellow will magically get executed without any other programming efforts in 3 different nodes:
+The swarm described bellow will magically get executed without any other programming efforts in 3 nodes:
 
             vars:{
                 message:"Hello World",
@@ -46,8 +46,7 @@ The swarm described bellow will magically get executed without any other program
             }
  
 
-Imagine: each node could be on a different continent! 
-Check other swarms for parallel execution examples.
+Imagine: each node could be on a different continent!  Check other swarms for parallel execution examples.
 
 
 
