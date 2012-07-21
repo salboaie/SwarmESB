@@ -28,8 +28,8 @@ var loginSwarming =
     success:{   //phase
         node:"ClientAdaptor",
         code : function (){
-            console.log("Successful login for " + this.userId);
-            thisAdaptor.findOutlet(this.sessionId).successfulLogin(this);
+            logInfo("Successful login for user " + this.userId + " in session " + this.sessionId + " and tenant " + this.tenantId );
+            findOutlet(this.sessionId).successfulLogin(this);
             this.swarm("home",this.sessionId);
         }
     },
@@ -42,8 +42,8 @@ var loginSwarming =
     failed:{   //phase
         node:"ClientAdaptor",
         code : function (){
-            console.log("Failed to login:" + this.userId);
-            thisAdaptor.findOutlet(this.sessionId).close();
+            logInfo("Failed login for " + this.userId + " in session " + this.sessionId + " and tenant " + this.tenantId );
+            findOutlet(this.sessionId).close();
         }
     }
 };

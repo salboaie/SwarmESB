@@ -8,10 +8,12 @@
 
 var thisAdaptor;
 
+thisAdaptor = require('swarmutil').createAdaptor("Logger","localhost", 6379, "2214997C-D258-11E1-9F72-B01D6288709B");
+/*
 process.on('message', function(m){
      redisPort       = m.redisPort;
     thisAdaptor = require('swarmutil').createAdaptor("Logger",m.redisHost, m.redisPort, m.shardId);
 
 });
 
-
+*/

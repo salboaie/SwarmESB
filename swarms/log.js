@@ -8,26 +8,25 @@ var logSwarming =
         userId:null,
         debug:"false"
     },
-    start:function(message,errText,stack,level,tenantId,sessionId){
-        this.message    = message;
-        this.errText    = errText;
-        this.stack      = stack;
-        this.level      = level;
-        this.tenantId   = tenantId;
-        this.sessionId   = sessionId;
+    err:function(level,message,errText,stack){
+        this.nodeName       = thisAdaptor.nodeName;
+        this.message        = message;
+        this.errText        = errText;
+        this.stack          = stack;
+        this.level          = level;
         this.swarm("doLog");
     },
-    info:function(message,level,tenantId,sessionId){
-        this.message    = message;
-        this.level      = level;
-        this.tenantId   = tenantId;
-        this.sessionId   = sessionId;
+    info:function(level,message,details){
+        this.nodeName       = thisAdaptor.nodeName;
+        this.message        = message;
+        this.level          = level;
+        this.details        = details;
         this.swarm("doLog");
     },
     doLog:{ //phase that should be replaced. Use your own logging logic
         node:"Logger",
         code : function (){
-            cprint(J(this));
+            cprint("*LOG:[" +this.level + "][" + this.nodeName +"]: "+this.message);
         }
     }
 };

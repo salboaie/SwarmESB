@@ -14,7 +14,7 @@ var serverPort      = 3000;
 var sutil = require('swarmutil');
 
 function ClientTcpServer(port,adaptor){
-    console.log("Starting server on 3000");
+    console.log("ClientAdaptor is starting a server on port 3000");
     var net   	= require('net');
     this.server = net.createServer(
         function (socket){
@@ -34,9 +34,14 @@ findConnectedClientByUserId = function (userId){
     if(o != null && o != undefined){
         return o.sessionId;
     }
-    //cprint("Error finding connection to user " + userId);
     return "Null*";
 }
+
+
+findOutlet = function (sessionId) {
+    return thisAdaptor.connectedOutlets[sessionId];
+}
+
 
 var net = require("net");
 
@@ -46,14 +51,8 @@ net.createServer(
     }
 ).listen(843);
 
-
-process.on('message', function(m){
-    //console.log('CHILD got message:', m);
-    redisHost       = m.redisHost;
-    redisPort       = m.redisPort;
-    thisAdaptor     = sutil.createAdaptor("ClientAdaptor", redisHost, redisPort, m.shardId);
-    thisAdaptor.loginSwarmingName = "login.js";
-    new ClientTcpServer(serverPort);
-});
+thisAdaptor     = sutil.createAdaptor("ClientAdaptor");
+thisAdaptor.loginSwarmingName = "login.js";
+new ClientTcpServer(serverPort);
 
 

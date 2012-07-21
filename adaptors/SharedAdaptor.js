@@ -59,10 +59,8 @@ set = function(contextId,key,value){
 }
 
 
+thisAdaptor = require('swarmutil').createAdaptor("SharedAdaptor");
+client = redis.createClient(thisAdaptor.redisPort,thisAdaptor.redisHost);
 
-process.on('message', function(m){
-    thisAdaptor = require('swarmutil').createAdaptor("SharedAdaptor",m.redisHost, m.redisPort, m.shardId);
-    client = redis.createClient(m.redisPort,m.redisHost);
-});
 
 

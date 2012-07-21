@@ -6,11 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 
-var thisAdaptor;
 
-process.on('message', function(m){
-    redisPort       = m.redisPort;
-    thisAdaptor = require('swarmutil').createAdaptor("Null*",m.redisHost, m.redisPort, m.shardId);
-});
+thisAdaptor = require('swarmutil').createAdaptor("Null*");
+
 
 
