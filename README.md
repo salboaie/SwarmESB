@@ -53,25 +53,25 @@
 
 ## Installation
 
-    1. Install Node.js
-    2. Install and run a Redis server
-    2. Get SwarmESB (with git) in a folder, ex : c:\work\SwarmESB
-    3. Create a folder for node modules, ex C:\work\node, set the environment variable NODE_PATH to C:\global\node\node_modules
-    4. Go in C:\global\node and do:
- npm install swarmutil
- npm install redis
- npm install node-uuid
-    5. Set environment variable SWARM_PATH  to your SwarmESB installation (ex. c:\work\SwarmESB)
-    7. Check and modify your configuration (%SWARM_ESB%\etc\config)
-Warning: modify SWARM_ESB_ID, otherwise you can't reuse the redis server for multiple ESBs
-    8. Check the code for swarms, adaptors and tests.
-    9. Run SwarmESB:
-node adaptors/Core.js       //loads swarm descriptions
-node adaptors/Logger.js     //errors and infos get here
-node adaptors/Launcher.js   //starts running for other adaptors
-    10. Create new swarms and adaptors. Play with it.
-Don't forget to restart your adaptors when you change their code. I will work on a feature to do it automatically.
-    11.It works. Got the idea. Great! Send me an email with your opinions, improvements ideas, dislikes, etc.
+1. Install Node.js
+2. Install and run a Redis server
+2. Get SwarmESB (with git) in a folder, ex : c:\work\SwarmESB
+3. Create a folder for node modules, ex C:\work\node, set the environment variable NODE_PATH to C:\global\node\node_modules
+4. Go in C:\global\node and do:
+        npm install swarmutil
+        npm install redis
+        npm install node-uuid
+5. Set environment variable SWARM_PATH  to your SwarmESB installation (ex. c:\work\SwarmESB)
+7. Check and modify your configuration (%SWARM_ESB%\etc\config)
+        Warning: modify SWARM_ESB_ID, otherwise you can't reuse the redis server for multiple ESBs
+8. Check the code for swarms, adaptors and tests.
+9. Run SwarmESB:
+        node adaptors/Core.js       //loads swarm descriptions
+        node adaptors/Logger.js     //errors and infos get here
+        node adaptors/Launcher.js   //starts running for other adaptors
+10. Create new swarms and adaptors. Play with it.
+        Don't forget to restart your adaptors when you change their code. I will work on a feature to do it automatically.
+11.It works. Got the idea. Great! Send me an email with your opinions, improvements ideas, dislikes, etc.
 
 
 ## Conclusions:
