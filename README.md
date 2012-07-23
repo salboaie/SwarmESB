@@ -6,8 +6,9 @@ All the communication and how services get composed is described in the simplest
 The essence of swarming idea is that offer a practical way to describe communication and to structure your code for 
 a distributed application in a maintainable, easy to understand way.
 
-    We claim that by using SwarmESB, you can get the benefits of asynchronous message passing without paying the normal price.
-    Why? Because the code will follow the open/close principle. (http://en.wikipedia.org/wiki/Open/closed_principle)
+    We claim that by using SwarmESB, you can get the benefits of asynchronous message passing without paying the usual price.
+        Why? 
+    Because your code will follow the open/close principle and get a better separation of concerns. 
 
     
 SwarmESB ca be also used as a light, open source, ESB replacement for your enterprise applications.
