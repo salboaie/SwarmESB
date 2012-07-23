@@ -61,7 +61,9 @@ Imagine: each node could be on a different continent!  Check other swarms for pa
 4. Go in C:\global\node and do:
 
     npm install swarmutil
+    
     npm install redis
+    
     npm install node-uuid
 
 5. Set environment variable SWARM_PATH  to your SwarmESB installation (ex. c:\work\SwarmESB)
