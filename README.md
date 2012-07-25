@@ -5,11 +5,12 @@ In a few hours you can have your maintainable system working!
 All the communication and how services get composed is described in the simplest way!
 The essence of swarming idea is that offer a practical way to describe communication and to structure your code for 
 a distributed application in a maintainable, easy to understand way.
-We claim that by using SwarmESB, you can get the benefits of asynchronous message passing without paying the price.
-On our normal hardware (i3/i5) our benchmark is doing 30000 - 40000 phases per second. Quite amazing.
 
-    Please, check our claims :) !
+    We claim that by using SwarmESB, you can get the benefits of asynchronous message passing without paying the usual price.
+        Why? 
+    Because your code will follow the open/close principle and get a better separation of concerns. 
 
+    
 SwarmESB ca be also used as a light, open source, ESB replacement for your enterprise applications.
 Instead of message oriented communication or web services, you describe your communication between "nodes" in what
 we call "swarm descriptions" or simple "swarms".
@@ -60,7 +61,9 @@ Imagine: each node could be on a different continent!  Check other swarms for pa
 4. Go in C:\global\node and do:
 
     npm install swarmutil
+    
     npm install redis
+    
     npm install node-uuid
 
 5. Set environment variable SWARM_PATH  to your SwarmESB installation (ex. c:\work\SwarmESB)
