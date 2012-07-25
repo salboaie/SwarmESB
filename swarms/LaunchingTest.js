@@ -7,10 +7,9 @@ var launchingTest =
 {
         vars:{
             message:"Hello World",
-            debugSwarm:true
+            debug :"true1"
         },
         start:function(){
-                    logInfo("launch start");
                     this.message+="!";
                     this.swarm("begin");
                 },
@@ -21,7 +20,6 @@ var launchingTest =
         begin:{ //phase
             node:"Core",
             code : function (){
-                    logInfo("begin");
                     this.message="Hello World!"+" The swarming has begun! ";
                     this.swarm("endTest");
                 }
@@ -29,7 +27,6 @@ var launchingTest =
         endTest:{   //phase
             node:"Logger",
             code : function (){
-                    logInfo("print");
                     cprint(this.message);
                 }
         },

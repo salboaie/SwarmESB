@@ -4,7 +4,9 @@ var adaptorHost         = "localhost";
 var util                = require("swarmutil");
 var assert              = require('assert');
 
-var client             = util.createClient(adaptorHost, adaptorPort, "UserForStartSwarmTest", "ok");
+swarmSettings.authentificationMethod = "testCtor";
+
+var client             = util.createClient(adaptorHost, adaptorPort, "UserForStartSwarmTest", "ok","StartSwarmTest");
 
 
 

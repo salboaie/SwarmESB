@@ -4,10 +4,12 @@ var adaptorHost      = "localhost";
 var util = require("swarmutil");
 var assert = require('assert');
 
-var client2 = util.createClient(adaptorHost, adaptorPort, "Client2", "ok");
-var client1 = util.createClient(adaptorHost, adaptorPort, "Client1", "ok");
-var client3 = util.createClient(adaptorHost, adaptorPort, "Client3", "ok");
-var client4 = util.createClient(adaptorHost, adaptorPort, "Client4", "!ok");
+swarmSettings.authentificationMethod = "testCtor";
+
+var client2 = util.createClient(adaptorHost, adaptorPort, "Client2", "ok","SwarmClientTest");
+var client1 = util.createClient(adaptorHost, adaptorPort, "Client1", "ok","SwarmClientTest");
+var client3 = util.createClient(adaptorHost, adaptorPort, "Client3", "ok","SwarmClientTest");
+var client4 = util.createClient(adaptorHost, adaptorPort, "Client4", "!ok","SwarmClientTest");
 
 client1.on("login.js",successLogin);
 client1.on("close",onClose);

@@ -40,6 +40,7 @@ set = function(contextId,key){
 }        */
 
 
+/*
 var transientContext={};
 
 incr = function(contextId,key){
@@ -58,9 +59,10 @@ set = function(contextId,key,value){
     transientContext[getUri(contextId,key)] = value;
 }
 
+*/
 
 thisAdaptor = require('swarmutil').createAdaptor("SharedAdaptor");
-client = redis.createClient(thisAdaptor.redisPort,thisAdaptor.redisHost);
+//client = redis.createClient(thisAdaptor.redisPort,thisAdaptor.redisHost);
 
 
 

@@ -8,19 +8,33 @@ var benchmark =     //swarming description
         vars:{
             maxCount:0,
             startTime:0,
-            tickTackCount:0,
-            debug:"true1"
+            tickTackCount:0
         },
         ctor:function(phases){
                     this.startTime = Date.now();
-                    this.maxCount = phases/2;
-                    console.log("Starting benchmark for " + phases + " phases!");
-                    for(var i=0;i< phases/6;i++){
-                        this.swarm("tickCore");
-                        this.swarm("tackLogger");
-                        this.swarm("clank");
-                    }
+                    this.maxCount = phases;
+                    this.swarm("countInit");
                 },
+        countInit:{          //phase
+            node:"SharedAdaptor",
+            code : function (){
+                var ctxt = getContext();
+                ctxt.counter = 0;
+                this.swarm("doParallelSwarm");
+            }
+        },
+        doParallelSwarm:{          //phase
+            node:"SharedAdaptor",
+            code : function (){
+                var phases = parseInt(this.maxCount);
+                logInfo("Starting benchmark for " + phases + " phases!");
+                for(var i=0;i< phases/6;i++){   //launch parallel swarms
+                    this.swarm("tickCore");
+                    this.swarm("tackLogger");
+                    this.swarm("clank");
+                }
+            }
+        },
         tickCore:{          //phase
             node:"Core",
             code : function (){
@@ -42,11 +56,11 @@ var benchmark =     //swarming description
         count:{  //phase
         node:"SharedAdaptor",
             code : function (){
-                incr("benchmark","counter");
-                var v           = get("benchmark","counter");
-                this.maxCount   = parseInt(this.maxCount);// - 5;
-                if(v >= this.maxCount ){
-                    this.realCount = v;
+                var ctxt = getContext();
+                ctxt.counter++;
+                var v           = parseInt(this.maxCount);
+                if(ctxt.counter >= this.maxCount/2 ){   // we count twice each call to count (because of tick,tack,clank)
+                    this.realCount = ctxt.counter;
                     this.swarm("printResults");
                 }
             }
@@ -60,10 +74,10 @@ var benchmark =     //swarming description
 
                 var speed = "Not enough phases requested!";
                 if(diff != 0){
-                    speed = "" + Math.ceil(2*max / diff) + " phases per second!";
+                    speed = "" + Math.ceil(max / diff) + " phases per second!";
                 }
 
-                console.log("Benchmark results: " + speed + " Time spent: " + diff + "seconds " + this.realCount);
+                console.log("Benchmark results: " + speed + " Time spent: " + diff + "seconds " /*+ this.realCount*/);
             }
         }
 };

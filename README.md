@@ -6,6 +6,7 @@ All the communication and how services get composed is described in the simplest
 The essence of swarming idea is that offer a practical way to describe communication and to structure your code for 
 a distributed application in a maintainable, easy to understand way.
 We claim that by using SwarmESB, you can get the benefits of asynchronous message passing without paying the price.
+On our normal hardware (i3/i5) our benchmark is doing 30000 - 40000 phases per second. Quite amazing.
 
     Please, check our claims :) !
 

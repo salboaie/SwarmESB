@@ -26,7 +26,7 @@ setTimeout(
         startSwarm("LaunchingTest.js","start");
         //startSwarm("BenchMark.js","ctor",48000);
     },
-1000);
+2000);
 
 
 

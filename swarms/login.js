@@ -6,14 +6,21 @@ var loginSwarming =
         sessionId:null,
         debug:"true1"
     },
-    start:function(clientSessionId,userId,authorisationToken){
+    testCtor:function(clientSessionId,userId,authorisationToken){
         this.isOk=false;
         this.sessionId   = clientSessionId;
         this.userId     = userId;
         this.authorisationToken  = authorisationToken;
         this.swarm("check");
     },
-    check:{ //phase that should be replaced. Use your own security provider adaptor
+    ldap:function(clientSessionId,userId,authorisationToken){
+        this.isOk=false;
+        this.sessionId   = clientSessionId;
+        this.userId     = userId;
+        this.authorisationToken  = authorisationToken;
+        this.swarm("check");
+    },
+    check:{
         node:"Core",
         code : function (){
             if(this.authorisationToken == "ok"){
@@ -28,7 +35,7 @@ var loginSwarming =
     success:{   //phase
         node:"ClientAdaptor",
         code : function (){
-            logInfo("Successful login for user " + this.userId + " in session " + this.sessionId + " and tenant " + this.tenantId );
+            logInfo("Successful login for user " + this.userId);
             findOutlet(this.sessionId).successfulLogin(this);
             this.swarm("home",this.sessionId);
         }
@@ -42,7 +49,7 @@ var loginSwarming =
     failed:{   //phase
         node:"ClientAdaptor",
         code : function (){
-            logInfo("Failed login for " + this.userId + " in session " + this.sessionId + " and tenant " + this.tenantId );
+            logInfo("Failed login for " + this.userId );
             findOutlet(this.sessionId).close();
         }
     }
