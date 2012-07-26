@@ -1,6 +1,6 @@
 ## SwarmESB  (beta version)
 
-Warning: SwarmESB is a new aproach for creating scalable, complex, distributed and highly parallel systems.
+Warning: SwarmESB is a new approach for creating scalable, complex, distributed and highly parallel systems.
 In a few hours you can have your maintainable system working!
 All the communication and how services get composed is described in the simplest way!
 The essence of swarming idea is that offer a practical way to describe communication and to structure your code for 
@@ -21,7 +21,7 @@ Your adaptors can use web services as a particular case of providing some specif
 
 ## Examples
     
-A swarm description is writen in Java Script and is composed from:  variable declarations (for defaults),
+A swarm description is written in Java Script and is composed from:  variable declarations (for defaults),
 constructors (functions that get called on the adaptor that starts a swarm) and phases (code that get executed
 remotely, usually in another node) 
     
@@ -67,9 +67,9 @@ Imagine: each node could be on a different continent!  Check other swarms for pa
     npm install node-uuid
 
 5. Set environment variable SWARM_PATH  to your SwarmESB installation (ex. c:\work\SwarmESB)
-7. Check and modify your configuration (%SWARM_ESB%\etc\config)
+7. Check and modify your configuration (%SWARM_PATH%\etc\config)
 
-        Warning: modify SWARM_ESB_ID, otherwise you can't reuse the redis server for multiple ESBs
+        Warning: modify coreId in config, otherwise you can't reuse the redis server for multiple ESBs
         
 8. Check the code for swarms, adaptors and tests.
 9. Run SwarmESB:

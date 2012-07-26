@@ -1,34 +1,41 @@
 
-var logSwarming =
+var codeUpdateSwarming =
 {
     vars:{
+        debug:"true1"
     },
-    update:function(){
-        this.swarm("dispatchRestart");
+    swarmChanged:function(swarmName){
+        this.reloadingSwarmName = swarmName;
+        this.swarm("dispatchRefresh");
     },
     register:function(adaptorName){
         this.adaptorName = adaptorName;
-        this.swarm("register");
+        this.swarm("doRegister");
     },
     doRegister:{ //phase that should be replaced. Use your own logging logic
         node:"Core",
         code : function (){
-            rememberAdaptor(this.adaptorName);
+            var ctxt = getContext("System:RegisteredAdaptors",true);
+            ctxt[this.adaptorName] = this.adaptorName;
         }
     },
-    dispatchRestart:{ //phase that should be replaced. Use your own logging logic
+    dispatchRefresh:{ //phase that should be replaced. Use your own logging logic
     node:"Core",
         code : function (){
-//         var adaptors = geAllAdaptors();
-//            for(var i=0;i<adaptors;i++)
+
+            var ctxt = getContext("System:RegisteredAdaptors",true);
+            for(var key in ctxt){
+                this.swarm("reloadSwarm",key);
+            }
         }
     },
-    restart:{ //phase that should be replaced. Use your own logging logic
+    reloadSwarm:{ //phase that should be replaced. Use your own logging logic
         node:"",
         code : function (){
-            thisAdaptor.restart();
+            console.log("* Reloading swarm " + this.reloadingSwarmName);
+            thisAdaptor.reloadSwarm(this.reloadingSwarmName );
         }
     }
 };
 
-logSwarming;
+codeUpdateSwarming;
