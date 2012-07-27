@@ -13,6 +13,11 @@ var serverPort      = 3000;
 
 var sutil = require('swarmutil');
 
+thisAdaptor     = sutil.createAdaptor("ClientAdaptor");
+thisAdaptor.loginSwarmingName = "login.js";
+new ClientTcpServer(serverPort);
+
+
 function ClientTcpServer(port,adaptor){
     console.log("ClientAdaptor is starting a server on port 3000");
     var net   	= require('net');
@@ -50,9 +55,5 @@ net.createServer(
         writePolicy(socket);
     }
 ).listen(843);
-
-thisAdaptor     = sutil.createAdaptor("ClientAdaptor");
-thisAdaptor.loginSwarmingName = "login.js";
-new ClientTcpServer(serverPort);
 
 

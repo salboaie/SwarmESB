@@ -2,7 +2,7 @@
  Arguments: none
 */
 
-var adaptor = require('swarmutil').createAdaptor("Launcher");
+var adaptor = require('swarmutil').createAdaptor("Launcher",onReadyCallback);
 
 var childForker = require('child_process');
 
@@ -21,12 +21,12 @@ for(var i=0; i<forLaunch.length; i++){
     //n.send({ "redisHost": redisHost,"redisPort":redisPort,"shardId":shardId});
 }
 
-setTimeout(
-    function(){
-        startSwarm("LaunchingTest.js","start");
-        //startSwarm("BenchMark.js","ctor",48000);
-    },
-2000);
+
+function onReadyCallback(){
+    startSwarm("LaunchingTest.js","start");
+    //startSwarm("BenchMark.js","ctor",48000);
+}
+
 
 
 

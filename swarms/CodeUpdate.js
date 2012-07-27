@@ -29,7 +29,7 @@ var codeUpdateSwarming =
             }
         }
     },
-    reloadSwarm:{ //phase that should be replaced. Use your own logging logic
+    reloadSwarm:{ //running in all adaptors
         node:"",
         code : function (){
             console.log("* Reloading swarm " + this.reloadingSwarmName);
