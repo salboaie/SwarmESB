@@ -13,9 +13,8 @@
                        "adaptors/ClientAdaptor.js",
                        "adaptors/ChatPersistence.js",
                        "adaptors/FollowerListService.js",
-                       "adaptors/SharedAdaptor.js"
-           ],
-           "workers":5
+                       {"3":"adaptors/Worker.js"}
+           ]
     },
 "FailSupervisor":{
            "watch":[

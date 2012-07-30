@@ -8,17 +8,19 @@ var benchmark =     //swarming description
         vars:{
             maxCount:0,
             startTime:0,
-            tickTackCount:0
+            tickTackCount:0,
+            debug:"true1"
         },
-        ctor:function(phases){
+        start:function(phases){
                     this.startTime = Date.now();
                     this.maxCount = phases;
                     this.swarm("countInit");
+
                 },
         countInit:{          //phase
             node:"SharedAdaptor",
             code : function (){
-                var ctxt = getContext();
+                var ctxt = getContext("benchmark",true);
                 ctxt.counter = 0;
                 this.swarm("doParallelSwarm");
             }
@@ -56,9 +58,10 @@ var benchmark =     //swarming description
         count:{  //phase
         node:"SharedAdaptor",
             code : function (){
-                var ctxt = getContext();
+                var ctxt = getContext("benchmark",true);
                 ctxt.counter++;
                 var v           = parseInt(this.maxCount);
+
                 if(ctxt.counter >= this.maxCount/2 ){   // we count twice each call to count (because of tick,tack,clank)
                     this.realCount = ctxt.counter;
                     this.swarm("printResults");
@@ -77,7 +80,9 @@ var benchmark =     //swarming description
                     speed = "" + Math.ceil(max / diff) + " phases per second!";
                 }
 
-                console.log("Benchmark results: " + speed + " Time spent: " + diff + "seconds " /*+ this.realCount*/);
+                this.result = "Benchmark results: " + speed + " Time spent: " + diff + "seconds " /*+ this.realCount*/
+                console.log(this.result);
+                this.swarm("results", this.sessionId);
             }
         }
 };

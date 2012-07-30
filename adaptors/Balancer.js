@@ -18,16 +18,17 @@ var workers = {};
 var workersArray = [];
 
 registerWorker  = function(workerName){
-
+    cprint("Registering: " + workerName);
     if(workers[workerName] != null){
         var pos = workersArray.indexOf(workers[workerName]);
         workersArray.splice(pos,1);
     }
-    workers[workerName] = new workerStat(workerName);
+    workers[workerName] = new workerStatus(workerName);
     workersArray.push(workers[workerName]);
 }
 
 unregisterWorker  = function(workerName){
+    cprint("Unregistering: " + workerName);
     if(workers[workerName] != null){
         var pos = workersArray.indexOf(workers[workerName]);
         workersArray.splice(pos,1);
@@ -43,6 +44,7 @@ getAllWorkers = function(){
 
 var robinPos = -1;
 function roundRobin(){
+    //cprint(J(workersArray));
     if(workersArray.length !=0){
         robinPos++;
         robinPos %= workersArray.length;
@@ -110,11 +112,13 @@ workerIsAlive = function (workerName,pingTime,pongTime){
 }
 
 taskDone = function (workerName){
+    //cprint("TaskDone:" + J(workers[workerName]) + " " + workerName);
     workers[workerName].loadCounter--;
 }
 
 
 taskBegin = function(workerName){
+    //cprint("TaskBegin:" + J(workers[workerName]) + " " + workerName);
     workers[workerName].loadCounter++;
 }
 

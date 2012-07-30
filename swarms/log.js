@@ -23,14 +23,18 @@ var logSwarming =
         this.sessionId      = getCurrentSession();
         this.forSwarm       = forSwarm;
         this.message        = message;
+
         this.level          = level;
+        if(level == "info"){
+            this.level = "info ";
+        }
         this.details        = details;
         this.swarm("doLog");
     },
     doLog:{ //phase that should be replaced. Use your own logging logic
         node:"Logger",
         code : function (){
-            cprint(this.level + ": [Node:" + this.nodeName+"] [Swarm:"+ this.forSwarm +"] [Tenant:"+ this.tenantId +"] [Session:"+ this.sessionId +"]\n\tMessage: "+this.message+"\n");
+            cprint(this.level + " :[Node:" + this.nodeName+"] [Swarm:"+ this.forSwarm +"] [Tenant:"+ this.tenantId +"] [Session:"+ this.sessionId +"] >>>>>>\t MESSAGE: "+this.message);
         }
     }
 };
