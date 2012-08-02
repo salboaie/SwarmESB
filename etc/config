@@ -2,7 +2,7 @@
 "verbose":false,
 "Core":{
      "coreId":"WTF://",
-     "redisHost":"192.168.20.61",
+     "redisHost":"localhost",
      "redisPort":6379,
      "swarmsfolder":"swarms"
     },
