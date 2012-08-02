@@ -28,15 +28,20 @@ convertDocument = function(fileName,callBack,endCallBack)
 {
     initialize();
 
-    var startTime;
-    var endTime;
     var docExecCmd;
     var swfExecCmd;
-    var directory    = getFileDirectory(fileName);
-    var extension    = getExtensionFromFileName(fileName);
-    var thisFileName = getFileName(fileName);
-
-    startTime  = Date.now();
+    var endTime;
+    var startTime            = Date.now();
+    var directory            = getFileDirectory(fileName);
+    var extension            = getExtensionFromFileName(fileName);
+    var thisFileName         = getFileName(fileName);
+    var swfConvertorHandler  = function()
+        {
+            endTime=Date.now();
+            callBack("Generating file done in :"+(endTime-startTime)/1000+" seconds !");
+            endCallBack();
+        }.bind(this);
+    
     swfExecCmd = pdf2swfCmd;
     swfExecCmd = swfExecCmd.replace("[file]",directory+"/"+thisFileName+".pdf");
     swfExecCmd = swfExecCmd.replace("[swffile]",directory+"/"+thisFileName+".swf");
@@ -47,31 +52,19 @@ convertDocument = function(fileName,callBack,endCallBack)
         docExecCmd = docExecCmd.replace("[file]",fileName);
         docExecCmd = docExecCmd.replace("[outdir]",directory);
 
-        converFile(fileName,docExecCmd,doc2pdfCmdPath,callBack,function()
+        convertFile(fileName,docExecCmd,doc2pdfCmdPath,callBack,function()
             {
-                converFile(fileName,swfExecCmd,pdf2swfCmdPath,callBack,function()
-                    {
-                        endTime=Date.now();
-                        callBack("Generating file done in :"+(endTime-startTime)/1000+" seconds !");
-                        endCallBack();
-                    }
-                );
+                convertFile(fileName,swfExecCmd,pdf2swfCmdPath,callBack,swfConvertorHandler);
             }
         );
     }
     else
     {
-        converFile(fileName,swfExecCmd,pdf2swfCmdPath,callBack,function()
-            {
-                endTime=Date.now();
-                callBack("Generating file done in :"+(endTime-startTime)/1000+" seconds !");
-                endCallBack();
-            }
-        );
+        convertFile(fileName,swfExecCmd,pdf2swfCmdPath,callBack,swfConvertorHandler);
     }
 }
 
-var converFile = function(fileName,execCmd,cwd,callBack,endCallBack)
+var convertFile = function(fileName,execCmd,cwd,callBack,endCallBack)
 {
     var intervalId;
     var messageQueue;
