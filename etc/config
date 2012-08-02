@@ -2,11 +2,19 @@
 "verbose":false,
 "Core":{
      "coreId":"WTF://",
-     "redisHost":"localhost",
+     "redisHost":"192.168.20.61",
      "redisPort":6379,
      "swarmsfolder":"swarms"
     },
 "Logger":{},
+"DocumentConvertor":
+            {
+            "doc2pdfCmdPath":"C:/Program Files/LibreOffice 3.5/program",
+            "doc2pdfCmd":"soffice.exe --headless --invisible --convert-to pdf [file] --outdir [outdir]",
+
+            "pdf2swfCmdPath":"C:/Program Files/SWFTools",
+            "pdf2swfCmd":"pdf2swf.exe [file] -o [swffile] -f -T 9 -t -s storeallcharacters"
+            },
 "Launcher":{
            "autorun":[
                        "adaptors/Null.js",
