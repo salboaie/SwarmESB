@@ -10,7 +10,7 @@
 "Launcher":{
            "autorun":[
                        "adaptors/Null.js",
-                       "adaptors/ClientAdaptor.js",
+                       "adaptors/ClientAdapter.js",
                        "adaptors/ChatPersistence.js",
                        "adaptors/FollowerListService.js",
                        {"3":"adaptors/Worker.js"}
@@ -19,10 +19,10 @@
 "FailSupervisor":{
            "watch":[
                                   "adaptors/Null.js",
-                                  "adaptors/ClientAdaptor.js",
+                                  "adaptors/ClientAdapter.js",
                                   "adaptors/ChatPersistence.js",
                                   "adaptors/FollowerListService.js",
-                                  "adaptors/SharedAdaptor.js"
+                                  "adaptors/SharedAdapter.js"
                       ]
         }
 

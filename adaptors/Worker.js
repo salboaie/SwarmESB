@@ -9,7 +9,7 @@ var thisAdaptor;
 thisAdaptor = require('swarmutil').createAdaptor(workerId,onReadyCallback);
 
 function onReadyCallback(){
-    startSwarm("WorkerSwarm.js","register",workerId);
+    startSwarm("WorkerManagement.js","register",workerId);
 }
 
 

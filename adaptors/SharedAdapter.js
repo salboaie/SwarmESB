@@ -3,7 +3,7 @@
  */
 
 var thisAdaptor;
-thisAdaptor = require('swarmutil').createAdaptor("SharedAdaptor");
+thisAdaptor = require('swarmutil').createAdaptor("SharedAdapter");
 
 
 

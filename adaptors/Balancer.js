@@ -113,13 +113,17 @@ workerIsAlive = function (workerName,pingTime,pongTime){
 
 taskDone = function (workerName){
     //cprint("TaskDone:" + J(workers[workerName]) + " " + workerName);
-    workers[workerName].loadCounter--;
+    if(workers[workerName] != undefined){
+        workers[workerName].loadCounter--;
+    }
 }
 
 
 taskBegin = function(workerName){
     //cprint("TaskBegin:" + J(workers[workerName]) + " " + workerName);
-    workers[workerName].loadCounter++;
+    if(workers[workerName] != undefined){
+        workers[workerName].loadCounter++;
+    }
 }
 
 
