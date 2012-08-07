@@ -9,8 +9,8 @@ var nodeStart = {
         debug:null
     },
     boot:function () {
-        this.currentInstanceUID = thisAdaptor.instaceUID;
-        this.nodeName           = thisAdaptor.nodeName;
+        this.currentInstanceUID = thisAdapter.instaceUID;
+        this.nodeName           = thisAdapter.nodeName;
         this.swarm("heartbeat", this.nodeName);
     },
     activate:function (nodeUID,nodeName ) {
@@ -21,19 +21,19 @@ var nodeStart = {
     heartbeat:{
         node:"*",
         code:function () {
-            if(thisAdaptor.instaceUID !=  this.currentInstanceUID){
+            if(thisAdapter.instaceUID !=  this.currentInstanceUID){
                 cprint("Because another node with same name got started, this node is going to sleep from now!");
-                thisAdaptor.sleepExecution();
+                thisAdapter.sleepExecution();
             }
         }
     },
     activate: {
         node: "*",
         code: function () {
-            if(thisAdaptor.instaceUID !=  this.currentInstanceUID){
-                thisAdaptor.sleepExecution();
+            if(thisAdapter.instaceUID !=  this.currentInstanceUID){
+                thisAdapter.sleepExecution();
             }else{
-                thisAdaptor.awakeExecution();
+                thisAdapter.awakeExecution();
             }
         }
     }

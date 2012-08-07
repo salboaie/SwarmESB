@@ -1,29 +1,26 @@
 {
-"verbose":false,
-"Core":{
-     "coreId":"WTF://",
+ "logPath":"logs",
+ "verbose":false,
+ "Core":{
+     "coreId":"<DefaultCoreId>",
      "redisHost":"localhost",
      "redisPort":6379,
      "swarmsfolder":"swarms"
-    },
-"Logger":{},
-"Launcher":{
+  },
+ "Logger":{},
+ "Launcher":{
            "autorun":[
-                       "adaptors/Null.js",
-                       "adaptors/ClientAdapter.js",
-                       "adaptors/ChatPersistence.js",
-                       "adaptors/FollowerListService.js",
-                       {"3":"adaptors/Worker.js"}
+                       {"node":"adaptors/Null.js",                  "enabled":true},
+                       {"node":"adaptors/Balancer.js",              "enabled":true},
+                       {"node":"adaptors/ClientAdapter.js",         "enabled":false},
+                       {"node":"adaptors/ChatPersistence.js",       "enabled":true},
+                       {"node":"adaptors/FollowerListService.js",   "enabled":true},
+                       {"node":"adaptors/SharedAdapter.js",         "enabled":true},
+                       {"node":"adaptors/Worker.js", "times":10                    }
            ]
-    },
-"FailSupervisor":{
-           "watch":[
-                                  "adaptors/Null.js",
-                                  "adaptors/ClientAdapter.js",
-                                  "adaptors/ChatPersistence.js",
-                                  "adaptors/FollowerListService.js",
-                                  "adaptors/SharedAdapter.js"
-                      ]
-        }
-
+  },
+  "ClientAdapter":{
+                "port":3000,
+                "bind":0
+  }
 }

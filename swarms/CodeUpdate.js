@@ -32,8 +32,8 @@ var codeUpdateSwarming =
     reloadSwarm:{ //running in all adaptors
         node:"",
         code : function (){
-            console.log("* Reloading swarm " + this.reloadingSwarmName);
-            thisAdaptor.reloadSwarm(this.reloadingSwarmName );
+            //console.log("* Reloading swarm " + this.reloadingSwarmName);
+            thisAdapter.reloadSwarm(this.reloadingSwarmName );
         }
     }
 };

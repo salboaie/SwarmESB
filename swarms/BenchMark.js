@@ -6,31 +6,34 @@
 var benchmark =     //swarming description
 {
         vars:{
-            maxCount:0,
             startTime:0,
             tickTackCount:0,
-            debug:"true1"
+            debug:false
         },
         start:function(phases){
+                    cprint("Starting Benchmark");
                     this.startTime = Date.now();
-                    this.maxCount = phases;
-                    this.swarm("countInit");
-
+                    this.totalCount = phases;
+                    this.swarm("counterInit");
                 },
-        countInit:{          //phase
-            node:"SharedAdaptor",
+        counterInit:{          //phase
+            node:"SharedAdapter",
             code : function (){
-                var ctxt = getContext("benchmark",true);
+                logInfo("Resetting counter");
+                var ctxt = getContext("benchmark");
                 ctxt.counter = 0;
                 this.swarm("doParallelSwarm");
             }
         },
         doParallelSwarm:{          //phase
-            node:"SharedAdaptor",
+            node:"Launcher",
             code : function (){
-                var phases = parseInt(this.maxCount);
-                logInfo("Starting benchmark for " + phases + " phases!");
-                for(var i=0;i< phases/6;i++){   //launch parallel swarms
+                this.totalCount = parseInt(this.totalCount);
+                logInfo("Starting benchmark for " + this.totalCount + " phases!");
+                var phases = this.totalCount /6; //launch in 3 nodes 2 consecutive phases
+                this.maxCount = this.totalCount / 3;
+
+                for(var i=0;i< phases;i++){   //launch parallel swarms
                     this.swarm("tickCore");
                     this.swarm("tackLogger");
                     this.swarm("clank");
@@ -44,25 +47,24 @@ var benchmark =     //swarming description
                 }
         },
         tackLogger:{  //phase
-            node:"Logger",
+            node:"Null*",
             code : function (){
                 this.swarm("count");
             }
         },
         clank:{  //phase
-            node:"ClientAdaptor",
+            node:"ClientAdapter",
                 code : function (){
                 this.swarm("count");
             }
         },
         count:{  //phase
-        node:"SharedAdaptor",
+        node:"SharedAdapter",
             code : function (){
-                var ctxt = getContext("benchmark",true);
+                var ctxt = getContext("benchmark");
                 ctxt.counter++;
                 var v           = parseInt(this.maxCount);
-
-                if(ctxt.counter >= this.maxCount/2 ){   // we count twice each call to count (because of tick,tack,clank)
+                if(ctxt.counter >= this.maxCount ){
                     this.realCount = ctxt.counter;
                     this.swarm("printResults");
                 }
@@ -72,15 +74,15 @@ var benchmark =     //swarming description
             node:"Logger",
             code : function (){
                 var ct = Date.now();
-                var max = parseInt(this.maxCount);
+                var totalCount = parseInt(this.totalCount);
                 var diff = (ct - parseInt(this.startTime))/1000;
 
                 var speed = "Not enough phases requested!";
                 if(diff != 0){
-                    speed = "" + Math.ceil(max / diff) + " phases per second!";
+                    speed = "" + Math.ceil(totalCount / diff) + " phases per second!";
                 }
 
-                this.result = "Benchmark results: " + speed + " Time spent: " + diff + "seconds " /*+ this.realCount*/
+                this.result = "Benchmark results: " + speed + " Time spent: " + diff + "seconds ";
                 console.log(this.result);
                 this.swarm("results", this.sessionId);
             }

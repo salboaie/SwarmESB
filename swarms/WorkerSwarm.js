@@ -20,7 +20,7 @@ var workerSwarm =
         node:"*",
         code : function (){
             //doWork();
-            //doLog(thisAdaptor.nodeName + "is working! ");
+            //doLog(thisAdapter.nodeName + "is working! ");
             this.swarm("taskDone");
         }
     },

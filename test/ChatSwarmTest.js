@@ -26,7 +26,7 @@ client.startSwarm("chat.js", "ctorGetPage",roomId,0, 10);
 
 
 function getPage(obj) {
-    if(obj.currentPhase = "pageAnswer"){
+    if(obj.currentPhase == "pageAnswer"){
         console.log("--------------- PAGE ----------------");
         obj.pageArray.forEach(function(element){
             var j = JSON.parse(element);

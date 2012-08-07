@@ -9,7 +9,7 @@ var logSwarming =
         debug:"false"
     },
     err:function(level,message,errText,stack,forSwarm){
-        this.nodeName       = thisAdaptor.nodeName;
+        this.nodeName       = thisAdapter.nodeName;
         this.sessionId      = getCurrentSession();
         this.forSwarm       = forSwarm;
         this.message        = message;
@@ -19,7 +19,7 @@ var logSwarming =
         this.swarm("doLog");
     },
     info:function(level,message,details,forSwarm){
-        this.nodeName       = thisAdaptor.nodeName;
+        this.nodeName       = thisAdapter.nodeName;
         this.sessionId      = getCurrentSession();
         this.forSwarm       = forSwarm;
         this.message        = message;

@@ -39,7 +39,7 @@ getFollowers = function (resurceId,callback) {
     });
 }
 
-thisAdaptor = require('swarmutil').createAdaptor("FollowerListService");
-client = redis.createClient(thisAdaptor.redisPort,thisAdaptor.redisHost);
+thisAdapter = require('swarmutil').createAdaptor("FollowerListService");
+client = redis.createClient(thisAdapter.redisPort,thisAdapter.redisHost);
 
 

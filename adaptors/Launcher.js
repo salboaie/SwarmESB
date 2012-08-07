@@ -7,27 +7,27 @@ var adaptor = require('swarmutil').createAdaptor("Launcher",onReadyCallback);
 var childForker = require('child_process');
 
 var forkOptions;
-var forLaunch = adaptor.config.Launcher.autorun;
+var forLaunch = getMyConfig().autorun;
+
+var howMany;
+
 
 for(var i=0; i<forLaunch.length; i++){
-    if(typeof forLaunch[i] == "string" ){
-        forkOptions = {
-            cwd:process.cwd(),
-            env:process.env
-        };
-        childForker.fork(forLaunch[i],null,forkOptions);
+    var cmdObj = forLaunch[i];
+    if(cmdObj.node == undefined){
+        logErr("Wrong adapter configuration: no \"node\" property where required when starting auto loading \n");
     }
-    else{
-        var multipleCmdsObj = forLaunch[i];
-        for (var v in multipleCmdsObj){
-            var count = parseInt(v);
-            for(var j=0;j<count; j++){
-                forkOptions = {
-                    cwd:process.cwd(),
-                    env:process.env
-                };
-                childForker.fork(multipleCmdsObj[v],null,forkOptions);
-            }
+    if(cmdObj.enabled == undefined || cmdObj.enabled == true){
+        howMany = cmdObj.times;
+        if(howMany  == undefined){
+            howMany = 1;
+        }
+        for(var k=0; k<howMany; k++){
+            forkOptions = {
+                cwd:process.cwd(),
+                env:process.env
+            };
+            childForker.fork(cmdObj.node,null,forkOptions);
         }
     }
 }

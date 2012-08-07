@@ -26,7 +26,7 @@ getPage = function(roomId, pageNumber, pageLines,callBack) {
     );
 }
 
-thisAdaptor = require('swarmutil').createAdaptor("ChatPersistence");
-client = redis.createClient(thisAdaptor.redisPort,thisAdaptor.redisHost);
+thisAdapter = require('swarmutil').createAdaptor("ChatPersistence");
+client = redis.createClient(thisAdapter.redisPort,thisAdapter.redisHost);
 
 

@@ -6,8 +6,7 @@ var assert              = require('assert');
 
 swarmSettings.authentificationMethod = "testCtor";
 
-var client             = util.createClient(adaptorHost, adaptorPort, "UserForStartSwarmTest", "ok","StartSwarmTest");
-
+var client             = util.createClient(adaptorHost, adaptorPort, "BenchmarkUser", "ok","BenchmarkTest");
 
 client.startSwarm("BenchMark.js","start",48000);
 

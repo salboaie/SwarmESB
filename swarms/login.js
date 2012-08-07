@@ -50,7 +50,9 @@ var loginSwarming =
         node:"ClientAdaptor",
         code : function (){
             logInfo("Failed login for " + this.userId );
+            this.swarm("failed",this.sessionId);
             findOutlet(this.sessionId).close();
+
         }
     }
 };

@@ -1,5 +1,5 @@
 
 var thisAdaptor;
 
-thisAdaptor = require('swarmutil').createAdaptor("Logger");
+thisAdapter = require('swarmutil').createAdaptor("Logger");
 

@@ -4,7 +4,7 @@
 
 
 var thisAdaptor;
-thisAdaptor = require('swarmutil').createAdaptor("Balancer");
+thisAdapter = require('swarmutil').createAdaptor("Balancer");
 
 function workerStatus(workerName){
     this.workerName = workerName;
