@@ -1,12 +1,12 @@
 
-var adaptorPort         = 3000;
-var adaptorHost         = "localhost";
+var adapterPort         = 3000;
+var adapterHost         = "localhost";
 var util                = require("swarmutil");
 var assert              = require('assert');
 
 swarmSettings.authentificationMethod = "testCtor";
 
-var client             = util.createClient(adaptorHost, adaptorPort, "UserForStartSwarmTest", "ok","BalancerTest");
+var client             = util.createClient(adapterHost, adapterPort, "UserForStartSwarmTest", "ok","BalancerTest");
 
 
 for(var i = 0; i<6;i++){

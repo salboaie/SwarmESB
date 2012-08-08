@@ -13,7 +13,7 @@ var workerManagement =
         this.swarm("doUnregister");
     },
 
-    checkWorkerStatus: function(adaptorName){ //running only in a timer from Balancer
+    checkWorkerStatus: function(adapterName){ //running only in a timer from Balancer
         this.pingTime = Date.now();
         for(var worker in getAllWorkers()) {
             this.workerName = worker;

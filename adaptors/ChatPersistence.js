@@ -5,7 +5,6 @@
  * Time: 10:52 PM
  * To change this template use File | Settings | File Templates.
  */
-var thisAdaptor;
 var redis = require("redis");
 var client;
 
@@ -26,7 +25,7 @@ getPage = function(roomId, pageNumber, pageLines,callBack) {
     );
 }
 
-thisAdapter = require('swarmutil').createAdaptor("ChatPersistence");
+thisAdapter = require('swarmutil').createAdapter("ChatPersistence");
 client = redis.createClient(thisAdapter.redisPort,thisAdapter.redisHost);
 
 

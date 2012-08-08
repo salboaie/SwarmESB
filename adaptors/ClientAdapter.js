@@ -8,26 +8,35 @@
 
 var redisHost;
 var redisPort;
-var serverPort      = 3000;
 
 var sutil = require('swarmutil');
 
-thisAdapter = sutil.createAdaptor("ClientAdaptor");
+thisAdapter = sutil.createAdapter("ClientAdapter");
 thisAdapter.loginSwarmingName   = "login.js";
 thisAdapter.verbose             = false;
 
+var myCfg = getMyConfig();
+var serverPort      = 3000;
+var serverHost      =  "localhost";
 
-new ClientTcpServer(serverPort);
+if(myCfg.port != undefined){
+    serverPort = myCfg.port;
+}
 
-function ClientTcpServer(port,adaptor){
-    console.log("ClientAdaptor is starting a server on port 3000");
+if(myCfg.bindAddress != undefined){
+    serverHost = myCfg.bindAddress;
+}
+new ClientTcpServer(serverPort,serverHost);
+
+function ClientTcpServer(port,host){
+    console.log("ClientAdapter is starting a server on port 3000");
     var net   	= require('net');
     this.server = net.createServer(
         function (socket){
             sutil.newOutlet(socket,loginCallback);
         }
     );
-    this.server.listen(port);
+    this.server.listen(port,host);
 };
 
 var map = {};

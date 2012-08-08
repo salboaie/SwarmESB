@@ -1,5 +1,5 @@
 /*
-    - Launched when a node is started to make sure that only one adaptor is executing commands
+    - Launched when a node is started to make sure that only one adapter is executing commands
     - Launched also to make active a redundant node
 
  */

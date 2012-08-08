@@ -33,7 +33,7 @@ var loginSwarming =
         }
     },
     success:{   //phase
-        node:"ClientAdaptor",
+        node:"ClientAdapter",
         code : function (){
             logInfo("Successful login for user " + this.userId);
             findOutlet(this.sessionId).successfulLogin(this);
@@ -47,7 +47,7 @@ var loginSwarming =
     },
 
     failed:{   //phase
-        node:"ClientAdaptor",
+        node:"ClientAdapter",
         code : function (){
             logInfo("Failed login for " + this.userId );
             this.swarm("failed",this.sessionId);

@@ -5,7 +5,7 @@
  * Time: 10:52 PM
  * To change this template use File | Settings | File Templates.
  */
-var thisAdaptor;
+
 var redis = require("redis");
 var client;
 var debug = true;
@@ -39,7 +39,7 @@ getFollowers = function (resurceId,callback) {
     });
 }
 
-thisAdapter = require('swarmutil').createAdaptor("FollowerListService");
+require('swarmutil').createAdapter("FollowerListService");
 client = redis.createClient(thisAdapter.redisPort,thisAdapter.redisHost);
 
 

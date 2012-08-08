@@ -1,5 +1,4 @@
 var initialized=false;
-var thisAdaptor;
 var pdf2swfCmd;
 var doc2pdfCmd;
 
@@ -136,7 +135,7 @@ var getFileDirectory = function(filePath)
     }
 }
 
-thisAdaptor = require('swarmutil').createAdaptor("DocumentConvertor");
+require('swarmutil').createAdapter("DocumentConvertor");
 
 
 
