@@ -10,7 +10,7 @@ var redis = require("redis");
 var client;
 
 function getRoomUri(roomId){
-    return "ChatPersistence://"+roomId;
+    return "ChatPersistence://"+ getCurrentTenant() + "/" + roomId;
 }
 
 saveChatMessage = function(roomId,userId,date,message){
