@@ -1,8 +1,5 @@
-/*
- Arguments: none
-*/
 
-var adaptor = require('swarmutil').createAdaptor("Launcher",onReadyCallback);
+require('swarmutil').createAdapter("Launcher",onReadyCallback);
 
 var childForker = require('child_process');
 
@@ -27,7 +24,7 @@ for(var i=0; i<forLaunch.length; i++){
                 cwd:process.cwd(),
                 env:process.env
             };
-            childForker.fork(cmdObj.node,null,forkOptions);
+            childForker.fork(getSwarmFilePath(cmdObj.node),null,forkOptions);
         }
     }
 }

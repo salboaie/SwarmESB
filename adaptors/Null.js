@@ -1,5 +1,5 @@
 
-thisAdapter = require('swarmutil').createAdaptor("Null*");
+require('swarmutil').createAdapter("Null*");
 
 
 

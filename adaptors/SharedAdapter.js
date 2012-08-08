@@ -3,8 +3,8 @@
  */
 
 
-thisAdaptor = require('swarmutil').createAdaptor("SharedAdapter");
-thisAdaptor.verbose = false;
+require('swarmutil').createAdapter("SharedAdapter");
+thisAdapter.verbose = false;
 
 
 

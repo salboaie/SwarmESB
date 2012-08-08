@@ -3,7 +3,7 @@
  * Date: 6/7/12
  * Time: 9:49 PM
  */
-var benchmark =     //swarming description
+var benchmark =     //benchmark example!
 {
         vars:{
             startTime:0,
@@ -25,18 +25,19 @@ var benchmark =     //swarming description
                 this.swarm("doParallelSwarm");
             }
         },
-        doParallelSwarm:{          //phase
+        doParallelSwarm:{          //laouch as many parallel swarms as possible
             node:"Launcher",
             code : function (){
                 this.totalCount = parseInt(this.totalCount);
                 logInfo("Starting benchmark for " + this.totalCount + " phases!");
-                var phases = this.totalCount /6; //launch in 3 nodes 2 consecutive phases
-                this.maxCount = this.totalCount / 3;
+                var phases = this.totalCount /8; //launch in 3 nodes 2 consecutive phases
+                this.maxCount = this.totalCount / 2;
 
-                for(var i=0;i< phases;i++){   //launch parallel swarms
+                for(var i=0;i< phases;i++){   //launch swarms in 4 nodes (process)
                     this.swarm("tickCore");
                     this.swarm("tackLogger");
                     this.swarm("clank");
+                    this.swarm("frank");
                 }
             }
         },
@@ -55,6 +56,12 @@ var benchmark =     //swarming description
         clank:{  //phase
             node:"ClientAdapter",
                 code : function (){
+                this.swarm("count");
+            }
+        },
+        frank:{  //phase
+            node:"Balancer",
+            code : function (){
                 this.swarm("count");
             }
         },

@@ -54,7 +54,7 @@ var addChatMsgSwarming =
         }
     },
     directNotification:{   //notify connected clients
-        node:"ClientAdaptor",
+        node:"ClientAdapter",
         code : function (){
             var clientSessionId = findConnectedClientByUserId(this.currentTargetUser);
             this.swarm("notifyChatMessage",clientSessionId);

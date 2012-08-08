@@ -14,15 +14,15 @@ a distributed application in a maintainable, easy to understand way.
 SwarmESB ca be also used as a light, open source, ESB replacement for your enterprise applications.
 Instead of message oriented communication or web services, you describe your communication between "nodes" in what
 we call "swarm descriptions" or simple "swarms".
-"Nodes" can be adaptors to various servers or clients connected to the "swarming middleware": SwarmESB.
+"Nodes" can be adapters to various servers or clients connected to the "swarming middleware": SwarmESB.
 
-Your adaptors can use web services as a particular case of providing some specific API in a node.
+Your adapters can use web services as a particular case of providing some specific API in a node.
 
 
 ## Examples
     
 A swarm description is written in Java Script and is composed from:  variable declarations (for defaults),
-constructors (functions that get called on the adaptor that starts a swarm) and phases (code that get executed
+constructors (functions that get called on the adapter that starts a swarm) and phases (code that get executed
 remotely, usually in another node) 
     
 The swarm described bellow will magically get executed without any other programming efforts in 3 nodes:
@@ -30,17 +30,17 @@ The swarm described bellow will magically get executed without any other program
             vars:{
                 message:"Hello World",
             },
-            start:function(){ //constructor  that can be executed in any adaptor
+            start:function(){ //constructor  that can be executed in any adapter
                         this.swarm("concat");  // swarm is a "primitive" used to invoke execution in a phase
                     },
-            concat:{ // phase that get executed in "Core" adaptor
+            concat:{ // phase that get executed in "Core" adapter
                 node:"Core",
                 code : function (){
                         this.message=this.message + " The swarming has begun! ";
                         this.swarm("print");    //move again
                     }
             },
-            print:{ //print phase executed in "Logger" adaptor
+            print:{ //print phase executed in "Logger" adapter
             node:"Logger",
             code : function (){
                 cprint(this.message);    //use of some api, specific only to the Logger node

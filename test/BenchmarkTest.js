@@ -1,12 +1,12 @@
 
-var adaptorPort         = 3000;
-var adaptorHost         = "localhost";
+var adapterPort         = 3000;
+var adapterHost         = "localhost";
 var util                = require("swarmutil");
 var assert              = require('assert');
 
 swarmSettings.authentificationMethod = "testCtor";
 
-var client             = util.createClient(adaptorHost, adaptorPort, "BenchmarkUser", "ok","BenchmarkTest");
+var client             = util.createClient(adapterHost, adapterPort, "BenchmarkUser", "ok","BenchmarkTest");
 
 client.startSwarm("BenchMark.js","start",48000);
 
@@ -23,4 +23,4 @@ setTimeout (
         assert.equal(msg,"succes");
         process.exit(1);
     },
-    3000);
+    5000);
