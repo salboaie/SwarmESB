@@ -3,7 +3,7 @@
  */
 
 var uuid = require('node-uuid');
-var workerId = "worker:" + uuid.v4();
+var workerId = "worker/" + uuid.v4();
 
 require('swarmutil').createAdapter(workerId,onReadyCallback);
 

@@ -3,12 +3,12 @@ var follower = {
         resourceId:null,
         userId:null
     },
-    ctorFollow:function (resourceId, userId) {
+    follow:function (resourceId, userId) {
         this.resourceId = resourceId;
         this.userId = userId;
         this.swarm("doFollow");
     },
-    ctorUnfollow:function (resourceId, userId) {
+    unfollow:function (resourceId, userId) {
         this.resourceId = resourceId;
         this.userId = userId;
         this.swarm("doUnfollow");
@@ -22,7 +22,7 @@ var follower = {
     doUnfollow: {
         node: "FollowerListService",
         code: function () {
-            unFollow(this.resourceId, this.userId);
+            unfollow(this.resourceId, this.userId);
         }
     }
 }

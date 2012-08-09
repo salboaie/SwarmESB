@@ -10,10 +10,14 @@ var redis = require("redis");
 var client;
 var debug = true;
 
-function getFSUri(resId){
-    return "FollowerListService://"+resId;
+
+follow = function (resourceId,userId){
+
 }
 
+
+
+/*
 follow = function (resourceId,userId){
     client.sadd(getFSUri(resourceId),userId);
     if(debug) {
@@ -31,13 +35,14 @@ unfollow = function (resourceId, userId) {
 getFollowers = function (resurceId,callback) {
     client.SMEMBERS(getFSUri(resurceId),function (err, replies){
         if(err != null){
-            perror(err);
+            logErr(err);
         }
         else{
             callback(replies);
         }
     });
 }
+*/
 
 require('swarmutil').createAdapter("FollowerListService");
 client = redis.createClient(thisAdapter.redisPort,thisAdapter.redisHost);

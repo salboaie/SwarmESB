@@ -13,7 +13,7 @@
                        {"node":"adaptors/Null.js",                  "enabled":true},
                        {"node":"adaptors/Balancer.js",              "enabled":true},
                        {"node":"adaptors/ClientAdapter.js",         "enabled":true},
-                       {"node":"adaptors/ChatPersistence.js",       "enabled":true},
+                       {"node":"adaptors/ChatServices.js",       "enabled":true},
                        {"node":"adaptors/FollowerListService.js",   "enabled":true},
                        {"node":"adaptors/SharedAdapter.js",         "enabled":true},
                        {"node":"adaptors/Worker.js", "times":10                    }
