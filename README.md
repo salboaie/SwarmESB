@@ -1,17 +1,13 @@
 ## SwarmESB  (beta version)
 
-Warning: SwarmESB is a new approach for creating scalable, complex, distributed and highly parallel systems.
-In a few hours you can have your maintainable system working!
-All the communication and how services get composed is described in the simplest way!
-The essence of swarming idea is that offer a practical way to describe communication and to structure your code for 
-a distributed application in a maintainable, easy to understand way.
+SwarmESB is a new approach for creating scalable, complex, distributed and highly parallel systems.
+All the communication and how services get composed is described in a simple and powerfull way thet resamble "swarm behaviours" found in nature!
 
-    We claim that by using SwarmESB, you can get the benefits of asynchronous message passing without paying the usual price.
-        Why? 
-    Because your code will follow the open/close principle and get a better separation of concerns. 
+    Easy and fun! We claim that by using swarming, asynchronous message passing has become like playing.  
+    Check our wiki: https://github.com/salboaie/SwarmESB/wiki !
 
     
-SwarmESB ca be also used as a light, open source, ESB replacement for your enterprise applications.
+SwarmESB ca be used as a light, open source, ESB replacement for your enterprise applications.
 Instead of message oriented communication or web services, you describe your communication between "nodes" in what
 we call "swarm descriptions" or simple "swarms".
 "Nodes" can be adapters to various servers or clients connected to the "swarming middleware": SwarmESB.
