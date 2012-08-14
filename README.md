@@ -1,15 +1,17 @@
 ## SwarmESB  
 
 SwarmESB is a new approach for creating scalable, complex, distributed and highly parallel systems.
-All the communication and how services get composed is described in a simple and powerfull way that resemble "swarm behaviours" found in nature!
+Communication and how services get composed is supported by a powerfull method that resemble "swarm behaviours" found in nature!
 
-    Easy and fun! We claim that by using swarming, asynchronous message passing has become like playing.  
+    Easy and fun! We claim that by using swarming, programming with asynchronous message has become like playing.  
     
     Check our wiki: https://github.com/salboaie/SwarmESB/wiki !
 
-    Keywords: node.js, Redis, asynchronous message, Message Bus, Enterprise Service Bus
 
-SwarmESB ca be used as a light, open source, ESB replacement for your enterprise applications.
+    Technologies: node.js, Redis, asynchronous messages, Message Bus, Enterprise Service Bus
+    Usage of JavaScript is accidental, the swarming concept can be implemented on any modern platform.
+
+SwarmESB ca be used as a light, open source, ESB (or Message Bus) for your enterprise applications.
 Instead of message oriented communication or web services, you describe your communication between "nodes" in what
 we call "swarm descriptions" or simple "swarms".
 "Nodes" can be adapters to various servers or clients connected to the "swarming middleware": SwarmESB.
