@@ -7,7 +7,7 @@
 // TODO: Make explicit swarm loading in Core...
 
 require('swarmutil').createAdapter("Core");
-
+//thisAdapter.verbose = true;
 
 
 

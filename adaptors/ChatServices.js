@@ -4,16 +4,15 @@
  * Time: 10:52 PM
  */
 
-var api = require("../api/index.js");
+var api = require("../api/redis.js");
 thisAdapter = require('swarmutil').createAdapter("ChatServices");
 
 var redisContext = api.newRedisContext(thisAdapter.redisPort,thisAdapter.redisHost,"ChatService");
 
-saveChatMessage = redisContext.create();
 
 saveChatMessage = function(roomId,userId,date,message){
-    var jso={"roomId":roomId,"userId":userId,"date":date,"message":message};
-    redisContext.lpush(roomId,JSON.stringify(jso));
+    var json ={"roomId":roomId,"userId":userId,"date":date,"message":message};
+    redisContext.lpush(roomId,JSON.stringify(json));
 }
 
 getPage = function(roomId, pageNumber, pageLines,callBack) {
@@ -32,8 +31,8 @@ getFollowers = function (resurceId,succesCallBack){
     redisContext.smembers(resurceId,succesCallBack);
 }
 
-cleanRoom = function (resurceId,succesCallBack){
-    redisContext.del(resurceId,succesCallBack);
+cleanRoom = function (resurceId){
+    redisContext.del(resurceId);
 }
 
 cleanFollowers = function (resurceId){

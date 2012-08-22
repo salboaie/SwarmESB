@@ -13,7 +13,7 @@ var client;
 for (var i = 0; i <= 3; i++) {
     user = "user"+ i;
     client = util.createClient(adaptorHost, adaptorPort, user, "ok", "ChatTestTenant");
-    client.startSwarm("Follower.js","follow", roomId, "user3");
+    client.startSwarm("RoomChatFollow.js","follow", roomId, "user3");
     client.on("chat.js", onNewMessage);
     clients.push(client);
 }
@@ -24,13 +24,13 @@ client.startSwarm("chat.js", "cleanRoom", roomId);
 
 for (var i = 0; i <= 3; i++) {           //clean followers list
     user = "user"+ i;
-    clients[i].startSwarm("Follower.js","unfollow", roomId, user);
+    clients[i].startSwarm("RoomChatFollow.js","unfollow", roomId, user);
 }
 
 
 for (var i = 0; i <= 3; i++) {
     user = "user"+ i;
-    clients[i].startSwarm("Follower.js","follow", roomId, user);
+    clients[i].startSwarm("RoomChatFollow.js","follow", roomId, user);
 }
 
 setTimeout(function () {

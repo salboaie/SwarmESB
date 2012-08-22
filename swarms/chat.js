@@ -2,15 +2,9 @@
 var addChatMsgSwarming =
 {
     vars:{
-        userId:false,
-        date:null,
-        message:null,
-        roomId:null,
-        debug:"true1",
-        debugSwarm:"true1",
-        action:null
+        debug:false
     },
-    ctorNewMessage:function(roomId,userId,date,message,userFriendlyRoomName){
+    newMessage:function(roomId,userId,date,message,userFriendlyRoomName){
         this.userFriendlyRoomName = userFriendlyRoomName;
         this.roomId     = roomId;
         this.userId     = userId;
@@ -18,21 +12,32 @@ var addChatMsgSwarming =
         this.message    = message;
         this.swarm("recordMsg");
     },
-    ctorGetPage:function(roomId, pageNumber, pageSize){
+    getPage:function(roomId, pageNumber, pageSize){
         this.roomId     = roomId;
         this.pageNumber = pageNumber;
         this.pageSize   = pageSize;
         this.swarm("getPage");
     },
+    cleanRoom:function(roomId){
+        this.roomId     = roomId;
+        this.swarm("doClean");
+    },
     recordMsg:{
-        node:"ChatPersistence",
+        node:"ChatServices",
         code : function (){
             saveChatMessage(this.roomId,this.userId,this.date,this.message);
             this.swarm("notifyAll");
         }
     },
+    doClean:{
+        node:"ChatServices",
+        code : function (){
+            cleanRoom(this.roomId);
+            this.swarm("notifyAll");
+        }
+    },
     getPage:{
-        node:"ChatPersistence",
+        node:"ChatServices",
         code : function (){
             var f = function(pageArray){
                 this.pageArray = pageArray;
@@ -42,7 +47,7 @@ var addChatMsgSwarming =
         }
     },
     notifyAll:{   //phase
-        node:"FollowerListService",
+        node:"ChatServices",
         code : function (){
             getFollowers(this.roomId, function(reply)
             {
