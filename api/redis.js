@@ -42,27 +42,46 @@ function createFunction(command){
 
         //each tenant has its own visibility space so keys get prefixed with tenant and context
         args[0] = this.createTenantURI(args[0]);
-        var successFunction  = arguments[arguments.length-2];
-        var failFunction     = arguments[arguments.length-1];
+        var successFunction = null;
+        var failFunction    = null;
 
-        if(failFunction == undefined || typeof failFunction !== 'function'){
+        if(arguments.length >= 2){
+            successFunction = arguments[arguments.length-2];
+            failFunction    = arguments[arguments.length-1];
+        }else{
+            if(arguments.length == 1){
+                successFunction = arguments[0];
+                failFunction    = null;
+            }
+        }
+
+        if(typeof failFunction !== 'function'){
             failFunction = function(err){
                 logErr("Redis command failed: " + command + J(args), err);
             }
-            successFunction  = arguments[arguments.length-1];
-        }
-        else{
-            args.pop();
-        }
-
-        if(successFunction == undefined || typeof successFunction !== 'function'){
-            successFunction = null;
-        }
-        else{
-            args.pop();
+            if(arguments.length != 1){
+                successFunction = null;
+            } else{
+                if(typeof successFunction !== 'function'){
+                    successFunction = null;
+                }
+            }
+        }else{
+            if(typeof successFunction !== 'function'){
+                successFunction =  failFunction;
+                failFunction = function(err){
+                    logErr("Redis command failed: " + command + J(args), err);
+                }
+                args.pop();
+            }
+            else{
+                args.pop();
+                args.pop();
+            }
         }
 
         args.push(function (err, response){
+            cprint("Redis RESPONSE to " + command + ":" + J(response));
             if(err != null){
                 failFunction(err);
             }
@@ -73,6 +92,7 @@ function createFunction(command){
 
             }
         });
+        cprint("Redis: " + command + J(args));
         this.client.send_command(command,args);
     }
 }
@@ -84,12 +104,12 @@ function init(){
         cmd = cmd.toUpperCase();
         RedisContext.prototype[cmd] = createFunction(cmd);
     }
-};
+}
 
 init();
 
 RedisContext.prototype.createTenantURI =  function (resourceId) {
-    return getCurrentTenant() + "::"+ this.context +"/"+ resourceId;
+    return getCurrentTenant() + ":"+ this.context +"/"+ resourceId;
 }
 
 

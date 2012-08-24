@@ -10,56 +10,58 @@ var roomId = "room-test";
 var clients = [];
 
 var client;
-for (var i = 0; i <= 3; i++) {
+for (var i = 0; i < 5; i++) {
     user = "user"+ i;
     client = util.createClient(adaptorHost, adaptorPort, user, "ok", "ChatTestTenant");
-    client.startSwarm("RoomChatFollow.js","follow", roomId, "user3");
     client.on("chat.js", onNewMessage);
     clients.push(client);
 }
 
 client = util.createClient(adaptorHost, adaptorPort, "Tester", "ok", "ChatTestTenant");
-client.startSwarm("chat.js", "cleanRoom", roomId);
+var getPageclient = util.createClient(adaptorHost, adaptorPort, "PageTester", "ok", "ChatTestTenant");
+getPageclient.on("chat.js", onPageReturned);
 
-
-for (var i = 0; i <= 3; i++) {           //clean followers list
-    user = "user"+ i;
-    clients[i].startSwarm("RoomChatFollow.js","unfollow", roomId, user);
-}
-
-
-for (var i = 0; i <= 3; i++) {
-    user = "user"+ i;
-    clients[i].startSwarm("RoomChatFollow.js","follow", roomId, user);
-}
+client.on("chat.js", onNewMessage);
+client.startSwarm("chat.js", "deleteRoomMessages", roomId);
+client.startSwarm("RoomChatFollow.js", "clean", roomId);
 
 setTimeout(function () {
-    for (var i = 0; i <= 3; i++) {
+    client.startSwarm("RoomChatFollow.js","follow", roomId, "Tester");
+    client.startSwarm("RoomChatFollow.js","follow", roomId, "FakeTester2");
+    cprint(" is following ");
+}, 2000);
+
+
+setTimeout(function () {
+    for (var i = 0; i < 5; i++) {
         user = "user"+ i;
         clients[i].startSwarm("chat.js", "newMessage", roomId, user, new Date(), "I am " + user);
     }
-}, 1000);
+    cprint(" is chatting ");
+}, 3000);
 
 
 setTimeout(function () {
-    client.on("chat.js", onPageReturned);
-    client.startSwarm("chat.js", "getPage",roomId,0, 10);
-}, 1000);
+    getPageclient.startSwarm("chat.js", "getPage",roomId,0, 10);
+    cprint(" is requesting page ");
+}, 4000);
 
 
-var messageCount        = 0;
+var newMessageCount        = 0;
 var messageCountInPage  = 0;
 
 function onPageReturned(obj){
+    cprint("onPageReturned:" + J(obj));
     messageCountInPage++;
 }
 
 function onNewMessage(obj){
-    messageCount++;
+    cprint("onNewMessage:" + J(obj));
+    newMessageCount++;
 }
 
 setTimeout(function () {
-    assert.equal(messageCount,4)
-    assert.equal(messageCountInPage,1)
+    assert.equal(newMessageCount,5)
+    //assert.equal(messageCountInPage,1);
     process.exit(1);
-}, 3000);
+}, 5000);

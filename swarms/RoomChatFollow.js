@@ -3,11 +3,13 @@
 var roomFollow = {
     vars:{
         roomId:null,
-        userId:null
+        userId:null,
+        debug:true
     },
     follow:function (roomId, userId) {
         this.roomId = roomId;
         this.userId = userId;
+        cprint(this.userId + " is following " +this.roomId );
         this.swarm("doFollow");
     },
     unfollow:function (roomId, userId) {
@@ -22,6 +24,7 @@ var roomFollow = {
     doFollow:{
         node:"ChatServices",
         code:function () {
+            cprint(this.userId + " is following " +this.roomId );
             follow(this.roomId, this.userId);
         }
     },
