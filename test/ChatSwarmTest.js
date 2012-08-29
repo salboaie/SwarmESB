@@ -4,48 +4,64 @@ var adaptorHost         = "localhost";
 var assert              = require('assert');
 var util                = require("swarmutil");
 
-var roomId = "room1";
-var message ="Hello from chat !";
-var userFriendlyRoomName = "room1";
-var user;
-var noOfClients = 5;
+swarmSettings.authentificationMethod = "testCtor";
+
+var roomId = "room-test";
+var clients = [];
+
 var client;
-
-for (var i = 1; i <= noOfClients; i++) {
+for (var i = 0; i < 5; i++) {
     user = "user"+ i;
-    client = util.createClient(adaptorHost, adaptorPort, user, "ok");
-    client.on("chat.js", getGreetings.bind(client));
-    client.startSwarm("chat.js", "ctorNewMessage", roomId, user, new Date(), message + i, "blueRoom");
-    client.startSwarm("Follower.js","ctorFollow", roomId, user);
+    client = util.createClient(adaptorHost, adaptorPort, user, "ok", "ChatTestTenant");
+    client.on("chat.js", onNewMessage);
+    clients.push(client);
 }
 
-// The last client gets all the messages
-client = util.createClient(adaptorHost, adaptorPort, "superuser", "ok");
-client.on("chat.js", getPage.bind(client));
-client.startSwarm("chat.js", "ctorGetPage",roomId,0, 10);
+client = util.createClient(adaptorHost, adaptorPort, "Tester", "ok", "ChatTestTenant");
+var getPageclient = util.createClient(adaptorHost, adaptorPort, "PageTester", "ok", "ChatTestTenant");
+getPageclient.on("chat.js", onPageReturned);
+
+client.on("chat.js", onNewMessage);
+client.startSwarm("chat.js", "deleteRoomMessages", roomId);
+client.startSwarm("RoomChatFollow.js", "clean", roomId);
+
+setTimeout(function () {
+    client.startSwarm("RoomChatFollow.js","follow", roomId, "Tester");
+    client.startSwarm("RoomChatFollow.js","follow", roomId, "FakeTester2");
+    cprint(" is following ");
+}, 2000);
 
 
-function getPage(obj) {
-    if(obj.currentPhase == "pageAnswer"){
-        console.log("--------------- PAGE ----------------");
-        obj.pageArray.forEach(function(element){
-            var j = JSON.parse(element);
-            var d = new Date(j.date);
-            var date = d.getDate();
-            var time = d.getTime();
-            console.log(j.userId+ " (" + date+ " | " + time + "):" + j.message);
-
-        });
-        console.log("--------------------------------------");
+setTimeout(function () {
+    for (var i = 0; i < 5; i++) {
+        user = "user"+ i;
+        clients[i].startSwarm("chat.js", "newMessage", roomId, user, new Date(), "I am " + user);
     }
+    cprint(" is chatting ");
+}, 3000);
+
+
+setTimeout(function () {
+    getPageclient.startSwarm("chat.js", "getPage",roomId,0, 10);
+    cprint(" is requesting page ");
+}, 4000);
+
+
+var newMessageCount        = 0;
+var messageCountInPage  = 0;
+
+function onPageReturned(obj){
+    cprint("onPageReturned:" + J(obj));
+    messageCountInPage++;
 }
 
-function getGreetings(obj){
-    if(obj.currentPhase == "notifyChatMessage"){
-        console.log(obj.userId + " got message:" + obj.message);
-    }
+function onNewMessage(obj){
+    cprint("onNewMessage:" + J(obj));
+    newMessageCount++;
 }
 
 setTimeout(function () {
+    assert.equal(newMessageCount,5)
+    //assert.equal(messageCountInPage,1);
     process.exit(1);
-}, 10000);
+}, 5000);

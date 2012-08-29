@@ -2,15 +2,9 @@
 var addChatMsgSwarming =
 {
     vars:{
-        userId:false,
-        date:null,
-        message:null,
-        roomId:null,
-        debug:"true1",
-        debugSwarm:"true1",
-        action:null
+        debug:true
     },
-    ctorNewMessage:function(roomId,userId,date,message,userFriendlyRoomName){
+    newMessage:function(roomId,userId,date,message,userFriendlyRoomName){
         this.userFriendlyRoomName = userFriendlyRoomName;
         this.roomId     = roomId;
         this.userId     = userId;
@@ -18,22 +12,33 @@ var addChatMsgSwarming =
         this.message    = message;
         this.swarm("recordMsg");
     },
-    ctorGetPage:function(roomId, pageNumber, pageSize){
+    getPage:function(roomId, pageNumber, pageSize){
         this.roomId     = roomId;
         this.pageNumber = pageNumber;
         this.pageSize   = pageSize;
         this.swarm("getPage");
     },
+    deleteRoomMessages:function(roomId){
+        this.roomId     = roomId;
+        this.swarm("doClean");
+    },
     recordMsg:{
-        node:"ChatPersistence",
+        node:"ChatServices",
         code : function (){
             saveChatMessage(this.roomId,this.userId,this.date,this.message);
             this.swarm("notifyAll");
         }
     },
-    getPage:{
-        node:"ChatPersistence",
+    doClean:{
+        node:"ChatServices",
         code : function (){
+            cleanRoom(this.roomId);
+        }
+    },
+    getPage:{
+        node:"ChatServices",
+        code : function (){
+            cprint("XXXXXXX");
             var f = function(pageArray){
                 this.pageArray = pageArray;
                 this.swarm("pageAnswer",this.sessionId);
@@ -42,10 +47,11 @@ var addChatMsgSwarming =
         }
     },
     notifyAll:{   //phase
-        node:"FollowerListService",
+        node:"ChatServices",
         code : function (){
             getFollowers(this.roomId, function(reply)
             {
+                cprint(J(reply));
                 for(var i=0;i<reply.length;i++) {
                     this.currentTargetUser = reply[i];
                         this.swarm("directNotification");

@@ -1,11 +1,14 @@
 {
- "logsFolder":"logs",
+ "logsPath":"logs",
  "verbose":false,
  "Core":{
      "coreId":"<DefaultCoreId>",
      "redisHost":"localhost",
      "redisPort":6379,
-     "swarmsfolder":"swarms"
+     "paths":[
+        {"folder":"disabled"  ,"enabled":false},
+        {"folder":"swarms"    ,"enabled":true}
+     ]
   },
  "Logger":{},
  "Launcher":{
@@ -13,10 +16,10 @@
                        {"node":"adaptors/Null.js",                  "enabled":true},
                        {"node":"adaptors/Balancer.js",              "enabled":true},
                        {"node":"adaptors/ClientAdapter.js",         "enabled":true},
-                       {"node":"adaptors/ChatPersistence.js",       "enabled":true},
+                       {"node":"adaptors/ChatServices.js",          "enabled":false},
                        {"node":"adaptors/FollowerListService.js",   "enabled":true},
                        {"node":"adaptors/SharedAdapter.js",         "enabled":true},
-                       {"node":"adaptors/Worker.js", "times":10                    }
+                       {"node":"adaptors/Worker.js",                "times":5 }
            ]
   },
   "ClientAdapter":{

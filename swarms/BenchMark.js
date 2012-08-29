@@ -30,7 +30,7 @@ var benchmark =     //benchmark example!
             code : function (){
                 this.totalCount = parseInt(this.totalCount);
                 logInfo("Starting benchmark for " + this.totalCount + " phases!");
-                var phases = this.totalCount /8; //launch in 3 nodes 2 consecutive phases
+                var phases = this.totalCount /8; //launch in 4 nodes 2 consecutive phases
                 this.maxCount = this.totalCount / 2;
 
                 for(var i=0;i< phases;i++){   //launch swarms in 4 nodes (process)
