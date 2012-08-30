@@ -16,7 +16,7 @@ var addChatMsgSwarming =
         this.roomId     = roomId;
         this.pageNumber = pageNumber;
         this.pageSize   = pageSize;
-        this.swarm("getPage");
+        this.swarm("returnPage");
     },
     deleteRoomMessages:function(roomId){
         this.roomId     = roomId;
@@ -35,10 +35,9 @@ var addChatMsgSwarming =
             cleanRoom(this.roomId);
         }
     },
-    getPage:{
+    returnPage:{
         node:"ChatServices",
         code : function (){
-            cprint("XXXXXXX");
             var f = function(pageArray){
                 this.pageArray = pageArray;
                 this.swarm("pageAnswer",this.sessionId);
@@ -51,7 +50,6 @@ var addChatMsgSwarming =
         code : function (){
             getFollowers(this.roomId, function(reply)
             {
-                cprint(J(reply));
                 for(var i=0;i<reply.length;i++) {
                     this.currentTargetUser = reply[i];
                         this.swarm("directNotification");

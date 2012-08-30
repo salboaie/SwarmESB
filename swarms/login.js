@@ -7,11 +7,14 @@ var loginSwarming =
         debug:"true1"
     },
     testCtor:function(clientSessionId,userId,authorisationToken){
-        this.isOk=false;
-        this.sessionId   = clientSessionId;
-        this.userId     = userId;
-        this.authorisationToken  = authorisationToken;
+        this.identity = generateUID();
+        this.setTimeout(2000,"checkLoginTimeout","ClientAdapter");
+        this.isOk               = false;
+        this.sessionId          = clientSessionId;
+        this.userId             = userId;
+        this.authorisationToken = authorisationToken;
         this.swarm("check");
+
     },
     ldap:function(clientSessionId,userId,authorisationToken){
         this.isOk=false;
@@ -36,8 +39,10 @@ var loginSwarming =
         node:"ClientAdapter",
         code : function (){
             logInfo("Successful login for user " + this.userId);
-            findOutlet(this.sessionId).successfulLogin(this);
+            var outlet = findOutlet(this.sessionId);
+            outlet.successfulLogin(this);
             this.swarm("home",this.sessionId);
+            outlet.loginSucces = true;
         }
     },
 
@@ -46,13 +51,19 @@ var loginSwarming =
         code : null
     },
 
+    checkLoginTimeout:{   //phase
+        node:"ClientAdapter",
+        code : function (){
+            var outlet = findOutlet(this.sessionId);
+            cprint("Timeout for Outlet " + outlet.sessionId + " Succes:" + outlet.loginSucces );
+        }
+    },
     failed:{   //phase
         node:"ClientAdapter",
         code : function (){
             logInfo("Failed login for " + this.userId );
             this.swarm("failed",this.sessionId);
             findOutlet(this.sessionId).close();
-
         }
     }
 };

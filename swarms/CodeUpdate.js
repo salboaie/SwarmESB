@@ -12,14 +12,14 @@ var codeUpdateSwarming =
         this.adapterName = adapterName;
         this.swarm("doRegister");
     },
-    doRegister:{ //phase that should be replaced. Use your own logging logic
+    doRegister:{
         node:"Core",
         code : function (){
             var ctxt = getContext("System:RegisteredAdapters",true);
             ctxt[this.adapterName] = this.adapterName;
         }
     },
-    dispatchRefresh:{ //phase that should be replaced. Use your own logging logic
+    dispatchRefresh:{
     node:"Core",
         code : function (){
 

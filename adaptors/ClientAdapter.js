@@ -13,7 +13,7 @@ var sutil = require('swarmutil');
 
 thisAdapter = sutil.createAdapter("ClientAdapter");
 thisAdapter.loginSwarmingName   = "login.js";
-thisAdapter.verbose             = false;
+//globalVerbosity = true;
 
 var myCfg = getMyConfig();
 var serverPort      = 3000;

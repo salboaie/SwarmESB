@@ -81,7 +81,7 @@ function createFunction(command){
         }
 
         args.push(function (err, response){
-            cprint("Redis RESPONSE to " + command + ":" + J(response));
+            dprint("Redis RESPONSE to " + command + ":" + J(response));
             if(err != null){
                 failFunction(err);
             }
@@ -92,7 +92,7 @@ function createFunction(command){
 
             }
         });
-        cprint("Redis: " + command + J(args));
+        dprint("Redis: " + command + J(args));
         this.client.send_command(command,args);
     }
 }
