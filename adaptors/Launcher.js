@@ -46,6 +46,7 @@ for(var i=0; i<forLaunch.length; i++){
 
 function onReadyCallback(){
     startSwarm("LaunchingTest.js","start");
+
 }
 
 /*
