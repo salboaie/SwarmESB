@@ -8,6 +8,21 @@ var forLaunch = getMyConfig().autorun;
 
 var howMany;
 
+function runAll(cmdObj,howMany){
+    for(var k=0; k<howMany; k++){
+        forkOptions = {
+            cwd:process.cwd(),
+            env:process.env
+        };
+        childForker.fork(getSwarmFilePath(cmdObj.node),null,forkOptions);
+    }
+}
+
+function bindClosure(cmdObj,howMany){
+    return function(){
+        runAll(cmdObj,howMany);
+    }
+}
 
 for(var i=0; i<forLaunch.length; i++){
     var cmdObj = forLaunch[i];
@@ -19,12 +34,11 @@ for(var i=0; i<forLaunch.length; i++){
         if(howMany  == undefined){
             howMany = 1;
         }
-        for(var k=0; k<howMany; k++){
-            forkOptions = {
-                cwd:process.cwd(),
-                env:process.env
-            };
-            childForker.fork(getSwarmFilePath(cmdObj.node),null,forkOptions);
+        if(cmdObj.wait == undefined){
+            runAll(cmdObj,howMany);
+        }
+        else{
+            setTimeout(bindClosure(cmdObj,howMany),cmdObj.wait);
         }
     }
 }
@@ -32,6 +46,7 @@ for(var i=0; i<forLaunch.length; i++){
 
 function onReadyCallback(){
     startSwarm("LaunchingTest.js","start");
+
 }
 
 /*

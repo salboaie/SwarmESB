@@ -15,11 +15,11 @@
            "autorun":[
                        {"node":"adaptors/Null.js",                  "enabled":true},
                        {"node":"adaptors/Balancer.js",              "enabled":true},
-                       {"node":"adaptors/ClientAdapter.js",         "enabled":true},
+                       {"node":"adaptors/ClientAdapter.js",         "enabled":false},
                        {"node":"adaptors/ChatServices.js",          "enabled":false},
                        {"node":"adaptors/FollowerListService.js",   "enabled":true},
                        {"node":"adaptors/SharedAdapter.js",         "enabled":true},
-                       {"node":"adaptors/Worker.js",                "times":5 }
+                       {"node":"adaptors/Worker.js",                "times":5,      "wait":300 }
            ]
   },
   "ClientAdapter":{

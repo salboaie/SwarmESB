@@ -25,7 +25,7 @@ var benchmark =     //benchmark example!
                 this.swarm("doParallelSwarm");
             }
         },
-        doParallelSwarm:{          //laouch as many parallel swarms as possible
+        doParallelSwarm:{          //launch as many parallel swarms as possible
             node:"Launcher",
             code : function (){
                 this.totalCount = parseInt(this.totalCount);
