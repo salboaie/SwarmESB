@@ -3,9 +3,10 @@
 SwarmESB is a new approach for creating scalable, complex, distributed and highly parallel systems.
 Communication and how services get composed is supported by a powerfull method that resemble "swarm behaviours" found in nature!
 
-    Easy and fun! We claim that by using swarming, programming with asynchronous message has become like playing.  
+    Easy and fun! 
+    We claim that by using swarming, programming with asynchronous message is more programmers-friendly than ever.  
     
-    Check our wiki: https://github.com/salboaie/SwarmESB/wiki !
+    Check our wiki: https://github.com/salboaie/SwarmESB/wiki
 
 
     Technologies: node.js, Redis, asynchronous messages, Message Bus, Enterprise Service Bus
@@ -47,7 +48,7 @@ The swarm described bellow will magically get executed without any other program
             }
  
 
-Imagine: each node could be on a different continent!  Check other swarms for parallel execution examples.
+Waw: each node could be on a different continent!  Check other swarms for parallel execution examples.
 
 
 ## Instalation:  https://github.com/salboaie/SwarmESB/wiki/Install-guide
@@ -57,7 +58,7 @@ Imagine: each node could be on a different continent!  Check other swarms for pa
     1. Maintainable code: Open/closed principle, no threads get abused (ever), simple
     2. High performance: We are using node.js and his asynchronous capabilities revealed no throughput degradation in
     our benchmarks. Network latency have no effect in capability of the system to execute things in parallel.
-    3. Scalability: Load balancing and sharding can be implemented using swarming concepts
+    3. Scalability: Load balancing and sharding (research) can be implemented using swarming concepts
     4. High availability: Still at the research level but looks promising
 
 
