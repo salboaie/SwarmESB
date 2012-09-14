@@ -8,7 +8,7 @@ var loginSwarming =
     },
     testCtor:function(clientSessionId,userId,authorisationToken){
         this.identity = generateUID();
-        this.setTimeout(2000,"checkLoginTimeout","ClientAdapter");
+        //this.loginTimeOut = this.timeoutSwarm(2000,"checkLoginTimeout","ClientAdapter");
         this.isOk               = false;
         this.sessionId          = clientSessionId;
         this.userId             = userId;
@@ -26,6 +26,7 @@ var loginSwarming =
     check:{
         node:"Core",
         code : function (){
+            cprint("Login passed!");
             if(this.authorisationToken == "ok"){
                 this.isOk=true;
                 this.swarm("success");
@@ -38,6 +39,7 @@ var loginSwarming =
     success:{   //phase
         node:"ClientAdapter",
         code : function (){
+            this.deleteTimeoutSwarm(this.loginTimeOut);
             logInfo("Successful login for user " + this.userId);
             var outlet = findOutlet(this.sessionId);
             outlet.successfulLogin(this);
@@ -61,6 +63,7 @@ var loginSwarming =
     failed:{   //phase
         node:"ClientAdapter",
         code : function (){
+            this.deleteTimeoutSwarm(this.loginTimeOut);
             logInfo("Failed login for " + this.userId );
             this.swarm("failed",this.sessionId);
             findOutlet(this.sessionId).close();
