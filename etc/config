@@ -2,7 +2,7 @@
  "logsPath":"logs",
  "verbose":false,
  "Core":{
-     "coreId":"<DefaultCoreId>",
+     "coreId":"abss://",
      "redisHost":"localhost",
      "redisPort":6379,
      "paths":[
