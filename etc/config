@@ -2,7 +2,7 @@
  "logsPath":"logs",
  "verbose":false,
  "Core":{
-     "coreId":"abss://",
+     "coreId":"default_partition",
      "redisHost":"localhost",
      "redisPort":6379,
      "paths":[
