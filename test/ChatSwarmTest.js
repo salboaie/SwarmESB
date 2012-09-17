@@ -4,11 +4,16 @@ var adaptorHost         = "localhost";
 var assert              = require('assert');
 var util                = require("swarmutil");
 
+//globalVerbosity = true;
+
 swarmSettings.authentificationMethod = "testCtor";
 
 var roomId = "room-test";
 var clients = [];
-var MAXCLIENTS=10;
+
+var MULTIPLY = 10;
+
+var MAXCLIENTS = MULTIPLY * 100;
 
 var client;
 for (var i = 0; i < MAXCLIENTS; i++) {
@@ -34,8 +39,8 @@ client.startSwarm("RoomChatFollow.js", "clean", roomId);
 
 setTimeout(function () {
     client.startSwarm("RoomChatFollow.js","follow", roomId, "Tester");
-    client.startSwarm("RoomChatFollow.js","follow", roomId, "FakeTester2");
-}, 500);
+    //client.startSwarm("RoomChatFollow.js","follow", roomId, "FakeTester2");
+}, MULTIPLY * 200);
 
 
 setTimeout(function () {
@@ -43,12 +48,12 @@ setTimeout(function () {
         user = "user"+ i;
         clients[i].startSwarm("chat.js", "newMessage", roomId, user, new Date(), "I am " + user);
     }
-}, 1000);
+}, MULTIPLY * 400);
 
 
 setTimeout(function () {
     getPageclient.startSwarm("chat.js", "getPage",roomId,0, MAXCLIENTS+1);
-}, 1500);
+}, MULTIPLY * 600);
 
 
 var newMessageCount     = 0;
@@ -57,23 +62,26 @@ var loginsCounter       = 0;
 var pageSize            = 0;
 
 function onPageReturned(obj){
+    //cprint(obj);
     pageSize = obj.pageArray.length;
     messageCountInPage++;
 }
 
 function onNewMessage(obj){
+    //cprint(obj);
     newMessageCount++;
 }
 
 function countLogins(obj){
+    //cprint(obj);
     loginsCounter++;
 }
 
 setTimeout(function () {
     assert.equal(loginsCounter,MAXCLIENTS + 2);
-    assert.equal(newMessageCount,MAXCLIENTS)
     assert.equal(messageCountInPage,1);
     assert.equal(pageSize,MAXCLIENTS);
-    cprint("Success!\n");
-    process.exit(1);
-}, 3000);
+    assert.equal(newMessageCount,MAXCLIENTS);
+
+    util.delayExit("Success!\n",1000);
+}, MULTIPLY * 800);

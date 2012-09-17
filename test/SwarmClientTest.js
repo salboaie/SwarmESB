@@ -3,7 +3,7 @@ var adapterPort      = 3000;
 var adapterHost      = "localhost";
 var util = require("swarmutil");
 var assert = require('assert');
-
+globalVerbosity = true;
 swarmSettings.authentificationMethod = "testCtor";
 
 var client2 = util.createClient(adapterHost, adapterPort, "Client2", "ok","SwarmClientTest");

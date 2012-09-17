@@ -2,7 +2,7 @@
 var addChatMsgSwarming =
 {
     vars:{
-        debug:true
+        debug:false
     },
     newMessage:function(roomId,userId,date,message,userFriendlyRoomName){
         this.userFriendlyRoomName = userFriendlyRoomName;
@@ -50,9 +50,10 @@ var addChatMsgSwarming =
         code : function (){
             getFollowers(this.roomId, function(reply)
             {
+                cprint("Followers:" + reply);
                 for(var i=0;i<reply.length;i++) {
                     this.currentTargetUser = reply[i];
-                        this.swarm("directNotification");
+                    this.swarm("directNotification");
                 }
             }.bind(this) );
         }
