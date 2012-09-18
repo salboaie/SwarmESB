@@ -50,7 +50,7 @@ var addChatMsgSwarming =
         code : function (){
             getFollowers(this.roomId, function(reply)
             {
-                cprint("Followers:" + reply);
+                //cprint("Followers:" + reply);
                 for(var i=0;i<reply.length;i++) {
                     this.currentTargetUser = reply[i];
                     this.swarm("directNotification");

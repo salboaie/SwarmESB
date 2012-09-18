@@ -2,10 +2,13 @@
 var workerSwarm =
 {
     vars:{
-        debug:"true"
+        balancingStrategy:"Round-Robin",
+        debug:"false"
     },
     doWork:function(balacingStrategy)  {
-        this.balacingStrategy = balacingStrategy;
+        if(balacingStrategy != undefined){
+            this.balacingStrategy = balacingStrategy;
+        }
         this.swarm("doChooseWorker");
     },
     doChooseWorker:{
@@ -20,7 +23,6 @@ var workerSwarm =
         node:"*",
         code : function (){
             //doWork();
-            //doLog(thisAdapter.nodeName + "is working! ");
             this.swarm("taskDone");
         }
     },

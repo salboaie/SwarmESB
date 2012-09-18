@@ -48,7 +48,7 @@ var benchmark =     //benchmark example!
                 }
         },
         tackLogger:{  //phase
-            node:"Null*",
+            node:"Balancer",
             code : function (){
                 this.swarm("count");
             }
