@@ -5,8 +5,7 @@
  */
 
 var api = require("../api/redis.js");
-thisAdapter = require('swarmutil').createAdapter("ChatServices");
-thisAdapter.verbose = false;
+thisAdapter = require('swarmutil').createAdapter("ChatServices",null,null,false);
 
 var redisContext = api.newRedisContext(thisAdapter.redisPort,thisAdapter.redisHost,"ChatService");
 

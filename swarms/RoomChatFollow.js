@@ -4,7 +4,7 @@ var roomFollow = {
     vars:{
         roomId:null,
         userId:null,
-        debug:true
+        debug:false
     },
     follow:function (roomId, userId) {
         this.roomId = roomId;

@@ -14,7 +14,7 @@ function RedisContext(context){
 
 
 
-//add here all redis commands that have an key as their first argument and should get "contextualised"
+//add here all redis commands that have an key as their first argument and should get "multi-tenancy"
 var commands = [
     "append",    "auth",    "bgrewriteaof",    "bgsave",    "blpop",    "brpop",    "brpoplpush",    "config get",
     "config set",    "config resetstat",    "dbsize",    "debug object",    "debug segfault",    "decr",    "decrby",
@@ -35,53 +35,55 @@ var commands = [
 
 function createFunction(command){
     return function(){
-        var args = []; // empty array
+        var args = new Array(); // empty array
+
         for(var i = 0; i < arguments.length; i++){
             args.push(arguments[i]);
         }
 
         //each tenant has its own visibility space so keys get prefixed with tenant and context
         args[0] = this.createTenantURI(args[0]);
-        var successFunction = null;
-        var failFunction    = null;
 
-        if(arguments.length >= 2){
-            successFunction = arguments[arguments.length-2];
-            failFunction    = arguments[arguments.length-1];
-        }else{
-            if(arguments.length == 1){
-                successFunction = arguments[0];
-                failFunction    = null;
+        var failFunction    = null;
+        var successFunction = null;
+
+        if(arguments.length <= 1) {
+            var failFunction    = null;
+            var successFunction = null;
+        } else if(arguments.length == 2) {
+            var failFunction    = null;
+            var successFunction = arguments[1];
+            if(typeof successFunction !== 'function') {
+                successFunction = null;
+            } else {
+                args.pop();
             }
         }
-
-        if(typeof failFunction !== 'function'){
+        else if(arguments.length >= 3){
+            successFunction = arguments[arguments.length-2];
+            failFunction    = arguments[arguments.length-1];
+            if(typeof failFunction !== 'function'){
+                failFunction    = null;
+                successFunction = null;
+            }
+            else {
+                if(typeof successFunction !== 'function'){
+                    successFunction = failFunction;
+                    args.pop();
+                } else {
+                    args.pop();
+                    args.pop();
+                }
+            }
+        }
+        if(failFunction == null){
             failFunction = function(err){
                 logErr("Redis command failed: " + command + J(args), err);
-            }
-            if(arguments.length != 1){
-                successFunction = null;
-            } else{
-                if(typeof successFunction !== 'function'){
-                    successFunction = null;
-                }
-            }
-        }else{
-            if(typeof successFunction !== 'function'){
-                successFunction =  failFunction;
-                failFunction = function(err){
-                    logErr("Redis command failed: " + command + J(args), err);
-                }
-                args.pop();
-            }
-            else{
-                args.pop();
-                args.pop();
             }
         }
 
         args.push(function (err, response){
-            dprint("Redis RESPONSE to " + command + ":" + J(response));
+            //cprint("Redis RESPONSE for " + command +  J(args) + ":" + J(response));
             if(err != null){
                 failFunction(err);
             }
@@ -89,10 +91,9 @@ function createFunction(command){
                 if(successFunction != null){
                     successFunction(response);
                 }
-
             }
         });
-        dprint("Redis: " + command + J(args));
+        //cprint("Redis command: " + command + J(args));
         this.client.send_command(command,args);
     }
 }
@@ -111,6 +112,3 @@ init();
 RedisContext.prototype.createTenantURI =  function (resourceId) {
     return getCurrentTenant() + ":"+ this.context +"/"+ resourceId;
 }
-
-
-

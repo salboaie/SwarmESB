@@ -26,7 +26,7 @@ var loginSwarming =
     check:{
         node:"Core",
         code : function (){
-            cprint("Login passed!");
+            //cprint("Login passed!");
             if(this.authorisationToken == "ok"){
                 this.isOk=true;
                 this.swarm("success");
