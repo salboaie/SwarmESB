@@ -7,8 +7,9 @@
      "redisHost":"localhost",
      "redisPort":6379,
      "paths":[
-        {"folder":"disabled"  ,"enabled":false},
-        {"folder":"swarms"    ,"enabled":true}
+        {"folder":"disabled"        ,"enabled":false},
+        {"folder":"testSwarms"      ,"enabled":true},
+        {"folder":"swarms"          ,"enabled":true}
      ]
   },
  "Logger":{},
