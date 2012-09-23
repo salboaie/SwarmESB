@@ -8,9 +8,9 @@ var confirmExecution = {
     },
     confirm:function (swarm) {
         this.phaseExecutionId = swarm.meta.phaseExecutionId;
-        this.swarm("confirm", swarm.meta.fromNode);
+        this.swarm("confirmAtOrigin", swarm.meta.fromNode);
     },
-    confirm:{
+    confirmAtOrigin:{
         node:"*",
         code:function () {
             var ctxt = getContext(this.meta.phaseExecutionId);
