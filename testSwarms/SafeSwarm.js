@@ -1,27 +1,35 @@
 /*
-   - swarm that guarantees that a phase was successfully executed
+   - swarm that testing safeSwarm primitive
  */
 var safeSwarm = {
     meta:{
-        safe:true,
-        onError:"onError"
+        onErrorPhase:"onError",
+        onSuccesPhase:"onSwarmSucces"
     },
     vars:{
 
     },
     start:function () {
-        this.swarm("run");
+        this.safeSwarm("runFail",100,"Null*",3); //it will not respond properly
+        this.safeSwarm("runSucces");
     },
-    run:{
+    runSucces:{
         node:"Core",
         code:function () {
-            throw "Intended Error for test";
+            //do nothing but onSwarmSucces will get called
         }
     },
     onError: {
         node: "*",
         code: function () {
-            cprint("Error...");
+            this.swarm("failure",this.sessionId);
+        }
+    },
+    onSwarmSucces: {
+        node: "*",
+        code: function () {
+            this.node = thisAdapter.nodeName;
+            this.swarm("succes",this.sessionId);
         }
     }
 }

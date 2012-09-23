@@ -18,7 +18,6 @@ function getGreetings(obj){
     msg = obj.message;
 }
 
-
 setTimeout (
     function(){
         assert.equal(msg,"Client swarming!");
