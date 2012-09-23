@@ -1,13 +1,15 @@
 
 var loginSwarming =
 {
+    meta:{
+        debug: false,
+        renameSession:false
+    },
     vars:{
         isOk:false,
-        sessionId:null,
-        debug:"true1"
+        sessionId:null
     },
     testCtor:function(clientSessionId,userId,authorisationToken){
-        this.identity = generateUID();
         //this.loginTimeOut = this.timeoutSwarm(2000,"checkLoginTimeout","ClientAdapter");
         this.isOk               = false;
         this.sessionId          = clientSessionId;
@@ -16,19 +18,20 @@ var loginSwarming =
         this.swarm("check");
 
     },
-    ldap:function(clientSessionId,userId,authorisationToken){
-        this.isOk=false;
-        this.sessionId   = clientSessionId;
-        this.userId     = userId;
-        this.authorisationToken  = authorisationToken;
-        this.swarm("check");
+    testForceSessionId:function(clientSessionId,userId,authorisationToken){
+        this.identity = generateUID();
+        this.isOk               = false;
+        this.sessionId          = clientSessionId;
+        this.userId             = userId;
+        this.forceSessionId     = authorisationToken;
+        this.swarm("checkForcedSessionValidity");
     },
     check:{
         node:"Core",
         code : function (){
             //cprint("Login passed!");
             if(this.authorisationToken == "ok"){
-                this.isOk=true;
+                this.isOk = true;
                 this.swarm("success");
             }
             else{
@@ -36,10 +39,30 @@ var loginSwarming =
             }
         }
     },
+    checkForcedSessionValidity:{
+        node:"Core",
+        code : function (){
+            if(this.forceSessionId == "testSession"){
+                this.isOk = true;
+                this.swarm("renameSession");
+            }
+            else{
+                this.swarm("failed");
+            }
+        }
+    },
+    renameSession:{
+        node:"ClientAdapter",
+        code : function () {
+            renameSession(this.sessionId,this.forceSessionId);
+            this.sessionId = this.forceSessionId;
+            this.swarm("success");
+        }
+    },
     success:{   //phase
         node:"ClientAdapter",
         code : function (){
-            this.deleteTimeoutSwarm(this.loginTimeOut);
+            //this.deleteTimeoutSwarm(this.loginTimeOut);
             logInfo("Successful login for user " + this.userId);
             var outlet = findOutlet(this.sessionId);
             outlet.successfulLogin(this);
