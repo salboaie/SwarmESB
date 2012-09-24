@@ -40,7 +40,7 @@ var addChatMsgSwarming =
         code : function (){
             var f = function(pageArray){
                 this.pageArray = pageArray;
-                this.swarm("pageAnswer",this.sessionId);
+                this.swarm("pageAnswer",this.currentSession());
             }.bind(this);
             getPage(this.roomId,this.pageNumber,this.pageSize,f);
         }

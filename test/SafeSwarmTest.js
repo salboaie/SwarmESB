@@ -10,7 +10,6 @@ swarmSettings.authentificationMethod = "testCtor";
 var client             = util.createClient(adapterHost, adapterPort, "testSafeTestUser", "ok","testTenant");
 
 client.startSwarm("SafeSwarm.js","start");
-
 client.on("SafeSwarm.js",getGreetings);
 
 var msg = "none";

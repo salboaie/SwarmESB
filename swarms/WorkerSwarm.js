@@ -31,7 +31,7 @@ var workerSwarm =
         code : function (){
             taskDone(this.selectedWorker);
             this.result = "succes";
-            this.swarm("result", this.sessionId);
+            this.swarm("result", this.currentSession());
         }
     }
 };

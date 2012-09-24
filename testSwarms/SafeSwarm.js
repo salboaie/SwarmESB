@@ -22,14 +22,14 @@ var safeSwarm = {
     onError: {
         node: "*",
         code: function () {
-            this.swarm("failure",this.sessionId);
+            this.safeSwarm("failure",this.currentSession());
         }
     },
     onSwarmSucces: {
         node: "*",
         code: function () {
             this.node = thisAdapter.nodeName;
-            this.swarm("succes",this.sessionId);
+            this.safeSwarm("succes",this.currentSession());
         }
     }
 }

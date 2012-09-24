@@ -18,7 +18,7 @@ var documentConvertorSwarming =
 
             var f = function(message){
                 this.message = message;
-                this.swarm("onClient",this.sessionId);
+                this.swarm("onClient",this.currentSession());
             }.bind(this);
 
             var end = function(message){
@@ -33,7 +33,7 @@ var documentConvertorSwarming =
         node:"DocumentConvertor",
         code : function (){
             console.log("document generated");
-            this.swarm("onClient",this.sessionId);
+            this.swarm("onClient",this.currentSession());
         }
     },
     onClient:{ //phase

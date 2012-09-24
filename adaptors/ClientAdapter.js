@@ -29,7 +29,7 @@ if(myCfg.bindAddress != undefined){
 new ClientTcpServer(serverPort,serverHost);
 
 function ClientTcpServer(port,host){
-    console.log("ClientAdapter is starting a server on port 3000");
+    console.log("ClientAdapter is starting a server on port " + port);
     var net   	= require('net');
     this.server = net.createServer(
         function (socket){
@@ -37,7 +37,7 @@ function ClientTcpServer(port,host){
         }
     );
     this.server.listen(port,host);
-};
+}
 
 var map = {};
 function loginCallback(outlet){

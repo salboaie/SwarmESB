@@ -2,7 +2,6 @@
 var codeUpdateSwarming =
 {
     vars:{
-        debug:"true1"
     },
     swarmChanged:function(swarmName){
         this.reloadingSwarmName = swarmName;
@@ -15,15 +14,14 @@ var codeUpdateSwarming =
     doRegister:{
         node:"Core",
         code : function (){
-            var ctxt = getContext("System:RegisteredAdapters",true);
+            var ctxt = getGlobalContext("System:RegisteredAdapters");
             ctxt[this.adapterName] = this.adapterName;
         }
     },
     dispatchRefresh:{
     node:"Core",
         code : function (){
-
-            var ctxt = getContext("System:RegisteredAdapters",true);
+            var ctxt = getGlobalContext("System:RegisteredAdapters");
             for(var key in ctxt){
                 this.swarm("reloadSwarm",key);
             }
@@ -32,7 +30,6 @@ var codeUpdateSwarming =
     reloadSwarm:{ //running in all adapters
         node:"",
         code : function (){
-            //console.log("* Reloading swarm " + this.reloadingSwarmName);
             thisAdapter.reloadSwarm(this.reloadingSwarmName );
         }
     }

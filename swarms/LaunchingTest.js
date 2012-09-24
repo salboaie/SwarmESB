@@ -34,7 +34,7 @@ var launchingTest =
         node:"Core",
         code : function (){
             this.message="Client swarming!";
-            this.swarm("onClient",this.sessionId);
+            this.swarm("onClient",this.currentSession());
         },
         onClient:{ //phase
             node:"$client",

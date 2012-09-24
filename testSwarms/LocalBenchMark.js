@@ -50,7 +50,7 @@ var benchmark =     //benchmark example!
 
                 this.result = "Single process benchmark results: " + speed + " Time spent: " + diff + "seconds ";
                 console.log(this.result);
-                this.swarm("results", this.sessionId);
+                this.swarm("results", this.currentSession());
             }
         }
 };

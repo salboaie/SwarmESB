@@ -4,13 +4,12 @@ var logSwarming =
     vars:{
         message:"",
         level:"normal",
-        sessionId:null,
         userId:null,
         debug:"false"
     },
     err:function(level,message,errText,stack,forSwarm){
         this.nodeName       = thisAdapter.nodeName;
-        this.sessionId      = getCurrentSession();
+        this.setSessionId(getCurrentSession());
         this.forSwarm       = forSwarm;
         this.message        = message;
         this.errText        = errText;
@@ -20,7 +19,7 @@ var logSwarming =
     },
     info:function(level,message,details,forSwarm){
         this.nodeName       = thisAdapter.nodeName;
-        this.sessionId      = getCurrentSession();
+        this.setSessionId(getCurrentSession());
         this.forSwarm       = forSwarm;
         this.message        = message;
 
@@ -34,7 +33,7 @@ var logSwarming =
     doLog:{ //phase that should be replaced. Use your own logging logic
         node:"Logger",
         code : function (){
-            cprint(this.level + " :[Node:" + this.nodeName+"] [Swarm:"+ this.forSwarm +"] [Tenant:"+ this.tenantId +"] [Session:"+ this.sessionId +"] >>>>>>\t MESSAGE: "+this.message);
+            cprint(this.level + " :[Node:" + this.nodeName+"] [Swarm:"+ this.forSwarm +"] [Tenant:"+ this.meta.tenantId +"] [Session:"+ this.meta.sessionId +"] >>>>>>\t MESSAGE: "+this.message);
         }
     }
 };
