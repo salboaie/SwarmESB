@@ -2,7 +2,7 @@
 var loginSwarming =
 {
     meta:{
-        debug: false,
+        debug: true,
         renameSession:false
     },
     vars:{
@@ -54,9 +54,11 @@ var loginSwarming =
     renameSession:{
         node:"ClientAdapter",
         code : function () {
-            renameSession(this.sessionId,this.forceSessionId);
-            this.sessionId = this.forceSessionId;
-            this.swarm("success");
+            renameSession(this.sessionId,this.forceSessionId, function(){
+                this.sessionId = this.forceSessionId;
+                this.meta.changeSessionId = true;
+                this.swarm("success");
+            }.bind(this));
         }
     },
     success:{   //phase
@@ -90,6 +92,12 @@ var loginSwarming =
             logInfo("Failed login for " + this.userId );
             this.swarm("failed",this.sessionId);
             findOutlet(this.sessionId).close();
+        }
+    },
+    onErrorPhase:{
+        node:"*",
+        code : function (){
+            cprint("Error on safe swarming");
         }
     }
 };

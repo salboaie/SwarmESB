@@ -11,7 +11,7 @@ var redisPort;
 
 var sutil = require('swarmutil');
 
-thisAdapter = sutil.createAdapter("ClientAdapter",null,null,false);
+thisAdapter = sutil.createAdapter("ClientAdapter",null,null,true);
 thisAdapter.loginSwarmingName   = "login.js";
 //globalVerbosity = true;
 
@@ -59,10 +59,10 @@ findOutlet = function (sessionId) {
 }
 
 
-renameSession = function (sessionId, forceId) {
+renameSession = function (sessionId, forceId,onSubscribe) {
     var outlet = thisAdapter.connectedOutlets[sessionId];
     thisAdapter.connectedOutlets[forceId] = outlet;
-    outlet.renameSessionId(forceId);
+    outlet.renameSession(forceId,onSubscribe);
 }
 
 var net = require("net");
