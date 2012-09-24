@@ -4,17 +4,15 @@
  */
 var confirmExecution = {
     vars:{
-        phaseId:null
     },
-    metat:{
-        tenantId:null,
-        sessionId:null
+    meta:{
+        debug:true
     },
     confirm:function (swarm) {
         this.phaseExecutionId = swarm.meta.phaseExecutionId;
         this.setTenantId(swarm.getTenantId());
         this.setSessionId(swarm.getSessionId());
-        this.swarm("confirmAtOrigin", swarm.meta.fromNode);
+        this.swarm("confirmAtOrigin", swarm.meta.confirmationNode);
     },
     confirmAtOrigin:{
         node:"*",

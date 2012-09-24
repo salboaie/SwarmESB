@@ -2,7 +2,7 @@
 var loginSwarming =
 {
     meta:{
-        debug: true,
+        debug: false,
         renameSession:false
     },
     vars:{

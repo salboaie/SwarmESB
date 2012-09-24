@@ -1,16 +1,17 @@
 /*
    - swarm that testing safeSwarm primitive
  */
-var safeSwarm = {
+var safeSwarmTest = {
     meta:{
-        onErrorPhase:"onError",
-        onSuccesPhase:"onSwarmSucces"
+        debug:true,
+        onError:"onError",
+        onSucces:"onSucces"
     },
     vars:{
 
     },
     start:function () {
-        this.safeSwarm("runFail",100,"Null*",3); //it will not respond properly
+        //this.safeSwarm("runFail",100,"Null*",3); //it will not respond properly
         this.safeSwarm("runSucces");
     },
     runSucces:{
@@ -22,16 +23,19 @@ var safeSwarm = {
     onError: {
         node: "*",
         code: function () {
-            this.safeSwarm("failure",this.currentSession());
+            cprint("Failure...");
+            this.swarm("failure",this.currentSession());
         }
     },
-    onSwarmSucces: {
+    onSucces: {
         node: "*",
         code: function () {
+            cprint("Succes...");
             this.node = thisAdapter.nodeName;
-            this.safeSwarm("succes",this.currentSession());
+            this.swarm("succes",this.currentSession());
+            //this.safeSwarm("succes",this.currentSession());
         }
     }
 }
 
-safeSwarm;
+safeSwarmTest;

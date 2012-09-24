@@ -11,7 +11,7 @@ var redisPort;
 
 var sutil = require('swarmutil');
 
-thisAdapter = sutil.createAdapter("ClientAdapter",null,null,true);
+thisAdapter = sutil.createAdapter("ClientAdapter",null,null,false);
 thisAdapter.loginSwarmingName   = "login.js";
 //globalVerbosity = true;
 
