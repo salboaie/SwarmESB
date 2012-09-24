@@ -59,6 +59,12 @@ findOutlet = function (sessionId) {
 }
 
 
+renameSession = function (sessionId, forceId) {
+    var outlet = thisAdapter.connectedOutlets[sessionId];
+    thisAdapter.connectedOutlets[forceId] = outlet;
+    outlet.renameSessionId(forceId);
+}
+
 var net = require("net");
 
 net.createServer(

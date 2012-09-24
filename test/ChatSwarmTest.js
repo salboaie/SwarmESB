@@ -11,9 +11,9 @@ swarmSettings.authentificationMethod = "testCtor";
 var roomId = "room-test";
 var clients = [];
 
-var MULTIPLY = 20;
+var MULTIPLY = 10;
 
-var MAXCLIENTS = MULTIPLY * 10;
+var MAXCLIENTS = MULTIPLY * 20;
 
 var client;
 for (var i = 0; i < MAXCLIENTS; i++) {
