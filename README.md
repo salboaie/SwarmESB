@@ -4,8 +4,7 @@ SwarmESB is a new approach for creating scalable, complex, distributed and highl
 Communication and how services get composed is supported by a powerful method that resemble "swarm behaviours" found in nature!
 
     Easy and fun! 
-
-    Programming with asynchronous messages is more programmers-friendly than ever.
+    A new approach for programming with asynchronous messages.
     
     Check our wiki: https://github.com/salboaie/SwarmESB/wiki
 
