@@ -16,7 +16,7 @@ var msg = "none";
 var succesCount     = 0;
 var failCount       = 0;
 function getGreetings(obj){
-    if(obj.phaseName == "succes"){
+    if(obj.answear == "succes"){
         succesCount++;
     }else{
         failCount++;

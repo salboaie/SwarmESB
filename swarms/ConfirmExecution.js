@@ -6,7 +6,7 @@ var confirmExecution = {
     vars:{
     },
     meta:{
-        debug:true
+        debug:false
     },
     confirm:function (swarm) {
         this.phaseExecutionId = swarm.meta.phaseExecutionId;
@@ -17,6 +17,7 @@ var confirmExecution = {
     confirmAtOrigin:{
         node:"*",
         code:function () {
+            //cprint("Confirming phase execution " + this.phaseExecutionId);
             var ctxt = getContext(this.phaseExecutionId);
             ctxt.confirmedExecution = true;
         }

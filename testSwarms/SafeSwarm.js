@@ -3,7 +3,7 @@
  */
 var safeSwarmTest = {
     meta:{
-        debug:true,
+        debug:false,
         onError:"onError",
         onSucces:"onSucces"
     },
@@ -11,7 +11,7 @@ var safeSwarmTest = {
 
     },
     start:function () {
-        //this.safeSwarm("runFail",100,"Null*",3); //it will not respond properly
+        this.safeSwarm("runFail","Null*",100,3); //it will not respond properly
         this.safeSwarm("runSucces");
     },
     runSucces:{
@@ -23,17 +23,17 @@ var safeSwarmTest = {
     onError: {
         node: "*",
         code: function () {
-            cprint("Failure...");
+            this.answear = "failure";
             this.swarm("failure",this.currentSession());
+            this.safeSwarm("failure",this.currentSession());
         }
     },
     onSucces: {
         node: "*",
         code: function () {
-            cprint("Succes...");
-            this.node = thisAdapter.nodeName;
+            this.answear = "succes";
             this.swarm("succes",this.currentSession());
-            //this.safeSwarm("succes",this.currentSession());
+            this.safeSwarm("succes",this.currentSession());
         }
     }
 }
