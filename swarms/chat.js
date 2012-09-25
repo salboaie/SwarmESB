@@ -1,6 +1,9 @@
 
 var addChatMsgSwarming =
 {
+    meta:{
+        name:"chat.js"
+    },
     vars:{
         debug:false
     },

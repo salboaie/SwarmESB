@@ -1,6 +1,9 @@
 
 var codeUpdateSwarming =
 {
+    meta:{
+        name:"CodeUpdate.js"
+    },
     vars:{
     },
     swarmChanged:function(swarmName){

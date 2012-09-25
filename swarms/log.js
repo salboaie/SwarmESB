@@ -1,6 +1,9 @@
 
 var logSwarming =
 {
+    meta:{
+        name:"log.js"
+    },
     vars:{
         message:"",
         level:"normal",

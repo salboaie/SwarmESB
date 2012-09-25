@@ -6,7 +6,8 @@ var confirmExecution = {
     vars:{
     },
     meta:{
-        debug:false
+        debug:false,
+        name:"ConfirmExecution.js"
     },
     confirm:function (swarm) {
         this.phaseExecutionId = swarm.meta.phaseExecutionId;
