@@ -5,7 +5,7 @@ var documentConvertorSwarming =
         debug:"true1",
         debugSwarm:"true1",
         message:"",
-        path:""
+         path:""
     },
     ctorConvertDocument:function(path)
     {

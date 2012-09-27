@@ -1,5 +1,5 @@
 /* DocumentConvertor Config
- "DocumentConvertor":
+  "DocumentConvertor":
  {
       "doc2pdfCmdPath":"C:/Program Files/LibreOffice 3.5/program",
       "doc2pdfCmd":"soffice.exe --headless --invisible --convert-to pdf [file] --outdir [outdir]",

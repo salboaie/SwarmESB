@@ -11,6 +11,7 @@ client.startSwarm("DocumentConvertorSwarm.js","ctorConvertDocument","C:/Users/Ma
 client.on("DocumentConvertorSwarm.js",getGreetings);
 
 
-function getGreetings(obj){
+function getGreetings(obj)
+{
     console.log(obj.message);
 }
