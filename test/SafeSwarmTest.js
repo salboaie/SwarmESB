@@ -10,14 +10,13 @@ swarmSettings.authentificationMethod = "testCtor";
 var client             = util.createClient(adapterHost, adapterPort, "testSafeTestUser", "ok","testTenant");
 
 client.startSwarm("SafeSwarm.js","start");
-
 client.on("SafeSwarm.js",getGreetings);
 
 var msg = "none";
 var succesCount     = 0;
 var failCount       = 0;
 function getGreetings(obj){
-    if(obj.phaseName == "succes"){
+    if(obj.answear == "succes"){
         succesCount++;
     }else{
         failCount++;
@@ -27,8 +26,8 @@ function getGreetings(obj){
 
 setTimeout (
     function(){
-        assert.equal(succesCount,1);
+        assert.equal(succesCount,2);
         assert.equal(failCount,1);
         process.exit(1);
     },
-    1000);
+    2000);

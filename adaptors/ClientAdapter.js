@@ -11,7 +11,7 @@ var redisPort;
 
 var sutil = require('swarmutil');
 
-thisAdapter = sutil.createAdapter("ClientAdapter",null,null,false);
+thisAdapter = sutil.createAdapter("ClientAdapter", null, null, false);
 thisAdapter.loginSwarmingName   = "login.js";
 //globalVerbosity = true;
 
@@ -29,7 +29,7 @@ if(myCfg.bindAddress != undefined){
 new ClientTcpServer(serverPort,serverHost);
 
 function ClientTcpServer(port,host){
-    console.log("ClientAdapter is starting a server on port 3000");
+    console.log("ClientAdapter is starting a server on port " + port);
     var net   	= require('net');
     this.server = net.createServer(
         function (socket){
@@ -37,7 +37,7 @@ function ClientTcpServer(port,host){
         }
     );
     this.server.listen(port,host);
-};
+}
 
 var map = {};
 function loginCallback(outlet){
@@ -59,10 +59,10 @@ findOutlet = function (sessionId) {
 }
 
 
-renameSession = function (sessionId, forceId) {
+renameSession = function (sessionId, forceId,onSubscribe) {
     var outlet = thisAdapter.connectedOutlets[sessionId];
     thisAdapter.connectedOutlets[forceId] = outlet;
-    outlet.renameSessionId(forceId);
+    outlet.renameSession(forceId,onSubscribe);
 }
 
 var net = require("net");

@@ -4,10 +4,12 @@ var documentConvertorSwarming =
     vars:{
         debug:"true1",
         debugSwarm:"true1",
-        message:""
+        message:"",
+         path:""
     },
-    ctorConvertDocument:function()
+    ctorConvertDocument:function(path)
     {
+        this.path = path;
         this.swarm("convertDocument");
     },
     convertDocument:{
@@ -16,24 +18,28 @@ var documentConvertorSwarming =
 
             console.log("converting started..");
 
-            var f = function(message){
+            var progressHandler = function(message)
+            {
                 this.message = message;
-                this.swarm("onClient",this.currentSession());
+                this.swarm("onClient",this.sessionId);
             }.bind(this);
 
-            var end = function(message){
+            var completeHandler = function(message)
+            {
                 this.message = message;
-                this.swarm("convertDone");
+                this.swarm("convertComplete");
             }.bind(this);
 
-            convertDocument("C:/Users/Mac/Desktop/test.pdf",f,end);
+            convertDocument(this.path,progressHandler,completeHandler);
         }
     },
-    convertDone:{
+    convertComplete:{
         node:"DocumentConvertor",
-        code : function (){
+        code : function ()
+        {
             console.log("document generated");
-            this.swarm("onClient",this.currentSession());
+            this.message = "done";
+            this.swarm("onClient",this.sessionId());
         }
     },
     onClient:{ //phase

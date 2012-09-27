@@ -4,16 +4,22 @@
  */
 var confirmExecution = {
     vars:{
-        phaseId:null
+    },
+    meta:{
+        debug:false,
+        name:"ConfirmExecution.js"
     },
     confirm:function (swarm) {
         this.phaseExecutionId = swarm.meta.phaseExecutionId;
-        this.swarm("confirmAtOrigin", swarm.meta.fromNode);
+        this.setTenantId(swarm.getTenantId());
+        this.setSessionId(swarm.getSessionId());
+        this.swarm("confirmAtOrigin", swarm.meta.confirmationNode);
     },
     confirmAtOrigin:{
         node:"*",
         code:function () {
-            var ctxt = getContext(this.meta.phaseExecutionId);
+            //cprint("Confirming phase execution " + this.phaseExecutionId);
+            var ctxt = getContext(this.phaseExecutionId);
             ctxt.confirmedExecution = true;
         }
     }

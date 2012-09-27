@@ -1,6 +1,19 @@
+/* DocumentConvertor Config
+  "DocumentConvertor":
+ {
+      "doc2pdfCmdPath":"C:/Program Files/LibreOffice 3.5/program",
+      "doc2pdfCmd":"soffice.exe --headless --invisible --convert-to pdf [file] --outdir [outdir]",
+      "pdf2swfCmdPath":"C:/Program Files/SWFTools",
+      "pdf2swfCmd":"pdf2swf.exe [file] -o [swffile] -f -T 9 -t -s storeallcharacters"
+ }
+ */
+
 var initialized=false;
+var thisAdaptor;
 var pdf2swfCmd;
+var pdf2swfCmdPath;
 var doc2pdfCmd;
+var doc2pdfCmdPath;
 
 /***********************************************************************************************************************
  *  Functions
@@ -20,7 +33,7 @@ initialize = function()
 
     doc2pdfCmdPath = thisAdaptor.config["DocumentConvertor"]["doc2pdfCmdPath"];
     doc2pdfCmd     = thisAdaptor.config["DocumentConvertor"]["doc2pdfCmd"];
-}
+};
 
 
 convertDocument = function(fileName,callBack,endCallBack)
@@ -35,12 +48,12 @@ convertDocument = function(fileName,callBack,endCallBack)
     var extension            = getExtensionFromFileName(fileName);
     var thisFileName         = getFileName(fileName);
     var swfConvertorHandler  = function()
-        {
-            endTime=Date.now();
-            callBack("Generating file done in :"+(endTime-startTime)/1000+" seconds !");
-            endCallBack();
-        }.bind(this);
-    
+    {
+        endTime=Date.now();
+        callBack("Generating file done in :"+(endTime-startTime)/1000+" seconds !");
+        endCallBack();
+    }.bind(this);
+
     swfExecCmd = pdf2swfCmd;
     swfExecCmd = swfExecCmd.replace("[file]",directory+"/"+thisFileName+".pdf");
     swfExecCmd = swfExecCmd.replace("[swffile]",directory+"/"+thisFileName+".swf");
@@ -61,7 +74,7 @@ convertDocument = function(fileName,callBack,endCallBack)
     {
         convertFile(fileName,swfExecCmd,pdf2swfCmdPath,callBack,swfConvertorHandler);
     }
-}
+};
 
 var convertFile = function(fileName,execCmd,cwd,callBack,endCallBack)
 {
@@ -104,38 +117,23 @@ var convertFile = function(fileName,execCmd,cwd,callBack,endCallBack)
         intervalFunction();
         endCallBack();
     });
-}
+};
 
-var getExtensionFromFileName = function(filePath)
+function getExtensionFromFileName(filePath)
 {
     return filePath.split('.').pop();
 }
 
-var getFileName = function(filePath)
+function getFileName (filePath)
 {
-    if (filePath.indexOf("/") == -1) // windows
-    {
-        return filePath.substring( filePath.lastIndexOf('\\')+1,filePath.lastIndexOf('.'));
-    }
-    else // unix
-    {
-        return filePath.substring( filePath.lastIndexOf('/')+1,filePath.lastIndexOf('.'));
-    }
+    filePath.replace('\\','/');
+    return filePath.substring( filePath.lastIndexOf('/')+1,filePath.lastIndexOf('.'));
 }
 
-var getFileDirectory = function(filePath)
+function getFileDirectory(filePath)
 {
-    if (filePath.indexOf("/") == -1) // windows
-    {
-        return filePath.substring(0, filePath.lastIndexOf('\\'));
-    }
-    else // unix
-    {
-        return filePath.substring(0, filePath.lastIndexOf('/'));
-    }
+    filePath.replace('\\','/');
+    return filePath.substring(0, filePath.lastIndexOf('/'));
 }
 
-require('swarmutil').createAdapter("DocumentConvertor");
-
-
-
+thisAdaptor = require('swarmutil').createAdapter("DocumentConvertor");

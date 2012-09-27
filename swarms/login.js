@@ -6,13 +6,12 @@ var loginSwarming =
         renameSession:false
     },
     vars:{
-        isOk:false,
-        sessionId:null
+        isOk:false
     },
     testCtor:function(clientSessionId,userId,authorisationToken){
         //this.loginTimeOut = this.timeoutSwarm(2000,"checkLoginTimeout","ClientAdapter");
         this.isOk               = false;
-        this.sessionId          = clientSessionId;
+        this.setSessionId(clientSessionId);
         this.userId             = userId;
         this.authorisationToken = authorisationToken;
         this.swarm("check");
@@ -21,7 +20,7 @@ var loginSwarming =
     testForceSessionId:function(clientSessionId,userId,authorisationToken){
         this.identity = generateUID();
         this.isOk               = false;
-        this.sessionId          = clientSessionId;
+        this.setSessionId(clientSessionId);
         this.userId             = userId;
         this.forceSessionId     = authorisationToken;
         this.swarm("checkForcedSessionValidity");
@@ -54,9 +53,11 @@ var loginSwarming =
     renameSession:{
         node:"ClientAdapter",
         code : function () {
-            renameSession(this.sessionId,this.forceSessionId);
-            this.sessionId = this.forceSessionId;
-            this.swarm("success");
+            renameSession(this.currentSession(),this.forceSessionId, function(){
+                this.setSessionId(this.forceSessionId);
+                this.meta.changeSessionId = true;
+                this.swarm("success");
+            }.bind(this));
         }
     },
     success:{   //phase
@@ -64,9 +65,9 @@ var loginSwarming =
         code : function (){
             //this.deleteTimeoutSwarm(this.loginTimeOut);
             logInfo("Successful login for user " + this.userId);
-            var outlet = findOutlet(this.sessionId);
+            var outlet = findOutlet(this.currentSession());
             outlet.successfulLogin(this);
-            this.swarm("home",this.sessionId);
+            this.swarm("home",this.currentSession());
             outlet.loginSucces = true;
         }
     },
@@ -79,8 +80,8 @@ var loginSwarming =
     checkLoginTimeout:{   //phase
         node:"ClientAdapter",
         code : function (){
-            var outlet = findOutlet(this.sessionId);
-            cprint("Timeout for Outlet " + outlet.sessionId + " Succes:" + outlet.loginSucces );
+            var outlet = findOutlet(this.currentSession());
+            cprint("Timeout for Outlet " + outlet.getSessionId + " Succes:" + outlet.loginSucces );
         }
     },
     failed:{   //phase
@@ -88,8 +89,14 @@ var loginSwarming =
         code : function (){
             this.deleteTimeoutSwarm(this.loginTimeOut);
             logInfo("Failed login for " + this.userId );
-            this.swarm("failed",this.sessionId);
-            findOutlet(this.sessionId).close();
+            this.swarm("failed",this.currentSession());
+            findOutlet(this.currentSession()).close();
+        }
+    },
+    onErrorPhase:{
+        node:"*",
+        code : function (){
+            cprint("Error on safe swarming");
         }
     }
 };

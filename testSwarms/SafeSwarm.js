@@ -1,37 +1,42 @@
 /*
    - swarm that testing safeSwarm primitive
  */
-var safeSwarm = {
+var SafeSwarm = {
     meta:{
-        onErrorPhase:"onError",
-        onSuccesPhase:"onSwarmSucces"
+        name:"SafeSwarm.js",
+        debug:false,
+        onError:"onError",
+        onSucces:"onSucces"
     },
     vars:{
 
     },
     start:function () {
-        this.safeSwarm("runFail",100,"Null*",3); //it will not respond properly
+        this.safeSwarm("runFail","Null*",100,5); //it will not respond properly
+        this.safeSwarm("runSucces");
         this.safeSwarm("runSucces");
     },
     runSucces:{
         node:"Core",
         code:function () {
-            //do nothing but onSwarmSucces will get called
+            //do nothing but onSucces will get called
         }
     },
     onError: {
         node: "*",
         code: function () {
-            this.swarm("failure",this.sessionId);
+            this.answear = "failure";
+            this.swarm("failure",this.currentSession());
         }
     },
-    onSwarmSucces: {
+    onSucces: {
         node: "*",
         code: function () {
-            this.node = thisAdapter.nodeName;
-            this.swarm("succes",this.sessionId);
+            this.answear = "succes";
+            this.swarm("succes",this.currentSession());
+            //this.safeSwarm("succes",this.currentSession());
         }
     }
 }
 
-safeSwarm;
+SafeSwarm;
