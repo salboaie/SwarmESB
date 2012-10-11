@@ -13,6 +13,10 @@ var startRemoteSwarm =
     start:function(targetAdapter, targetSession, swarmingName, ctorName, calback, arguments){
         this.targetAdapter  = targetAdapter;
         this.targetSession  = targetSession;
+        if(this.targetSession == null){
+            this.targetSession = this.getSessionId();
+        }
+        this.setSessionId(this.targetSession);
         this.swarmingName   = swarmingName;
         this.ctorName       = ctorName;
         this.calback        = calback;
@@ -23,12 +27,15 @@ var startRemoteSwarm =
         node:"ClientAdapter",
         code : function (){
             var o = findOutlet(this.targetSession);
+            if(o == undefined){
+                logErr("Trying to send a swarm in a wrong session " + this.targetSession);
+            }
             this.setTenantId(o.getTenantId());
-            this.swarm("launch",targetAdapter);
+            this.swarm("launch",this.targetAdapter);
         }
     },
     launch:{ //phase that should be replaced. Use your own logging logic
-        node:"ClientAdapter",
+        node:"*",
         code : function (){
             var args = []; // empty array
             args.push(this.swarmingName);
@@ -37,7 +44,7 @@ var startRemoteSwarm =
             for(var i = 0; i < this.arguments.length; i++){
                 args.push(this.arguments[i]);
             }
-            startSwarm.call(thisAdapter,args);
+            startSwarm.apply(thisAdapter,args);
         }
     }
 };

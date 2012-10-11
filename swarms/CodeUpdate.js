@@ -26,7 +26,9 @@ var codeUpdateSwarming =
         code : function (){
             var ctxt = getGlobalContext("System:RegisteredAdapters");
             for(var key in ctxt){
-                this.swarm("reloadSwarm",key);
+                if(ctxt.hasOwnProperty(key)){
+                    this.swarm("reloadSwarm",key);
+                }
             }
         }
     },
