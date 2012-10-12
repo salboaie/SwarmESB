@@ -36,7 +36,9 @@ var logSwarming =
     doLog:{ //phase that should be replaced. Use your own logging logic
         node:"Logger",
         code : function (){
-            cprint(this.level + " :[Node:" + this.nodeName+"] [Swarm:"+ this.forSwarm +"] [Tenant:"+ this.meta.tenantId +"] [Session:"+ this.meta.sessionId +"] >>>>>>\t MESSAGE: "+this.message);
+            //cprint(this.level + " :[Node:" + this.nodeName+"] [Swarm:"+ this.forSwarm +"] [Tenant:"+ this.meta.tenantId +"] [Session:"+ this.meta.sessionId +"] >>>>>>\t MESSAGE: "+this.message);
+            var message = "[Swarm:"+ this.forSwarm +"] [Tenant:"+ this.meta.tenantId +"] [Session:"+ this.meta.sessionId +"] >>>>>>\t MESSAGE: "+this.message;
+            doLog(this.level, this.nodeName, message);
         }
     }
 };

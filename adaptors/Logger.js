@@ -1,5 +1,11 @@
+var fs = require("fs");
 
-require('swarmutil').createAdapter("Logger",onReadyCallback,null,false);
+thisAdapter = require('swarmutil').createAdapter("Logger",onReadyCallback,null,false);
+
+doLog = function(level, nodeName, message) {
+    var now = new Date();
+    fs.appendFileSync(getSwarmFilePath(thisAdapter.config.logsPath + "/" + nodeName + level.toLowerCase()), now.toDateString() + ' | ' + message + "\n");
+}
 
 function onReadyCallback(){
     //startSwarm("LocalBenchMark.js","start",10000);
