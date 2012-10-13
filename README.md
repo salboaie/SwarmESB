@@ -10,23 +10,6 @@ message and service busses. While this project is build using Node.js and Redis,
 as a new fundamental concept, comparable, but from the code maintainability perspective a lot simpler than direct 
 usage of Enterprise Integration Patterns or than the Actor model used in Scala and Erlang.
 
-
-    Easy and fun! 
-    A new approach for programming with asynchronous messages.
-    
-    Check our wiki: https://github.com/salboaie/SwarmESB/wiki
-
-
-    Technologies: node.js, Redis, asynchronous messages, Message Bus, Enterprise Service Bus
-    Usage of JavaScript is accidental, the swarming concept can be implemented on any modern platform.
-
-SwarmESB ca be used as a light, open source, ESB (or Message Bus) for your enterprise applications.
-Instead of message oriented communication or web services, you describe your communication between "nodes" in what
-we call "swarm descriptions" or simple "swarms".
-"Nodes" can be adapters to various servers or clients connected to the "swarming middleware": SwarmESB.
-
-Your adapters can use web services as a particular case of providing existing APIs in a node.
-
 ## Examples
     
 A swarm description is written in Java Script and is composed from:  variable declarations (for defaults),
@@ -57,6 +40,24 @@ The swarm described bellow will magically get executed without any other program
  
 
 Waw: each node could be on a different continent!  Check other swarms for parallel execution examples.
+
+
+
+## Easy and fun! 
+    A new approach for programming with asynchronous messages.
+    
+    Check our wiki: https://github.com/salboaie/SwarmESB/wiki
+
+
+    Technologies: node.js, Redis, asynchronous messages, Message Bus, Enterprise Service Bus
+    Usage of JavaScript is accidental, the swarming concept can be implemented on any modern platform.
+
+SwarmESB ca be used as a light, open source, ESB (or Message Bus) for your enterprise applications.
+Instead of message oriented communication or web services, you describe your communication between "nodes" in what
+we call "swarm descriptions" or simple "swarms".
+"Nodes" can be adapters to various servers or clients connected to the "swarming middleware": SwarmESB.
+
+Your adapters can use web services as a particular case of providing existing APIs in a node.
 
 
 ## Instalation:  https://github.com/salboaie/SwarmESB/wiki/Install-guide
