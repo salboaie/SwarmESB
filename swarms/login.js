@@ -25,6 +25,65 @@ var loginSwarming =
         this.forceSessionId     = authorisationToken;
         this.swarm("checkForcedSessionValidity");
     },
+    authenticate:function(clientSessionId, userId, authorisationToken){
+        this.identity = generateUID();
+        this.isOk               = false;
+        this.setSessionId(clientSessionId);
+        this.userId             = userId;
+        this.authorisationToken = authorisationToken;
+        //console.log('Auth request for token ' + authorisationToken);
+        this.swarm("validateAuth");
+    },
+    validateAuth:{
+        node: "Core",
+        code: function() {
+            var http = require('http');
+            var self = this;
+            var params = {
+                host: config['authHost'],
+                port: config['authPort'],
+                path: config['authPath'] + '/?dl_token=' + self.authorisationToken,
+                method: 'GET'
+            };
+
+            var request = http.request(params, function(response){
+                var buffers = [];
+
+                response.addListener('data', function (chunk) {
+                    buffers.push(chunk);
+                });
+
+                response.addListener('end', function () {
+                    var responseData = Buffer.concat(buffers);
+                    var authResponse = JSON.parse( responseData.toString() );
+
+                    if (authResponse.hasOwnProperty('error')) {
+                        this.swarm("failed");
+                    } else {
+                        this.isOk = true;
+                        this.userId = authResponse['screenName'];
+                        this.forceSessionId = authResponse['token'];
+                        //console.log('Login success for ' + this.userId);
+                        this.swarm("renameSession");
+                    }
+                }.bind(self));
+
+                response.addListener('error', function(error){
+                    //log error
+                    //console.log('Login failed \n' + error);
+                    this.swarm("failed");
+                }.bind(self));
+            });
+
+            request.addListener('error', function(error){
+                //log error
+                //console.log('Login failed \n' + error);
+                this.swarm("failed");
+            }.bind(self));
+
+            request.end();
+        }
+    },
     check:{
         node:"Core",
         code : function (){
@@ -56,6 +115,7 @@ var loginSwarming =
             renameSession(this.currentSession(),this.forceSessionId, function(){
                 this.setSessionId(this.forceSessionId);
                 this.meta.changeSessionId = true;
+                //console.log('Session set for ' + this.userId + ' [' + this.getSessionId() + ']');
                 this.swarm("success");
             }.bind(this));
         }
@@ -65,9 +125,9 @@ var loginSwarming =
         code : function (){
             //this.deleteTimeoutSwarm(this.loginTimeOut);
             logInfo("Successful login for user " + this.userId);
-            var outlet = findOutlet(this.currentSession());
+            var outlet = findOutlet(this.getSessionId());
             outlet.successfulLogin(this);
-            this.swarm("home",this.currentSession());
+            this.swarm("home",this.getSessionId());
             outlet.loginSucces = true;
         }
     },
@@ -80,8 +140,8 @@ var loginSwarming =
     checkLoginTimeout:{   //phase
         node:"ClientAdapter",
         code : function (){
-            var outlet = findOutlet(this.currentSession());
-            cprint("Timeout for Outlet " + outlet.getSessionId + " Succes:" + outlet.loginSucces );
+            var outlet = findOutlet(this.getSessionId());
+            cprint("Timeout for Outlet " + outlet.getSessionId() + " Succes:" + outlet.loginSucces );
         }
     },
     failed:{   //phase
@@ -89,8 +149,8 @@ var loginSwarming =
         code : function (){
             this.deleteTimeoutSwarm(this.loginTimeOut);
             logInfo("Failed login for " + this.userId );
-            this.swarm("failed",this.currentSession());
-            findOutlet(this.currentSession()).close();
+            this.swarm("failed",this.getSessionId());
+            findOutlet(this.getSessionId()).close();
         }
     },
     onErrorPhase:{
