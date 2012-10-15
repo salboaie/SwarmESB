@@ -25,10 +25,11 @@ var loginSwarming =
         this.forceSessionId     = authorisationToken;
         this.swarm("checkForcedSessionValidity");
     },
-    authenticate:function(clientSessionId,authorisationToken){
+    authenticate:function(clientSessionId, userId, authorisationToken){
         this.identity = generateUID();
         this.isOk               = false;
         this.setSessionId(clientSessionId);
+        this.userId             = userId;
         this.authorisationToken = authorisationToken;
         //console.log('Auth request for token ' + authorisationToken);
         this.swarm("validateAuth");
@@ -124,9 +125,9 @@ var loginSwarming =
         code : function (){
             //this.deleteTimeoutSwarm(this.loginTimeOut);
             logInfo("Successful login for user " + this.userId);
-            var outlet = findOutlet(this.currentSession());
+            var outlet = findOutlet(this.getSessionId());
             outlet.successfulLogin(this);
-            this.swarm("home",this.currentSession());
+            this.swarm("home",this.getSessionId());
             outlet.loginSucces = true;
         }
     },
@@ -139,8 +140,8 @@ var loginSwarming =
     checkLoginTimeout:{   //phase
         node:"ClientAdapter",
         code : function (){
-            var outlet = findOutlet(this.currentSession());
-            cprint("Timeout for Outlet " + outlet.getSessionId + " Succes:" + outlet.loginSucces );
+            var outlet = findOutlet(this.getSessionId());
+            cprint("Timeout for Outlet " + outlet.getSessionId() + " Succes:" + outlet.loginSucces );
         }
     },
     failed:{   //phase
@@ -148,8 +149,8 @@ var loginSwarming =
         code : function (){
             this.deleteTimeoutSwarm(this.loginTimeOut);
             logInfo("Failed login for " + this.userId );
-            this.swarm("failed",this.currentSession());
-            findOutlet(this.currentSession()).close();
+            this.swarm("failed",this.getSessionId());
+            findOutlet(this.getSessionId()).close();
         }
     },
     onErrorPhase:{
