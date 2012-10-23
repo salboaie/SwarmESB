@@ -9,7 +9,7 @@ globalVerbosity = true;
 swarmSettings.authentificationMethod = "testCtor";
 var client             = util.createClient(adapterHost, adapterPort, "testLoginUser", "ok","testTenant");
 
-client.startRemoteSwarm("Core","RemoteEcho.js","start");
+client.startRemoteSwarm("Core","RemoteEcho.js","start",'testParam1','testParam2');
 
 client.on("RemoteEcho.js",getGreetings);
 
