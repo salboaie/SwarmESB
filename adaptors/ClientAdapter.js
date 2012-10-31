@@ -25,6 +25,10 @@ if(myCfg.port != undefined){
 
 if(myCfg.bindAddress != undefined){
     serverHost = myCfg.bindAddress;
+    serverHost = serverHost.trim();
+    if (serverHost.length == 0 || serverHost == '*') {
+        serverHost = null;
+    }
 }
 new ClientTcpServer(serverPort,serverHost);
 
