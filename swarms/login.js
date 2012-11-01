@@ -2,7 +2,7 @@
 var loginSwarming =
 {
     meta:{
-        debug: false,
+        debug: true,
         renameSession:false
     },
     vars:{
@@ -64,7 +64,8 @@ var loginSwarming =
                             this.swarm("failed");
                         } else {
                             this.isOk = true;
-                            this.userId = authResponse['screenName'];
+                            //this.userId = authResponse['screenName'];
+                            this.authorization = authResponse;
                             this.forceSessionId = authResponse['token'];
                             //console.log('Login success for ' + this.userId);
                             this.swarm("renameSession");
