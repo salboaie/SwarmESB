@@ -14,7 +14,7 @@ for your new multi-tenant systems that will transparently acquire the benefits o
 parallel computing and loose coupling usually obtained with asynchronous messages, message queues, pub/sub channels, 
 message and service busses. While this project is build using Node.js and Redis, this project will present "swarming" 
 as a new fundamental concept, comparable, but from the code maintainability perspective a lot simpler than direct 
-usage of Enterprise Integration Patterns or than the Actor model used in Scala and Erlang.
+usage of Enterprise Integration Patterns or the Actor model used in Scala and Erlang.
 
 ## Examples
     
