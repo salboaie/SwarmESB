@@ -1,10 +1,16 @@
 ## SwarmESB  
 
-SwarmESB is a new approach for creating scalable, complex, distributed and highly parallel systems.
-Communication and how services get composed is supported by a powerful method that resemble "swarm behaviours" found in nature!
 
- Open source project implementing an inovative aproach for the software architecture you could reuse when creating
-a new multi-tenant system that will transparently acquire the benefits of sclability, high availability, highly
+SwarmESB presents a new approach for creating distributed systems comunicating by asynchronous messages.
+Swarming can be for SOA's orchestration what REST is for SOAP.
+
+A "swarm" is a set of related messages with some basic inteligence and is based on an intuitive point of view: 
+ computer processes comunicating by using asynchronous messages are more like "dumb tres/flowers" visited by "smart 
+swarms of bees" than smart "people" communicatig by "messages". 
+This intuition have a powerfull efect on reducing complexity of many distributed systems (allready proved by SOA but SwarmESB offers a better perspective).
+
+ SwarmESB is an open source project implementing a new aproach: "Swarming architecture" that you could reuse 
+for your new multi-tenant systems that will transparently acquire the benefits of sclability, high availability, highly
 parallel computing and loose coupling usually obtained with asynchronous messages, message queues, pub/sub channels, 
 message and service busses. While this project is build using Node.js and Redis, this project will present "swarming" 
 as a new fundamental concept, comparable, but from the code maintainability perspective a lot simpler than direct 
