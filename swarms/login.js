@@ -2,7 +2,7 @@
 var loginSwarming =
 {
     meta:{
-        debug: false,
+        debug: true,
         renameSession:false
     },
     vars:{
@@ -39,10 +39,12 @@ var loginSwarming =
         code: function() {
             var http = require('http');
             var self = this;
+            var authServiceURL = config['authPath'] ? config['authPath'] : '';
+            authServiceURL = authServiceURL.replace('[token]', self.authorisationToken);
             var params = {
                 host: config['authHost'],
                 port: config['authPort'],
-                path: config['authPath'] + '/?dl_token=' + self.authorisationToken,
+                path: authServiceURL,
                 method: 'GET'
             };
 
@@ -55,16 +57,23 @@ var loginSwarming =
 
                 response.addListener('end', function () {
                     var responseData = Buffer.concat(buffers);
-                    var authResponse = JSON.parse( responseData.toString() );
+                    try {
+                        var authResponse = JSON.parse( responseData.toString() );
 
-                    if (authResponse.hasOwnProperty('error')) {
+                        if (authResponse.hasOwnProperty('error')) {
+                            this.swarm("failed");
+                        } else {
+                            this.isOk = true;
+                            //this.userId = authResponse['screenName'];
+                            this.authorization = authResponse;
+                            this.forceSessionId = authResponse['token'];
+                            //console.log('Login success for ' + this.userId);
+                            this.swarm("renameSession");
+                        }
+                    } catch (err) {
+                        logErr('Authorization response invalid: ');
+                        logErr(responseData);
                         this.swarm("failed");
-                    } else {
-                        this.isOk = true;
-                        this.userId = authResponse['screenName'];
-                        this.forceSessionId = authResponse['token'];
-                        //console.log('Login success for ' + this.userId);
-                        this.swarm("renameSession");
                     }
                 }.bind(self));
 
