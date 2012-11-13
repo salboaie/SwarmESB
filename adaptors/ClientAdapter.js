@@ -6,9 +6,6 @@
  * To change this template use File | Settings | File Templates.
  */
 
-var redisHost;
-var redisPort;
-
 var sutil = require('swarmutil');
 
 thisAdapter = sutil.createAdapter("ClientAdapter", null, null, false);
@@ -16,7 +13,7 @@ thisAdapter.loginSwarmingName   = "login.js";
 //globalVerbosity = true;
 
 var myCfg = getMyConfig();
-var serverPort      = 3000;
+var serverPort      = 8000;
 var serverHost      =  "localhost";
 
 if(myCfg.port != undefined){
@@ -30,51 +27,36 @@ if(myCfg.bindAddress != undefined){
         serverHost = null;
     }
 }
-new ClientTcpServer(serverPort,serverHost);
 
-function ClientTcpServer(port,host){
-    console.log("ClientAdapter is starting a TCP server on port " + port);
-    var net   	= require('net');
-    this.server = net.createServer(
-        function (socket){
-            sutil.newOutlet(socket,loginCallback);
-        }
-    );
-    this.server.listen(port,host);
+function startSwarm(req, res,sessionId, data) {
+    console.log(data);
+
+    client.lpush(roomId,JSON.stringify(data),function(){
+        count(null,res,roomId);
+    });
 }
 
-var map = {};
-function loginCallback(outlet){
-    map[outlet.userId] = outlet;
-}
+var router = new(journey.Router);
 
-findConnectedClientByUserId = function (userId){
-    var o = map[userId];
-    if(o != null && o != undefined){
-        return o.sessionId;
-    }
-    cprint("No session for " + userId);
-    return "Null*";
-}
+// Create the routing table
+router.map(function () {
+    this.root.bind(function (req, res) { res.send("Welcome") });
+    this.put(/^\/(.+)\/startSwarm/).bind(startSwarm);
+});
 
+require('http').createServer(function (request, response) {
+    var body = "";
+    request.addListener('data', function (chunk) { body += chunk });
+    request.addListener('end', function () {
+        //
+        // Dispatch the request to the router
+        //
+        router.handle(request, body, function (result) {
+            response.writeHead(result.status, result.headers);
+            response.end(result.body);
+        });
+    });
+}).listen(serverPort,serverHost);
 
-findOutlet = function (sessionId) {
-    return thisAdapter.connectedOutlets[sessionId];
-}
-
-
-renameSession = function (sessionId, forceId,onSubscribe) {
-    var outlet = thisAdapter.connectedOutlets[sessionId];
-    thisAdapter.connectedOutlets[forceId] = outlet;
-    outlet.renameSession(forceId,onSubscribe);
-}
-
-var net = require("net");
-
-net.createServer(
-    function(socket){
-        writePolicy(socket);
-    }
-).listen(843);
 
 
