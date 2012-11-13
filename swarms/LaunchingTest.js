@@ -5,9 +5,12 @@
  */
 var launchingTest =
 {
+        meta:{
+            noMeta:true,
+            debug :"false"
+        },
         vars:{
-            message:"Hello World",
-            debug :"true1"
+            message:"Hello World"
         },
         start:function(){
                     this.message+="!";

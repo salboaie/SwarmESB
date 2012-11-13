@@ -29,7 +29,7 @@ if(myCfg.bindAddress != undefined){
 new ClientTcpServer(serverPort,serverHost);
 
 function ClientTcpServer(port,host){
-    console.log("ClientAdapter is starting a server on port " + port);
+    console.log("ClientAdapter is starting a TCP server on port " + port);
     var net   	= require('net');
     this.server = net.createServer(
         function (socket){
