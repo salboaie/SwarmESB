@@ -27,5 +27,9 @@
   "ClientAdapter":{
                 "port":3000,
                 "bindAddress":"localhost"
+  },
+  "WebClientAdapter":{
+               "port":8000,
+               "bindAddress":"localhost"
   }
 }

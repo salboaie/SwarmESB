@@ -10,18 +10,19 @@ var startRemoteSwarm =
         userId:null,
         debug:"false"
     },
-    start:function(targetAdapter, targetSession, swarmingName, ctorName, calback, arguments){
-        this.targetAdapter  = targetAdapter;
-        this.targetSession  = targetSession;
+    start:function(targetAdapter, targetSession, swarmingName, ctorName, responseURI, arguments){
+        this.targetAdapter          = targetAdapter;
+        this.targetSession          = targetSession;
+        this.meta.responseURI       = responseURI;
+
         if(this.targetSession == null){
-            this.targetSession = this.getSessionId();
+            this.targetSession      = this.getSessionId();
         }
         this.setSessionId(this.targetSession);
         this.swarmingName   = swarmingName;
         this.ctorName       = ctorName;
         this.calback        = calback;
         this.arguments      = arguments;
-
         this.swarm("findTenant");
     },
     findTenant:{ //phase that should be replaced. Use your own logging logic
@@ -46,7 +47,6 @@ var startRemoteSwarm =
             for(var i = 0; i < this.arguments.length; i++){
                 args.push(this.arguments[i]);
             }
-
             startSwarm.apply(thisAdapter,args);
         }
     }
