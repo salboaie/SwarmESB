@@ -39,6 +39,7 @@ var loginSwarming =
         code: function() {
             var http = require('http');
             var self = this;
+            var config = getMyConfig();
             var authServiceURL = config['authPath'] ? config['authPath'] : '';
             authServiceURL = authServiceURL.replace('[token]', self.authorisationToken);
             var params = {
