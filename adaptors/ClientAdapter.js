@@ -70,11 +70,17 @@ renameSession = function (sessionId, forceId,onSubscribe) {
 }
 
 var net = require("net");
-
-net.createServer(
+var policySocket = net.createServer(
     function(socket){
         writePolicy(socket);
     }
-).listen(843);
+);
+
+policySocket.once('error', function (error) {
+    logErr('PolicySocket[843] error\n');
+    logErr(error);
+});
+
+policySocket.listen(843);
 
 
