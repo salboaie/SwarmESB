@@ -25,18 +25,18 @@ if(myCfg.bindAddress != undefined){
 var requestZone = {};
 
 onRequestResponse = function(swarm, requestId){
-    requestZone[requestId].write(J(swarm));
+    requestZone[requestId].send(J(swarm));
     delete requestZone[requestId];
 }
 
 function startMySwarm(req, res, data) {
     console.log(data);
     try{
-        var jo = JSON.parse(data);
+        var jo = typeof(data) === 'string' ? JSON.parse(data) : data;
         var reqId = generateUID();
         requestZone[reqId] = res;
         if(jo.targetAdapter == undefined) {
-            jo.targetAdapter = this.adapterName;
+            jo.targetAdapter = thisAdapter.nodeName;
         }
         startSwarm("startRemoteSwarm.js",
             "start",
@@ -44,7 +44,7 @@ function startMySwarm(req, res, data) {
             jo.session,
             jo.swarm,
             jo.ctor,
-            this.adapterName+":"+reqId,
+            thisAdapter.nodeName+":"+reqId,
             jo.args);
     } catch(err){
         logErr("Wrong request ", err);
@@ -56,7 +56,7 @@ var router = new(journey.Router);
 // Create the routing table
 router.map(function () {
     this.root.bind(function (req, res) { res.send("Welcome"); });
-    this.put (/startSwarm/).bind(startMySwarm);
+    this.put(/startSwarm/).bind(startMySwarm);
 });
 
 require('http').createServer(function (request, response) {

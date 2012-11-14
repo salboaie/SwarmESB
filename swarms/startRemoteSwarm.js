@@ -21,7 +21,7 @@ var startRemoteSwarm =
         this.setSessionId(this.targetSession);
         this.swarmingName   = swarmingName;
         this.ctorName       = ctorName;
-        this.calback        = calback;
+        //this.calback        = calback;
         this.arguments      = arguments;
         this.swarm("findTenant");
     },
