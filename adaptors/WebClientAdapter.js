@@ -25,7 +25,7 @@ if(myCfg.bindAddress != undefined){
 var requestZone = {};
 
 onRequestResponse = function(swarm, requestId){
-    requestZone[requestId].send(J(swarm));
+    requestZone[requestId].send(swarm);
     delete requestZone[requestId];
 }
 
