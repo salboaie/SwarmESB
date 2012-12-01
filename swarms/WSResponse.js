@@ -1,4 +1,8 @@
-
+/**
+ *
+ * Swarm used by WebClientAdapter to send responses back
+ *
+ */
 var WSResponse = {
     vars:{
     },

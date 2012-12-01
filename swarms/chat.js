@@ -1,4 +1,7 @@
-
+/**
+ *
+ * Chat swarm
+ */
 var addChatMsgSwarming =
 {
     meta:{

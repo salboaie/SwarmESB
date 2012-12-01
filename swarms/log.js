@@ -1,4 +1,7 @@
-
+/**
+ * Do logging
+ *
+ */
 var logSwarming =
 {
     meta:{

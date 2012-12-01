@@ -1,5 +1,5 @@
 /*
-   - swarm that testing startRemoteSwarm
+   Swarm that testing startRemoteSwarm
  */
 var remoteEcho = {
     meta:{

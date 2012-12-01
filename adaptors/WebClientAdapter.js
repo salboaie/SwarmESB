@@ -1,4 +1,7 @@
-
+/**
+ * Adapter that opens swarmESB to php or other environments that can't do sockets but can do REST
+ *
+ */
 var sutil = require('swarmutil');
 var journey = require('journey');
 
@@ -29,6 +32,12 @@ onRequestResponse = function(swarm, requestId){
     delete requestZone[requestId];
 }
 
+/**
+ *
+ * @param req
+ * @param res
+ * @param data
+ */
 function startMySwarm(req, res, data) {
     console.log(data);
     try{

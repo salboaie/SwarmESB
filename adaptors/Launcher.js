@@ -1,11 +1,12 @@
-
+/**
+ *
+ *  Launching other adapters
+ *
+ */
 require('swarmutil').createAdapter("Launcher",onReadyCallback);
-
 var childForker = require('child_process');
-
 var forkOptions;
 var forLaunch = getMyConfig().autorun;
-
 var howMany;
 
 function runAll(cmdObj,howMany){

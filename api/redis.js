@@ -1,3 +1,11 @@
+/**
+ *
+ * Multi tenant API for working with REDIS
+ * Warning: commands that are using more than one key are not properly implemented
+ *
+ */
+
+//TODO: review all commands and remove or fix them
 
 var redis = require("redis");
 

@@ -6,6 +6,10 @@
  * To change this template use File | Settings | File Templates.
  */
 
+/**
+ * Opens swarmESB to socket connections for tests, node.js clients, flex sockets
+ */
+
 var redisHost;
 var redisPort;
 
