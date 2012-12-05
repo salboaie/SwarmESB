@@ -10,9 +10,6 @@
  * Opens swarmESB to socket connections for tests, node.js clients, flex sockets
  */
 
-var redisHost;
-var redisPort;
-
 var sutil = require('swarmutil');
 
 thisAdapter = sutil.createAdapter("ClientAdapter", null, null, false);
