@@ -4,7 +4,11 @@
  */
 var sutil = require('swarmutil');
 
-thisAdapter = sutil.createAdapter("SIOClientAdapter", null, null, false);
+
+thisAdapter = sutil.createAdapter("SIOClientAdapter", null, function(swarm){
+    sendToSocket(swarm);
+}, false);
+
 //thisAdapter.loginSwarmingName   = "login.js";
 //globalVerbosity = true;
 

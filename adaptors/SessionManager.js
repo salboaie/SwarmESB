@@ -1,30 +1,32 @@
 /*
 How sessions are handled in swarmESB:
- SessionId
-     responseURI
-    actor:id
 
+ SessionManager configuration
+    - uuid
+    - maxSessions
+
+
+ SessionInfo:
+    sessionId
+
+    userId
+    tenantId
+    pendingCmds
+    isClosed
+
+ SessionId
+     responseURI: uuid of the entry adapter
+    clientSwarmletId
 
  session
-
- TCPOutlet
-
- WebSocketOutlet
-
- WebServiceOutlet
+     JSONOutlet
+     WebSocketOutlet
+     WebServiceOutlet
 
  */
+
 var uuid = require('node-uuid');
 var workerId = "worker:" + uuid.v4();
+thisAdapter = require('swarmutil').createAdapter(workerId,null);
 
-require('swarmutil').createAdapter(workerId,onReadyCallback);
-
-function onReadyCallback(){
-
-
-}
-
-
-doWork = function(){
-    //do something
-}
+thisAdapter.join("@SessionManager");
