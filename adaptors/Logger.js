@@ -1,3 +1,7 @@
+/**
+ * Logger adapter,overwrite doLog function or log.js swarm to handle logging in your environment
+ */
+
 var fs = require("fs");
 
 thisAdapter = require('swarmutil').createAdapter("Logger",onReadyCallback,null,false);

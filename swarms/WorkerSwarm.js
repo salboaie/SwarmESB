@@ -1,4 +1,8 @@
-
+/**
+ *
+ *  swarm example, used to start tasks in workers
+ *
+ */
 var workerSwarm =
 {
     vars:{

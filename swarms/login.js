@@ -1,4 +1,9 @@
+/**
+ *
+ * Login swarm is used to create valid sessions
+ */
 
+//TODO: clean in production, it is a place where you can put a backdoor for your authentication
 var loginSwarming =
 {
     meta:{

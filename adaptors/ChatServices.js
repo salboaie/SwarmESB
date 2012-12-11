@@ -4,6 +4,11 @@
  * Time: 10:52 PM
  */
 
+/**
+ *  demonstrate how to use out tenant aware redis API
+ *  demonstrate how to create a chat with swarms
+ */
+
 var api = require("../api/redis.js");
 thisAdapter = require('swarmutil').createAdapter("ChatServices",null,null,false);
 

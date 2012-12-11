@@ -1,6 +1,5 @@
 /*
-    - confirm execution at successful execution of a phase
-
+    Swarm used to confirm execution at successful execution of a phase
  */
 var confirmExecution = {
     vars:{

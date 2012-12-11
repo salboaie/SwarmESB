@@ -1,5 +1,10 @@
-/*
-    Used to store temporary state for swarms.
+/**
+ * Demo adapter to show simple implementation of a service balancer
+ *
+ * Can be easily used for services that are very heavy (like file conversion, complex computation,etc)
+ * While it is fast,and good it will not be so good in all cases
+ *
+ * More strategies are available (roundRobin, random, after perceived load)
  */
 
 
@@ -73,7 +78,7 @@ function lightLoadChoose(){
         var minPos      = 0;
         var minValue    = 0;
         for(var i=0;i<workersArray.length;i++){
-            if(workersArray[i].loadCounter <minValue){
+            if(workersArray[i].loadCounter < minValue){
                 minPos = i;
                 minValue = workersArray[i].loadCounter;
             }

@@ -6,8 +6,9 @@
  * To change this template use File | Settings | File Templates.
  */
 
-var redisHost;
-var redisPort;
+/**
+ * Opens swarmESB to socket connections for tests, node.js clients, flex sockets
+ */
 
 var sutil = require('swarmutil');
 

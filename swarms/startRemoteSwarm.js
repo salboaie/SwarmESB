@@ -1,3 +1,8 @@
+/**
+ *
+ * Used to start a swarm in another node or session
+ *
+ */
 
 var startRemoteSwarm =
 {

@@ -1,4 +1,7 @@
-
+/**
+ * Used by balancers and workers
+ *
+ */
 var workerManagement =
 {
     vars:{
