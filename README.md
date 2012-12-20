@@ -4,6 +4,9 @@
 SwarmESB presents a new approach for creating distributed systems comunicating by asynchronous messages.
 Swarming can be for SOA's orchestration what REST is for SOAP.
 
+![Overview](http://salboaie.github.com/images/swarm-diagram.png "SwarmESB")
+
+
 A "swarm" is a set of related messages with some basic inteligence and is based on an intuitive point of view: 
  computer processes communicating by asynchronous messages are more like "dumb trees/flowers" visited by "smart 
 swarms of bees" than "smart people" communicatig by "dumb messages". 
