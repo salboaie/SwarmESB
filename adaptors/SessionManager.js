@@ -29,4 +29,5 @@ var uuid = require('node-uuid');
 var workerId = "worker:" + uuid.v4();
 thisAdapter = require('swarmutil').createAdapter(workerId,null);
 
-thisAdapter.join("@SessionManagers","groupSessionManagers.js");
+thisAdapter.join("@SessionManagers","groupSessionManagers.js", "start");
+

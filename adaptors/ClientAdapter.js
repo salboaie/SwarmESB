@@ -63,7 +63,6 @@ findOutlet = function (sessionId) {
     return thisAdapter.connectedOutlets[sessionId];
 }
 
-
 renameSession = function (sessionId, forceId,onSubscribe) {
     var outlet = thisAdapter.connectedOutlets[sessionId];
     thisAdapter.connectedOutlets[forceId] = outlet;

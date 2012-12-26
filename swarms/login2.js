@@ -3,7 +3,7 @@
  * Login swarm, version 2
  */
 
-//TODO: clean in production, it is a place where you can put a backdoor for your authentication
+//TODO: check to be clean in production, it is an ideal place where you can put a backdoor for your authentication
 var loginSwarming =
 {
     meta:{
@@ -65,3 +65,4 @@ var loginSwarming =
 };
 
 loginSwarming;
+
