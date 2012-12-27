@@ -15,13 +15,13 @@ var util = require('swarmutil');
 var uuid = require('node-uuid');
 
 
-exports.newOutlet = function(communicationObject, sendFunction, closeFunction, isAutheticated){
-    var ctxt = new GenericOutlet(communicationObject, sendFunction, closeFunction, isAutheticated);
+exports.newOutlet = function(communicationObject, sendFunction, closeFunction, isAuthenticated){
+    var ctxt = new GenericOutlet(communicationObject, sendFunction, closeFunction, isAuthenticated);
 
     return ctxt;
 }
 
-function GenericOutlet(communicationObject, sendFunction, closeFunction, isAutheticated){
+function GenericOutlet(communicationObject, sendFunction, closeFunction, isAuthenticated){
     var sock            = communicationObject;
     var send            = sendFunction;
     var close           = closeFunction;
@@ -34,18 +34,22 @@ function GenericOutlet(communicationObject, sendFunction, closeFunction, isAuthe
 
     var currentExecute = null;
     var execute = function(messageObj){
-        dprint("Executing message from socket: " + J(messageObj));
+
         if(pendingCmds != null){
+            dprint("Pending... " + J(messageObj) );
             pendingCmds.push(messageObj);
         }
         else{
+            dprint("Executing message from socket: " + J(messageObj));
             currentExecute(messageObj);
         }
     }
+    this.executeFromSocket = execute;
+
 
     var sendPendingCmds = function(){
         for (var i = 0; i < pendingCmds.length; i++) {
-            currentExecute(this.pendingCmds[i]);
+            currentExecute(pendingCmds[i]);
 
         }
             pendingCmds = null;
@@ -57,10 +61,10 @@ function GenericOutlet(communicationObject, sendFunction, closeFunction, isAuthe
 
     var executeButNotAuthenticated = function (messageObj){
         if(messageObj.meta.swarmingName != thisAdapter.loginSwarmingName ){
-            logErr("Could not execute [" +messageObj.meta.swarmingName +"] swarming without being logged in");
-            close();
+            logErr("Could not execute [" + messageObj.meta.swarmingName + "] swarming without being logged in");
+            close(sock);
         }
-        else{
+        else {
             executeSafe(messageObj);
         }
     }
@@ -70,7 +74,6 @@ function GenericOutlet(communicationObject, sendFunction, closeFunction, isAuthe
             logErr("Unknown swarm required by a client: [" + messageObj.meta.swarmingName + "]");
             return;
         }
-
         beginExecutionContext(messageObj);
 
         try{
@@ -79,13 +82,15 @@ function GenericOutlet(communicationObject, sendFunction, closeFunction, isAuthe
                 if(messageObj.meta.ctor != undefined){
                     ctorName = messageObj.meta.ctor;
                 }
+                dprint("Starting swarm " + messageObj.meta.swarmingName);
                 var swarming = util.newSwarmPhase(messageObj.meta.swarmingName,ctorName, messageObj);
 
                 swarming.meta.command = "phase";
+                swarming.meta.entryAdapter = thisAdapter.nodeName;
+
                 var start = thisAdapter.compiledSwarmingDescriptions[messageObj.meta.swarmingName][ctorName];
                 var args = messageObj.meta.commandArguments;
                 delete swarming.meta.commandArguments;
-
 
                 if(start != undefined){
                     start.apply(swarming,args);
@@ -110,10 +115,10 @@ function GenericOutlet(communicationObject, sendFunction, closeFunction, isAuthe
         endExecutionContext();
     }
 
-    if(!isAutheticated){
+    if(!isAuthenticated){
         var identifyCmd = {
             meta                 : {
-                sessionId        : outlet.sessionId,
+                sessionId        : sessionId,
                 swarmingName     : "login.js",
                 command          : "identity"
             }
@@ -125,7 +130,7 @@ function GenericOutlet(communicationObject, sendFunction, closeFunction, isAuthe
         currentExecute = executeSafe;
     }
 
-    thisAdapter.connectedOutlets[sessionId] = this;
+    thisAdapter.addOutlet(sessionId, this);
 
     /**
      * Called when it is ready to communicate by pub/sub channels
@@ -138,11 +143,12 @@ function GenericOutlet(communicationObject, sendFunction, closeFunction, isAuthe
      *  something wrong happened to current connection
      */
     this.onCommunicationError = function(){
-        delete thisAdapter.connectedOutlets[this.sessionId];
-        //this.socket.destroy();
+        delete thisAdapter.deleteOutlet(this.sessionId);
+        close(sock);
         isClosed = true;
     }
 
+    this.destroy = this.onCommunicationError;
     /**
      * honey in current session got called in an adapter and we got it to send
      */
@@ -165,5 +171,13 @@ function GenericOutlet(communicationObject, sendFunction, closeFunction, isAuthe
             thisAdapter.connectedOutlets[oldSessionId] = null;
         }.bind(this),2000);
         this.sessionId = newSession;
+    }
+
+    this.successfulLogin = function (swarmingVariables) {
+        this.loginSwarmingVariables = swarmingVariables;
+        userId = swarmingVariables.userId;
+        currentExecute = executeSafe;
+        tenantId = swarmingVariables.getTenantId();
+        //this.onLoginCallback(this);
     }
 }

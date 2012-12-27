@@ -11,10 +11,14 @@
  */
 
 var sutil = require('swarmutil');
+var go = require('../core/GenericOutlet.js');
 
-thisAdapter = sutil.createAdapter("ClientAdapter", null, null, false);
+//it will take an UUID as node name
+thisAdapter = sutil.createAdapter();
 thisAdapter.loginSwarmingName   = "login.js";
-//globalVerbosity = true;
+thisAdapter.join("@TCP-ClientAdapaters");
+
+globalVerbosity = true;
 
 var myCfg = getMyConfig();
 var serverPort      = 3000;
@@ -33,17 +37,55 @@ if(myCfg.bindAddress != undefined){
 }
 new ClientTcpServer(serverPort,serverHost);
 
+function sendFunction(socket, obj){
+    sutil.writeObject(socket, obj);
+}
+
+function closeFunction(socket){
+    socket.destroy();
+}
+
+function watchSocketAndPushInOutlet(socket, outlet){
+    var parser = sutil.createFastParser(outlet.executeFromSocket);
+    socket.on('data', function (data){
+        var utfData = data.toString('utf8');
+        if(checkPolicy (utfData)){
+            return;
+        }
+        parser.parseNewData(utfData);
+    });
+}
+
 function ClientTcpServer(port,host){
     console.log("ClientAdapter is starting a TCP server on port " + port);
     var net   	= require('net');
     this.server = net.createServer(
         function (socket){
-            sutil.newOutlet(socket,loginCallback);
+            var outlet = go.newOutlet(socket, sendFunction, closeFunction);
+            socket.on('error',outlet.onCommunicationError.bind(outlet));
+            socket.on('close',outlet.onCommunicationError.bind(outlet));
+            watchSocketAndPushInOutlet(socket, outlet);
+            outlet.onHostReady(); //TODO: fix, we assume that all connections are coming after Redis is ready !?
         }
     );
     this.server.listen(port,host);
 }
 
+/**
+ * Check if the data looks like a policy file, flash request. Write the answer
+ * @param utfData
+ * @return {Boolean}
+ */
+function checkPolicy(utfData){
+    if(utfData.indexOf("<policy-file-request/>") != -1){
+        writePolicy(this.socket);
+        return true;
+    }
+    return false;
+}
+
+
+/*
 var map = {};
 function loginCallback(outlet){
     map[outlet.userId] = outlet;
@@ -67,7 +109,7 @@ renameSession = function (sessionId, forceId,onSubscribe) {
     var outlet = thisAdapter.connectedOutlets[sessionId];
     thisAdapter.connectedOutlets[forceId] = outlet;
     outlet.renameSession(forceId,onSubscribe);
-}
+} */
 
 var net = require("net");
 var policySocket = net.createServer(
