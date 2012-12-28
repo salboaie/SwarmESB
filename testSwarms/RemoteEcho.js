@@ -13,7 +13,7 @@ var remoteEcho = {
         assert.equal(param1,'testParam1');
         assert.equal(param2,'testParam2');
         this.echoSource = thisAdapter.nodeName ;
-        this.honey("notify");
+        this.home("notify");
     }
 }
 
