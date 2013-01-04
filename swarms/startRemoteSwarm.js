@@ -33,8 +33,7 @@ var startRemoteSwarm =
     findTenant:{ //phase that should be replaced. Use your own logging logic
         node:"entryAdapter",
         code : function (){
-
-            var o = thisAdapter.findOutlet(this.targetSession);
+            var o = thisAdapter.findOutlet(this.meta.outletId);
             if(o == undefined){
                 logErr("Trying to send a swarm in a wrong session " + this.targetSession);
             } else {
@@ -54,7 +53,6 @@ var startRemoteSwarm =
             for(var i = 0; i < this.arguments.length; i++){
                 args.push(this.arguments[i]);
             }
-
             startSwarm.apply(thisAdapter,args);
         }
     }

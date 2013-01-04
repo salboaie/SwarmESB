@@ -45,7 +45,7 @@ function closeFunction(socket){
     socket.destroy();
 }
 
-function watchSocketAndPushInOutlet(socket, outlet){
+function watchSocket(socket, outlet){
     var parser = sutil.createFastParser(outlet.executeFromSocket);
     socket.on('data', function (data){
         var utfData = data.toString('utf8');
@@ -64,8 +64,8 @@ function ClientTcpServer(port,host){
             var outlet = go.newOutlet(socket, sendFunction, closeFunction);
             socket.on('error',outlet.onCommunicationError.bind(outlet));
             socket.on('close',outlet.onCommunicationError.bind(outlet));
-            watchSocketAndPushInOutlet(socket, outlet);
-            outlet.onHostReady(); //TODO: fix, we assume that all connections are coming after Redis is ready !?
+            watchSocket(socket, outlet);
+            outlet.onHostReady(); //TODO: fix, we assume that all connections are coming after Redis is ready
         }
     );
     this.server.listen(port,host);

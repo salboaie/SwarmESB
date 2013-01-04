@@ -16,9 +16,8 @@ var uuid = require('node-uuid');
 
 
 exports.newOutlet = function(communicationObject, sendFunction, closeFunction, isAuthenticated){
-    var ctxt = new GenericOutlet(communicationObject, sendFunction, closeFunction, isAuthenticated);
-
-    return ctxt;
+    var outlet = new GenericOutlet(communicationObject, sendFunction, closeFunction, isAuthenticated);
+    return outlet;
 }
 
 function GenericOutlet(communicationObject, sendFunction, closeFunction, isAuthenticated){
@@ -28,13 +27,14 @@ function GenericOutlet(communicationObject, sendFunction, closeFunction, isAuthe
 
     var pendingCmds     =  new Array();
     var sessionId       = uuid.v4();
+    var outletId        = uuid.v4();
+
     var isClosed        = false;
     var userId          = null;
     var tenantId        = null;
 
     var currentExecute = null;
     var execute = function(messageObj){
-
         if(pendingCmds != null){
             dprint("Pending... " + J(messageObj) );
             pendingCmds.push(messageObj);
@@ -50,7 +50,6 @@ function GenericOutlet(communicationObject, sendFunction, closeFunction, isAuthe
     var sendPendingCmds = function(){
         for (var i = 0; i < pendingCmds.length; i++) {
             currentExecute(pendingCmds[i]);
-
         }
             pendingCmds = null;
             /* CHECK !?
@@ -82,12 +81,13 @@ function GenericOutlet(communicationObject, sendFunction, closeFunction, isAuthe
                 if(messageObj.meta.ctor != undefined){
                     ctorName = messageObj.meta.ctor;
                 }
-                dprint("Starting swarm " + messageObj.meta.swarmingName);
+                dprint("Starting swarm " + messageObj.meta.swarmingName + " in outlet: " + outletId);
                 var swarming = util.newSwarmPhase(messageObj.meta.swarmingName,ctorName, messageObj);
 
                 swarming.meta.command = "phase";
                 swarming.meta.entryAdapter = thisAdapter.nodeName;
 
+                swarming.meta.outletId = outletId;
                 var start = thisAdapter.compiledSwarmingDescriptions[messageObj.meta.swarmingName][ctorName];
                 var args = messageObj.meta.commandArguments;
                 delete swarming.meta.commandArguments;
@@ -101,7 +101,7 @@ function GenericOutlet(communicationObject, sendFunction, closeFunction, isAuthe
             }
             else
             if(messageObj.meta.command == "phase"){
-                //TODO: fix it, looks wrong.. not used yet, isn't it?
+                //TODO: fix it, looks wrong.. never used yet, isn't it?
                 var swarming = util.newSwarmPhase(messageObj.meta.swarmingName,messageObj);
                 swarming.swarm(swarming.currentPhase);
             }
@@ -115,22 +115,6 @@ function GenericOutlet(communicationObject, sendFunction, closeFunction, isAuthe
         endExecutionContext();
     }
 
-    if(!isAuthenticated){
-        var identifyCmd = {
-            meta                 : {
-                sessionId        : sessionId,
-                swarmingName     : "login.js",
-                command          : "identity"
-            }
-        };
-
-        send(sock, identifyCmd);
-        currentExecute = executeButNotAuthenticated;
-    } else{
-        currentExecute = executeSafe;
-    }
-
-    thisAdapter.addOutlet(sessionId, this);
 
     /**
      * Called when it is ready to communicate by pub/sub channels
@@ -143,7 +127,7 @@ function GenericOutlet(communicationObject, sendFunction, closeFunction, isAuthe
      *  something wrong happened to current connection
      */
     this.onCommunicationError = function(){
-        delete thisAdapter.deleteOutlet(this.sessionId);
+        thisAdapter.deleteOutlet(this);
         close(sock);
         isClosed = true;
     }
@@ -165,12 +149,12 @@ function GenericOutlet(communicationObject, sendFunction, closeFunction, isAuthe
     }
 
     this.renameSession = function(newSession){
-        var oldSessionId = this.sessionId;
+        /*var oldSessionId = this.sessionId;
         setTimeout(function(){
             //cleanings after 2 seconds
             thisAdapter.connectedOutlets[oldSessionId] = null;
-        }.bind(this),2000);
-        this.sessionId = newSession;
+        }.bind(this),2000); */
+        sessionId = newSession;
     }
 
     this.successfulLogin = function (swarmingVariables) {
@@ -180,4 +164,27 @@ function GenericOutlet(communicationObject, sendFunction, closeFunction, isAuthe
         tenantId = swarmingVariables.getTenantId();
         //this.onLoginCallback(this);
     }
+
+
+    this.getOutletId = function(){
+        return outletId;
+    }
+
+    // should remain at the end of constructor
+    if(!isAuthenticated){
+        var identifyCmd = {
+            meta                 : {
+                sessionId        : sessionId,
+                swarmingName     : "login.js",
+                command          : "identity"
+            }
+        };
+
+        send(sock, identifyCmd);
+        currentExecute = executeButNotAuthenticated;
+    } else{
+        currentExecute = executeSafe;
+    }
+
+    thisAdapter.addOutlet(this);
 }
