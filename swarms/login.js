@@ -39,6 +39,35 @@ var loginSwarming =
             this.swarm("failed", this.clientAdapter);
         }
     },
+    authenticate:function(clientSessionId, userId, authorisationToken){
+        this.authenticated = false;
+        this.clientAdapter = thisAdapter.nodeName;
+
+        this.setSessionId(clientSessionId);
+
+        this.userId             = userId;
+        this.authorisationToken = authorisationToken;
+        
+        this.swarm("validateAuth",this.clientAdapter);
+    },
+    validateAuth:{
+        node: ";ClientAdapter",
+        code: function() {
+                    var success = function(data)
+                    {
+                        this.isOk = true;
+                        this.authorization = data;
+                        this.forceSessionId = data['token'];
+                        this.swarm("renameSession", this.clientAdapter);
+                    }.bind(this);
+
+                    var failed = function(data)
+                    {
+                        this.swarm("failed");
+                    }.bind(this);
+                    makeCall(this.authorisationToken,success,failed);
+               }
+    },
     register:{
         node: "@SessionManagers",
         code: function() {
@@ -82,7 +111,7 @@ var loginSwarming =
             this.meta.changeSessionId = true;
             outlet.successfulLogin(this);
             //console.log('Session set for ' + this.userId + ' [' + this.getSessionId() + ']');
-            this.home("success");
+            this.swarm("enableSwarms", this.clientAdapter);
         }
     }
 };

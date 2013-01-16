@@ -4,7 +4,7 @@ var notificationsSwarming =
         name:"notifications.js"
     },
     vars:{
-        debug:false
+        debug:true
     },
     recordMessage:function(roomId,userId,date,message,objectId)
     {
@@ -98,7 +98,7 @@ var notificationsSwarming =
         {
             var resultHandler = function(pageArray){
                 this.pageArray = pageArray;
-                this.swarm("pageAnswer",this.currentSession());
+                this.home("pageAnswer");
             }.bind(this);
             getPage(this.roomId,this.pageNumber,this.pageSize,resultHandler);
         }

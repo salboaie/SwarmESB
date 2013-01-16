@@ -6,8 +6,8 @@ var util                = require("swarmutil");
 var assert              = require('assert');
 
 //globalVerbosity = true;
-swarmSettings.authentificationMethod = "testCtor";
-var client             = util.createClient(adapterHost, adapterPort, "testLoginUser", "ok","testTenant");
+swarmSettings.authentificationMethod = "testForceSessionId";
+var client             = util.createClient(adapterHost, adapterPort, "testLoginUser", "testSession","testTenant");
 
 client.startSwarm("LaunchingTest.js","clientCtor");
 client.on("LaunchingTest.js",getGreetings);
@@ -19,7 +19,7 @@ function getGreetings(obj){
 }
 
 function getEchoGreetings(obj){
-    msg = "OK!";
+    msg = obj.succes ;
     console.log(obj);
 }
 

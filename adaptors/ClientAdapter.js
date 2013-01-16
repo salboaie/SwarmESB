@@ -20,9 +20,9 @@ thisAdapter.join("@TCP-ClientAdapaters");
 
 globalVerbosity = true;
 
-var myCfg = getMyConfig();
+var myCfg = getMyConfig("ClientAdapater");
 var serverPort      = 3000;
-var serverHost      =  "localhost";
+var serverHost      = "localhost";
 
 if(myCfg.port != undefined){
     serverPort = myCfg.port;
@@ -126,3 +126,56 @@ policySocket.once('error', function (error) {
 policySocket.listen(843);
 
 
+makeCall = function(authorisationToken,successCallBack,failedCallBack) {
+
+    var http = require('http');
+    var config = getMyConfig("Core");
+    var authServiceURL = config['authPath'] ? config['authPath'] : '';
+        authServiceURL = authServiceURL.replace('[token]', authorisationToken);
+
+    var params = {
+        host: config['authHost'],
+        port: config['authPort'],
+        path: authServiceURL,
+        method: 'GET'
+    };
+
+    var request = http.request(params, function(response){
+        var buffers = [];
+
+        response.addListener('data', function (chunk) {
+            buffers.push(chunk);
+        });
+
+        response.addListener('end', function () {
+            var responseData = Buffer.concat(buffers);
+            try {
+                var authResponse = JSON.parse( responseData.toString() );
+
+                if (authResponse.hasOwnProperty('error')) {
+                    failedCallBack(responseData);
+                } else {
+                    successCallBack(authResponse);
+                    /*this.isOk = true;
+
+                    this.authorization = authResponse;
+                    this.forceSessionId = authResponse['token'];
+
+                    this.swarm("renameSession");*/
+                }
+            } catch (err) {
+               failedCallBack(responseData);
+            }
+        }.bind(this));
+
+        response.addListener('error', function(error){
+            failedCallBack(responseData);
+        }.bind(this));
+    });
+
+    request.addListener('error', function(error){
+        failedCallBack(responseData);
+    }.bind(this));
+
+    request.end();
+}

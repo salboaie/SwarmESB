@@ -9,9 +9,9 @@ thisAdapter = sutil.createAdapter("WebClientAdapter", null, null, false);
 //thisAdapter.loginSwarmingName   = "login.js";
 //globalVerbosity = true;
 
-var myCfg = getMyConfig();
+var myCfg = getMyConfig("WebClientAdapter");
 var serverPort      = 8000;
-var serverHost      =  "localhost";
+var serverHost      = "localhost";
 
 if(myCfg.port != undefined){
     serverPort = myCfg.port;
