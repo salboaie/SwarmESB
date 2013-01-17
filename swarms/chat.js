@@ -46,7 +46,7 @@ var addChatMsgSwarming =
         code : function (){
             var f = function(pageArray){
                 this.pageArray = pageArray;
-                this.swarm("pageAnswer",this.currentSession());
+                this.home("pageAnswer");
             }.bind(this);
             getPage(this.roomId,this.pageNumber,this.pageSize,f);
         }
@@ -59,16 +59,9 @@ var addChatMsgSwarming =
                 //cprint("Followers:" + reply);
                 for(var i=0;i<reply.length;i++) {
                     this.currentTargetUser = reply[i];
-                    this.swarm("directNotification");
+                    this.toUser(this.currentTargetUser);
                 }
             }.bind(this) );
-        }
-    },
-    directNotification:{   //notify connected clients
-        node:"ClientAdapter",
-        code : function (){
-            var clientSessionId = findConnectedClientByUserId(this.currentTargetUser);
-            this.swarm("notifyChatMessage",clientSessionId);
         }
     },
     notifyChatMessage:{ //notify different clients about a new chat message

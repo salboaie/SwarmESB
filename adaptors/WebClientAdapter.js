@@ -2,8 +2,9 @@
  * Adapter that opens swarmESB to php or other environments that can't do sockets but can do REST
  *
  */
-var sutil = require('swarmutil');
+var sutil   = require('swarmutil');
 var journey = require('journey');
+var util    = require("util");
 
 thisAdapter = sutil.createAdapter("WebClientAdapter", null, null, false);
 //thisAdapter.loginSwarmingName   = "login.js";
@@ -25,11 +26,19 @@ if(myCfg.bindAddress != undefined){
     }
 }
 
-var requestZone = {};
+function requestOutlet(request, response){
+    var outletId =  generateUID();
+    this.getOutletId = function(){
+        return  outletId;
+    }
 
-onRequestResponse = function(swarm, requestId){
-    requestZone[requestId].send(swarm);
-    delete requestZone[requestId];
+    this.onHoney = function(swarm) {
+        console.log("Honey:" + J(swarm));
+        //res.send(200,J(swarm));
+        //response.writeHead(200, result.headers);
+        response.end(J(swarm));
+        thisAdapter.deleteOutlet(this);
+    }
 }
 
 /**
@@ -38,23 +47,31 @@ onRequestResponse = function(swarm, requestId){
  * @param res
  * @param data
  */
-function startMySwarm(req, res, data) {
-    console.log(data);
+function startMySwarm(req, res, jo) {
     try{
-        var jo = typeof(data) === 'string' ? JSON.parse(data) : data;
-        var reqId = generateUID();
-        requestZone[reqId] = res;
+
+        cprint("Cucu " + J(jo));
+        //var jo = typeof(data) === 'string' ? JSON.parse(data) : data;
+
+         //dprint("Start swarm request " + util. data);
+
+        var reqOutlet = new requestOutlet(req, res);
+        thisAdapter.addOutlet(reqOutlet);
+
         if(jo.targetAdapter == undefined) {
             jo.targetAdapter = thisAdapter.nodeName;
         }
-        startSwarm("startRemoteSwarm.js",
-            "start",
-            jo.targetAdapter,
-            jo.session,
-            jo.swarm,
-            jo.ctor,
-            thisAdapter.nodeName+":"+reqId,
-            jo.args);
+
+        var args = [];
+        args.push(jo.targetAdapter);
+        args.push(jo.session);
+        args.push(jo.swarm);
+        args.push(jo.ctor);
+        args.push(reqOutlet.getOutletId());
+        for(var i=0; i< jo.args.length; i++){
+            args.push(jo.args[i]);
+        }
+        startRemoteSwarm.apply(null,args);
     } catch(err){
         logErr("Wrong request ", err);
     }
@@ -65,20 +82,27 @@ var router = new(journey.Router);
 // Create the routing table
 router.map(function () {
     this.root.bind(function (req, res) { res.send("Welcome"); });
-    this.put(/startSwarm/).bind(startMySwarm);
+    this.route('/startSwarm').bind(startMySwarm);
+    //this.put(/startSwarm/).bind(startMySwarm);
+    //this.get(/startSwarm/).bind(startMySwarm);
 });
 
 require('http').createServer(function (request, response) {
+
     var body = "";
     request.addListener('data', function (chunk) { body += chunk });
     request.addListener('end', function () {
         //
         // Dispatch the request to the router
         //
-        router.handle(request, body, function (result) {
+        var utfData = body.toString('utf8');
+        var obj =   JSON.parse(utfData);
+        //startMySwarm(request,response, obj);
+        router.handle(request, utfData, function (result) {
             response.writeHead(result.status, result.headers);
             response.end(result.body);
         });
+
     });
 }).listen(serverPort,serverHost);
 

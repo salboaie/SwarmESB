@@ -81,17 +81,18 @@ function GenericOutlet(communicationObject, sendFunction, closeFunction, isAuthe
                 if(messageObj.meta.ctor != undefined){
                     ctorName = messageObj.meta.ctor;
                 }
-                dprint("Starting swarm " + messageObj.meta.swarmingName + " in outlet: " + outletId);
+                dprint("Outlet: Starting swarm " + messageObj.meta.swarmingName + " in outlet: " + outletId);
                 var swarming = util.newSwarmPhase(messageObj.meta.swarmingName,ctorName, messageObj);
 
                 swarming.meta.command = "phase";
                 swarming.meta.entryAdapter = thisAdapter.nodeName;
-
                 swarming.meta.outletId = outletId;
+
                 var start = thisAdapter.compiledSwarmingDescriptions[messageObj.meta.swarmingName][ctorName];
                 var args = messageObj.meta.commandArguments;
                 delete swarming.meta.commandArguments;
 
+                //cprint("GO:" + J(args));
                 if(start != undefined){
                     start.apply(swarming,args);
                 }
@@ -162,12 +163,17 @@ function GenericOutlet(communicationObject, sendFunction, closeFunction, isAuthe
         userId = swarmingVariables.userId;
         currentExecute = executeSafe;
         tenantId = swarmingVariables.getTenantId();
+        startSwarm("SessionActivity.js", "start", sessionId, tenantId, userId);
         //this.onLoginCallback(this);
     }
 
 
     this.getOutletId = function(){
         return outletId;
+    }
+
+    this.getSessionId = function(){
+        return sessionId;
     }
 
     // should remain at the end of constructor

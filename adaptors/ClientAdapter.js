@@ -18,7 +18,7 @@ thisAdapter = sutil.createAdapter();
 thisAdapter.loginSwarmingName   = "login.js";
 thisAdapter.join("@TCP-ClientAdapaters");
 
-globalVerbosity = true;
+//globalVerbosity = true;
 
 var myCfg = getMyConfig("ClientAdapater");
 var serverPort      = 3000;

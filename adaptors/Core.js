@@ -7,6 +7,3 @@
 // TODO: Make swarm descriptions loading explicit in Core... !?
 
 thisAdapter = require('swarmutil').createAdapter("Core");
-
-
-

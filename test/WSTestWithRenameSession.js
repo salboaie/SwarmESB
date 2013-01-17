@@ -19,13 +19,13 @@ function getGreetings(obj){
 }
 
 function getEchoGreetings(obj){
-    msg = obj.succes ;
+    msg = obj.success ;
     console.log(obj);
 }
 
 setTimeout (
     function(){
-        assert.equal(msg,"OK!");
+        assert.equal(msg,"OK");
         process.exit(1);
     },
     1000);

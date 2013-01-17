@@ -15,10 +15,13 @@ var startRemoteSwarm =
         userId:null,
         debug:"false"
     },
-    start:function(targetAdapter, targetSession, swarmingName, ctorName, responseURI, arguments){
+    start:function(targetAdapter, targetSession, swarmingName, ctorName, outletId, arguments){
         this.targetAdapter          = targetAdapter;
         this.targetSession          = targetSession;
-        this.meta.responseURI       = responseURI;
+        if(outletId){
+            this.meta.outletId          = outletId;
+        }
+        this.meta.entryAdapter      = thisAdapter.nodeName;
 
         if(this.targetSession == null){
             this.targetSession      = this.getSessionId();
@@ -28,18 +31,22 @@ var startRemoteSwarm =
         this.ctorName       = ctorName;
         this.arguments      = arguments;
 
-        this.swarm("findTenant", this.meta.entryAdapter);
+        if(!this.meta.outletId){
+            logErr("No outletId was given when starting remote swarm " + swarmingName);
+        }
+
+        this.swarm("findTenant");
     },
-    findTenant:{ //phase that should be replaced. Use your own logging logic
-        node:"entryAdapter",
-        code : function (){
-            var o = thisAdapter.findOutlet(this.meta.outletId);
-            if(o == undefined){
-                logErr("Trying to send a swarm in a wrong session " + this.targetSession);
-            } else {
-                this.setTenantId(o.getTenantId());
-                cprint("Launching in : " + this.targetAdapter);
+    findTenant:{
+        node:"SessionsRegistry",
+        code: function(){
+            var tenantId = getTenantForSession(this.targetSession);
+            if(tenantId) {
+                this.setTenantId(tenantId);
+                cprint("Launching remote swarm " + this.swarmingName + " in " + this.targetAdapter);
                 this.swarm("launch", this.targetAdapter);
+            } else{
+                logErr("Dropping the request of starting swarm \"" +  this.swarmingName + "\" in a unknown session " + this.targetSession);
             }
         }
     },
@@ -53,6 +60,7 @@ var startRemoteSwarm =
             for(var i = 0; i < this.arguments.length; i++){
                 args.push(this.arguments[i]);
             }
+            cprint("Launching for outlet " + this.meta.outletId + " " );
             startSwarm.apply(thisAdapter,args);
         }
     }

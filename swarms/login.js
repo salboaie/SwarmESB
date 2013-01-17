@@ -7,7 +7,7 @@
 var loginSwarming =
 {
     meta:{
-        debug: true,
+        debug: false,
         renameSession:false
     },
     vars:{
@@ -79,7 +79,7 @@ var loginSwarming =
         node:"this.clientAdapter",
         code : function (){
             var outlet = thisAdapter.findOutlet(this.meta.outletId);
-            cprint("Enabling:" + this.meta.outletId);
+            dprint("Enabling outlet:" + this.meta.outletId);
             if(outlet){
                 outlet.successfulLogin(this);
                 logInfo("Successful login for user " + this.userId );
