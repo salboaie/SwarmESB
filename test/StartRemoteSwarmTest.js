@@ -15,12 +15,12 @@ client.on("RemoteEcho.js",getGreetings);
 
 var msg = "none";
 function getGreetings(obj){
-    msg = obj.echoSource;
+    msg = obj.success ;
 }
 
 setTimeout (
     function(){
-        assert.equal(msg,"Core");
+        assert.equal(msg,"OK");
         process.exit(1);
     },
     1000);

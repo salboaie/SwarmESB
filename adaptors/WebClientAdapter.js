@@ -32,6 +32,10 @@ function requestOutlet(request, response){
         return  outletId;
     }
 
+    this.getSessionId = function(){
+        return outletId;
+    }
+
     this.onHoney = function(swarm) {
         console.log("Honey:" + J(swarm));
         //res.send(200,J(swarm));
@@ -39,6 +43,8 @@ function requestOutlet(request, response){
         response.end(J(swarm));
         thisAdapter.deleteOutlet(this);
     }
+
+
 }
 
 /**
@@ -97,11 +103,11 @@ require('http').createServer(function (request, response) {
         //
         var utfData = body.toString('utf8');
         var obj =   JSON.parse(utfData);
-        //startMySwarm(request,response, obj);
-        router.handle(request, utfData, function (result) {
+        startMySwarm(request,response, obj);
+        /*router.handle(request, utfData, function (result) {
             response.writeHead(result.status, result.headers);
             response.end(result.body);
-        });
+        });*/
 
     });
 }).listen(serverPort,serverHost);

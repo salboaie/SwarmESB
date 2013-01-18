@@ -20,7 +20,7 @@ thisAdapter.join("@TCP-ClientAdapaters");
 
 //globalVerbosity = true;
 
-var myCfg = getMyConfig("ClientAdapater");
+var myCfg = getMyConfig("ClientAdapter");
 var serverPort      = 3000;
 var serverHost      = "localhost";
 
