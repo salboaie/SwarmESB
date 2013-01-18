@@ -14,7 +14,6 @@ var notificationsSwarming =
         this.message    = message;
         this.objectId   = objectId;
         this.swarm("recordMsg");
-        this.honey("notify");
     },
     sendMessage:function(roomId,userId,date,message,objectId)
     {
@@ -24,7 +23,6 @@ var notificationsSwarming =
         this.message    = message;
         this.objectId   = objectId;
         this.swarm("sendMsg");
-        this.honey("notify");
     },
     getPage:function(roomId, pageNumber, pageSize)
     {
@@ -112,18 +110,11 @@ var notificationsSwarming =
                 for(var i=0;i<reply.length;i++)
                 {
                     this.currentTargetUser = reply[i];
-                    this.swarm("directNotification");
+                    this.toUser(this.currentTargetUser);
                 }
+
+                this.home("notify");
             }.bind(this) );
-        }
-    },
-    directNotification:
-    {
-        node:"ClientAdapter",
-        code : function ()
-        {
-            var clientSessionId = findConnectedClientByUserId(this.currentTargetUser);
-            this.swarm("notifyChatMessage",clientSessionId);
         }
     },
     notifyChatMessage:
