@@ -110,6 +110,7 @@ var notificationsSwarming =
                 for(var i=0;i<reply.length;i++)
                 {
                     this.currentTargetUser = reply[i];
+                    console.log("TO USER : "+this.currentTargetUser);
                     this.toUser(this.currentTargetUser);
                 }
 

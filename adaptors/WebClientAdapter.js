@@ -38,8 +38,6 @@ function requestOutlet(request, response){
 
     this.onHoney = function(swarm) {
         console.log("Honey:" + J(swarm));
-        //res.send(200,J(swarm));
-        //response.writeHead(200, result.headers);
         response.end(J(swarm));
         thisAdapter.deleteOutlet(this);
     }

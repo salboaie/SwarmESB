@@ -18,6 +18,7 @@ var startRemoteSwarm =
     start:function(targetAdapter, targetSession, swarmingName, ctorName, outletId, arguments){
         this.targetAdapter          = targetAdapter;
         this.targetSession          = targetSession;
+
         if(outletId){
             this.meta.outletId          = outletId;
         }
@@ -26,6 +27,7 @@ var startRemoteSwarm =
         if(this.targetSession == null){
             this.targetSession      = this.getSessionId();
         }
+
         this.setSessionId(this.targetSession);
         this.swarmingName   = swarmingName;
         this.ctorName       = ctorName;

@@ -27,7 +27,7 @@ function GenericOutlet(communicationObject, sendFunction, closeFunction, isAuthe
 
     var pendingCmds     =  new Array();
     var sessionId       = uuid.v4();
-    var outletId        = uuid.v4();
+    var outletId        = "GO"+uuid.v4();
 
     var isClosed        = false;
     var userId          = null;
@@ -155,6 +155,7 @@ function GenericOutlet(communicationObject, sendFunction, closeFunction, isAuthe
             //cleanings after 2 seconds
             thisAdapter.connectedOutlets[oldSessionId] = null;
         }.bind(this),2000); */
+        thisAdapter.renameSession(sessionId,newSession);
         sessionId = newSession;
     }
 

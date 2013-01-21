@@ -4,10 +4,11 @@ var util                = require("swarmutil");
 var assert              = require('assert');
 var client;
 
-swarmSettings.authentificationMethod = "testForceSessionId";
+swarmSettings.authentificationMethod = "authenticate";
 
 
-client = util.createClient(adapterHost, adapterPort, "testLoginUser", "testSession","testTenant");
+client = util.createClient(adapterHost, adapterPort, "marius.ciocan", "123456789","mac_tenant");
+
 client.startSwarm("LaunchingTest.js","clientCtor");
 client.on("LaunchingTest.js",getGreetings);
 

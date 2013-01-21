@@ -63,7 +63,7 @@ var loginSwarming =
 
                     var failed = function(data)
                     {
-                        this.swarm("failed");
+                        this.swarm("failed",this.clientAdapter);
                     }.bind(this);
                     makeCall(this.authorisationToken,success,failed);
                }
@@ -103,7 +103,7 @@ var loginSwarming =
         }
     },
     renameSession: {
-        node:"ClientAdapter",
+        node:";ClientAdapter",
         code : function () {
             var outlet = thisAdapter.findOutlet(this.meta.outletId);
             outlet.renameSession(this.forceSessionId);
