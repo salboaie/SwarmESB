@@ -109,7 +109,7 @@ var loginSwarming =
             outlet.renameSession(this.forceSessionId);
             this.setSessionId(this.forceSessionId);
             this.meta.changeSessionId = true;
-            outlet.successfulLogin(this);
+            //outlet.successfulLogin(this);
             //console.log('Session set for ' + this.userId + ' [' + this.getSessionId() + ']');
             this.swarm("enableSwarms", this.clientAdapter);
         }

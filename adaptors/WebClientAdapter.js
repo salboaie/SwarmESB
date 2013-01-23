@@ -37,7 +37,7 @@ function requestOutlet(request, response){
     }
 
     this.onHoney = function(swarm) {
-        console.log("Honey:" + J(swarm));
+        console.log("WebClientAdapter Honey:" + J(swarm));
         response.end(J(swarm));
         thisAdapter.deleteOutlet(this);
     }
@@ -99,8 +99,18 @@ require('http').createServer(function (request, response) {
         //
         // Dispatch the request to the router
         //
-        var utfData = body.toString('utf8');
-        var obj =   JSON.parse(utfData);
+        var utfData = body.toString('utf8');        
+
+        var obj= {};
+        try
+        {
+             obj = JSON.parse(utfData);
+        }
+        catch(err){                        
+            response.end("Wrong format!");
+            return;
+        }
+        
         startMySwarm(request,response, obj);
         /*router.handle(request, utfData, function (result) {
             response.writeHead(result.status, result.headers);

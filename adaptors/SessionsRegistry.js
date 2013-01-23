@@ -51,8 +51,9 @@ sendSwarmToUser = function (userName, swarm){
     var swarming = util.newSwarmPhase(swarm.meta.swarmingName, "toUser", swarm);
     var session =  users[userName];
     if(session){
-        swarming.meta.honeyRequest = true;
+        swarming.meta.toUserRequest = true;
         swarming.meta.entryAdapter = session.entryAdapter;
+        swarming.meta.sessionId = session.sessionId;
         swarming.swarm("toUser", session.entryAdapter);
     } else{
         cprint("Dropping message towards offline user " + userName);

@@ -138,6 +138,9 @@ function GenericOutlet(communicationObject, sendFunction, closeFunction, isAuthe
      * honey in current session got called in an adapter and we got it to send
      */
     this.onHoney = function(swarm){
+
+            console.log("GO Honey : "+M(swarm));
+
         send(sock, swarm);
     }
 

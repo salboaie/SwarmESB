@@ -105,17 +105,21 @@ var notificationsSwarming =
     {
         node:"NotificationServices",
         code : function (){
+            cprint("notifyAll start");
             getFollowers(this.roomId, function(reply)
             {
+                cprint("getFollowers start");
                 for(var i=0;i<reply.length;i++)
                 {
                     this.currentTargetUser = reply[i];
                     console.log("TO USER : "+this.currentTargetUser);
+                    console.log(JSON.stringify(this));
                     this.toUser(this.currentTargetUser);
                 }
-
+                cprint("getFollowers end");
                 this.home("notify");
             }.bind(this) );
+            cprint("notifyAll end");
         }
     },
     notifyChatMessage:
