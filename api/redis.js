@@ -12,6 +12,8 @@ var redis = require("redis");
 exports.newRedisContext = function(redisPort,redisHost,context){
     var ctxt = new RedisContext(context);
     ctxt.client = redis.createClient(redisPort,redisHost);
+    ctxt.client.retry_delay  = 2000;
+    ctxt.client.max_attempts = 20;
 
     return ctxt;
 }
