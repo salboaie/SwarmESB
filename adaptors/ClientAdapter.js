@@ -42,7 +42,7 @@ function sendFunction(socket, obj){
 }
 
 function closeFunction(socket){
-    socket.destroy();
+    socket.end();
 }
 
 function watchSocket(socket, outlet){

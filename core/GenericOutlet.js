@@ -139,7 +139,7 @@ function GenericOutlet(communicationObject, sendFunction, closeFunction, isAuthe
      */
     this.onHoney = function(swarm){
 
-            console.log("GO Honey : "+M(swarm));
+            //console.log("GO Honey : "+M(swarm));
 
         send(sock, swarm);
     }
