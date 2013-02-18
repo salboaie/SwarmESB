@@ -20,8 +20,8 @@ saveChatMessage = function(roomId,userId,date,message){
     redisContext.lpush(roomId+"/room",JSON.stringify(json));
 }
 
-getPage = function(roomId, pageNumber, pageLines,callBack) {
-    redisContext.lrange(roomId+"/room",pageNumber*pageLines,(pageNumber+1)*pageLines,callBack);
+getPage = function(roomId, start, end,callBack) {
+    redisContext.lrange(roomId+"/room",start,end,callBack);
 }
 
 follow = function (resourceId,userId){

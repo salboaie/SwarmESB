@@ -18,10 +18,10 @@ var addChatMsgSwarming =
         this.message    = message;
         this.swarm("recordMsg");
     },
-    getPage:function(roomId, pageNumber, pageSize){
+    getPage:function(roomId, start, end){
         this.roomId     = roomId;
-        this.pageNumber = pageNumber;
-        this.pageSize   = pageSize;
+        this.start      = start;
+        this.end        = end;
         this.swarm("returnPage");
     },
     deleteRoomMessages:function(roomId){
@@ -48,7 +48,7 @@ var addChatMsgSwarming =
                 this.pageArray = pageArray;
                 this.home("pageAnswer");
             }.bind(this);
-            getPage(this.roomId,this.pageNumber,this.pageSize,f);
+            getPage(this.roomId,this.start,this.end,f);
         }
     },
     notifyAll:{   //phase
