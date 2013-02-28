@@ -1,7 +1,7 @@
-var notificationsSwarming =
+var historyManagerSwarming =
 {
     meta:{
-        name:"notifications.js"
+        name:"HistoryManager.js"
     },
     vars:{
         debug:true
@@ -24,23 +24,17 @@ var notificationsSwarming =
         this.objectId   = objectId;
         this.swarm("sendMsg");
     },
-    getPage:function(roomId, pageNumber, pageSize)
+    getPage:function(roomId, start, end)
     {
         this.roomId     = roomId;
-        this.pageNumber = pageNumber;
-        this.pageSize   = pageSize;
+        this.start      = start;
+        this.end        = end;
         this.swarm("returnPage");
     },
     deleteRoomMessages:function(roomId)
     {
         this.roomId     = roomId;
         this.swarm("doClean");
-    },
-    deleteMessageById:function(roomId,objectId)
-    {
-        this.roomId     = roomId;
-        this.objectId   = objectId;
-        this.swarm("deleteMessage");
     },
     follow:function (roomId, userId)
     {
@@ -50,14 +44,14 @@ var notificationsSwarming =
     },
     doFollow:
     {
-        node:"NotificationServices",
+        node:"HistoryManager",
         code:function ()
         {
             follow(this.roomId, this.userId);
         }
     },
     recordMsg:{
-        node:"NotificationServices",
+        node:"HistoryManager",
         code : function ()
         {
             saveChatMessage(this.roomId,this.userId,this.date,this.message,this.objectId);
@@ -65,7 +59,7 @@ var notificationsSwarming =
         }
     },
     sendMsg:{
-        node:"NotificationServices",
+        node:"HistoryManager",
         code : function ()
         {
             this.swarm("notifyAll");
@@ -73,37 +67,27 @@ var notificationsSwarming =
     },
     doClean:
     {
-        node:"NotificationServices",
+        node:"HistoryManager",
         code : function ()
         {
             cleanRoom(this.roomId);
         }
     },
-    deleteMessage:
-    {
-        node:"NotificationServices",
-        code : function ()
-        {
-            deleteMessageById(this.roomId,this.objectId);
-            this.action = "deleteMessage";
-            this.swarm("notifyAll");
-        }
-    },
     returnPage:
     {
-        node:"NotificationServices",
+        node:"HistoryManager",
         code : function ()
         {
             var resultHandler = function(pageArray){
                 this.pageArray = pageArray;
                 this.home("pageAnswer");
             }.bind(this);
-            getPage(this.roomId,this.pageNumber,this.pageSize,resultHandler);
+            getPage(this.roomId,this.start,this.end,resultHandler);
         }
     },
     notifyAll:
     {
-        node:"NotificationServices",
+        node:"HistoryManager",
         code : function (){
             getFollowers(this.roomId, function(reply)
             {
@@ -128,4 +112,4 @@ var notificationsSwarming =
     }
 };
 
-notificationsSwarming;
+historyManagerSwarming;
