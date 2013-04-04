@@ -1,10 +1,15 @@
 ## SwarmESB  
 
+Swarm communication is a new approach for message communication in a distributed system.
+The usual method of doing message passing is to have relatively intelligent processes, objects or 
+actors sending and receiving dumb messages. Thinking to messages as relatively smart beings visiting
+relatively non intelligent places, we noticeed a positive effect on the quality of the code 
+and a new path for decomposing complex applications in small services.  
 
-SwarmESB presents a new approach for creating distributed systems comunicating by asynchronous messages.
-Swarming can be for SOA's orchestration what REST is for SOAP.
+SwarmESB is using swarm communication to create an Enterpise Service Bus. 
+Swarms can be for SOA's orchestration what REST is for SOAP.
 
-![Overview](http://salboaie.github.com/images/swarm-diagram.png "SwarmESB")
+![Overview](http://salboaie.github.com/images/swarmDiagram.png "SwarmESB")
 
 
 A "swarm" is a set of related messages with some basic inteligence and is based on an intuitive point of view: 
