@@ -15,7 +15,9 @@ Swarms can be for SOA's orchestration what REST is for SOAP.
 A "swarm" is a set of related messages with some basic inteligence and is based on an intuitive point of view: 
  computer processes communicating by asynchronous messages are more like "dumb trees/flowers" visited by "smart 
 swarms of bees" than "smart people" communicatig by "dumb messages". 
-This intuition have a powerfull efect on reducing complexity of many distributed systems (allready proved by SOA but SwarmESB offers a better perspective).
+This intuition have a powerfull efect on reducing complexity of many distributed systems (allready proved by SOA)
+Service orchestration with SwarmESB is elegant, there is no need to learn new languages and difficult new concepts: just use Java Script code and a few simple concepts.
+
 
  SwarmESB is an open source project implementing a new aproach: "Swarming architecture" that you could reuse 
 for your new multi-tenant systems that will transparently acquire the benefits of sclability, high availability, highly
@@ -61,8 +63,8 @@ Waw: each node could be on a different continent!  Check other swarms for parall
         
     Check our wiki: https://github.com/salboaie/SwarmESB/wiki
 
-    Technologies: node.js, Redis, asynchronous messages, Message Bus, Enterprise Service Bus
-    Usage of JavaScript is accidental, the swarming concept can be implemented on any modern platform.
+    Technologies: node.js, Redis, PUB/SUB
+    Usage of JavaScript is accidental, the swarming concept can be implemented on any modern platform!
 
 SwarmESB ca be used as a light, open source, ESB (or Message Bus) for your enterprise applications.
 Instead of message oriented communication or web services, you describe your communication between "nodes" in what
