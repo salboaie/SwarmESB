@@ -58,10 +58,8 @@ Waw: each node could be on a different continent!  Check other swarms for parall
 
 
 ## Easy and fun! 
-    A new approach for programming with asynchronous messages.
-    
+        
     Check our wiki: https://github.com/salboaie/SwarmESB/wiki
-
 
     Technologies: node.js, Redis, asynchronous messages, Message Bus, Enterprise Service Bus
     Usage of JavaScript is accidental, the swarming concept can be implemented on any modern platform.
@@ -88,3 +86,13 @@ Your adapters can use web services as a particular case of providing existing AP
 ## License:
 
     LGPL
+    
+## Project SWARM
+
+    SwarmESB is part of the open source project "Swarm project" toghether with:
+    https://github.com/salboaie/SwarmShape : a MVVM framework with swarm based persistence
+    https://github.com/salboaie/FlexSwarm  : swarm client for Flex aplications
+    https://github.com/salboaie/SwarmWebSocket : swarm client for web sockets
+    
+   
+    
