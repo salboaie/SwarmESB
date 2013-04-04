@@ -90,9 +90,11 @@ Your adapters can use web services as a particular case of providing existing AP
 ## Project SWARM
 
     SwarmESB is part of the open source project "Swarm project" toghether with:
-    https://github.com/salboaie/SwarmShape : a MVVM framework with swarm based persistence
-    https://github.com/salboaie/FlexSwarm  : swarm client for Flex aplications
-    https://github.com/salboaie/SwarmWebSocket : swarm client for web sockets
+    
+* SwarmShape: https://github.com/salboaie/SwarmShape : a MVVM framework with swarm based persistence
+* FlexSwarm: https://github.com/salboaie/FlexSwarm  : swarm client for Flex aplications
+* SwarmWebSocket https://github.com/salboaie/SwarmWebSocket : swarm client for web sockets
+* SwarmUtil https://github.com/salboaie/SwarmUtil : a node.js module for swarm applications
     
    
     
