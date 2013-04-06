@@ -1,13 +1,23 @@
 ## SwarmESB  
 
+Swarm communication is a new approach for message communication in a distributed system.
+The usual method of doing message passing is to have relatively intelligent processes, objects or 
+actors sending and receiving dumb messages. Thinking to messages as relatively smart beings visiting
+relatively non intelligent places, we noticeed a positive effect on the quality of the code 
+and a new path for decomposing complex applications in small services.  
 
-SwarmESB presents a new approach for creating distributed systems comunicating by asynchronous messages.
-Swarming can be for SOA's orchestration what REST is for SOAP.
+SwarmESB is using swarm communication to create an Enterpise Service Bus. 
+Swarms can be for SOA's orchestration what REST is for SOAP.
+
+![Overview](http://salboaie.github.com/images/swarmDiagram.png "SwarmESB")
+
 
 A "swarm" is a set of related messages with some basic inteligence and is based on an intuitive point of view: 
  computer processes communicating by asynchronous messages are more like "dumb trees/flowers" visited by "smart 
 swarms of bees" than "smart people" communicatig by "dumb messages". 
-This intuition have a powerfull efect on reducing complexity of many distributed systems (allready proved by SOA but SwarmESB offers a better perspective).
+This intuition have a powerfull efect on reducing complexity of many distributed systems (allready proved by SOA)
+Service orchestration with SwarmESB is elegant, there is no need to learn new languages and difficult new concepts: just use Java Script code and a few simple concepts.
+
 
  SwarmESB is an open source project implementing a new aproach: "Swarming architecture" that you could reuse 
 for your new multi-tenant systems that will transparently acquire the benefits of sclability, high availability, highly
@@ -50,13 +60,11 @@ Waw: each node could be on a different continent!  Check other swarms for parall
 
 
 ## Easy and fun! 
-    A new approach for programming with asynchronous messages.
-    
+        
     Check our wiki: https://github.com/salboaie/SwarmESB/wiki
 
-
-    Technologies: node.js, Redis, asynchronous messages, Message Bus, Enterprise Service Bus
-    Usage of JavaScript is accidental, the swarming concept can be implemented on any modern platform.
+    Technologies: node.js, Redis, PUB/SUB
+    Usage of JavaScript is accidental, the swarming concept can be implemented on any modern platform!
 
 SwarmESB ca be used as a light, open source, ESB (or Message Bus) for your enterprise applications.
 Instead of message oriented communication or web services, you describe your communication between "nodes" in what
@@ -80,3 +88,15 @@ Your adapters can use web services as a particular case of providing existing AP
 ## License:
 
     LGPL
+    
+## Project SWARM
+
+    SwarmESB is part of the open source project "Swarm project" toghether with:
+    
+* SwarmShape: https://github.com/salboaie/SwarmShape : a MVVM framework with swarm based persistence
+* FlexSwarm: https://github.com/salboaie/FlexSwarm  : swarm client for Flex aplications
+* SwarmWebSocket https://github.com/salboaie/SwarmWebSocket : swarm client for web sockets
+* SwarmUtil https://github.com/salboaie/SwarmUtil : a node.js module for swarm applications
+    
+   
+    
