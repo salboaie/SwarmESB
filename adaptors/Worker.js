@@ -2,17 +2,12 @@
     Workers, do work under control of a load balancer
  */
 
-var uuid = require('node-uuid');
-var workerId = "worker:" + uuid.v4();
-
-require('swarmutil').createAdapter(workerId,onReadyCallback);
-
-function onReadyCallback(){
-    startSwarm("WorkerManagement.js","register",workerId);
-}
-
+thisAdapter = require('swarmutil').createAdapter();
+thisAdapter.join("WorkersGroup");
 
 doWork = function(){
-    //do something
+    cprint("Worker " + thisAdapter.nodeName + " is working hard!");
 }
+
+
 
