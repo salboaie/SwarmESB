@@ -2,7 +2,9 @@
     - Launched when a node is started to make sure that only one adapter is executing commands
     - Launched also to make active a redundant node
 
+     Is an opportunity to broadcast topology information
  */
+
 var nodeStart = {
     vars:{
         currentInstanceUID:null,

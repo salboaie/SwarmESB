@@ -1,20 +1,23 @@
 {
- "logsPath":"logs",
- "verbose":false,
- "pingTimeout":500,
- "Core":{
-     "coreId":"default_partition",
-     "redisHost":"localhost",
-     "redisPort":6379,
-     "paths":[
+ "logsPath"     : "logs",
+ "verbose"      : false,
+ "pingTimeout"  : 500,
+ "Core": {
+     "coreId"       : "default_partition",
+     "redisHost"    : "localhost",
+     "redisPort"    : 6379,
+     "communication": "udp",
+     "cores"        : "localhost:8000",
+     "current"      : "localhost:8000",
+     "paths"        : [
         {"folder":"disabled"        ,"enabled":false},
         {"folder":"testSwarms"      ,"enabled":true},
         {"folder":"swarms"          ,"enabled":true}
      ]
   },
- "Logger":{},
- "Launcher":{
-           "autorun":[
+ "Logger"   : {},
+ "Launcher" : {
+           "autorun" :[
                        {"node":"adaptors/Null.js",                  "enabled":true  },
                        {"node":"adaptors/Balancer.js",              "enabled":true  },
                        {"node":"adaptors/ClientAdapter.js",         "enabled":false },
@@ -25,16 +28,16 @@
            ]
   },
   "ClientAdapter":{
-                "port":3000,
-                "bindAddress":"localhost"
+        "port"          : 3000,
+        "bindAddress"   : "localhost"
   },
   "WebClientAdapter":{
-               "port":8000,
-               "bindAddress":"localhost"
+       "port"           : 8000,
+       "bindAddress"    : "localhost"
   },
   "SwarmHttpServer":{
-         "port":8080,
-         "bindAddress":"localhost",
-         "home" : "c://work//shape//"
+         "port"         : 8080,
+         "bindAddress"  : "localhost",
+         "home"         : "c://work//swarmShape//"
     }
 }
