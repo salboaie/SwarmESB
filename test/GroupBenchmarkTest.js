@@ -8,9 +8,9 @@ swarmSettings.authentificationMethod = "testCtor";
 
 var client             = util.createClient(adapterHost, adapterPort, "BenchmarkUser", "ok","BenchmarkTest");
 
-client.startSwarm("Benchmark.js","start",48000);
+client.startSwarm("GroupBenchmark.js","start",48000);
 
-client.on("Benchmark.js",getGreetings);
+client.on("GroupBenchmark.js",getGreetings);
 
 var msg = "none";
 function getGreetings(obj){

@@ -20,6 +20,7 @@ var loginSwarming =
         this.authorisationToken = authorisationToken;
         this.clientAdapter = thisAdapter.nodeName;
         if(authorisationToken == "ok"){
+            this.isOk = true;
             //this.swarm("register");
             this.swarm("enableSwarms",this.clientAdapter);
         } else{

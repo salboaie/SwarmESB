@@ -28,6 +28,11 @@
                 "port":3000,
                 "bindAddress":"localhost"
   },
+  "SwarmHttpServer":{
+        "port":80,
+        "bindAddress":"127.0.0.1",
+        "home":"d:/work/shape/"
+  },
   "WebClientAdapter":{
                "port":8000,
                "bindAddress":"localhost"

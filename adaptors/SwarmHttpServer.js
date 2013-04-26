@@ -1,59 +1,148 @@
-/**
- * Adapter that opens swarmESB to php or other environments that can't do sockets but can do REST
- *
- */
+/**********************************************************************************************
+ * Init
+ **********************************************************************************************/
 var sutil = require('swarmutil');
-var static = require('node-static');
 var util = require('util');
+var fs = require('fs');
+thisAdapter = sutil.createAdapter("SwarmHttpServer", null, null, false);
+thisAdapter.loginSwarmingName = "login.js";
 
-thisAdapter = sutil.createAdapter("SwarmHttpServer", null,null,false);
-//thisAdapter.loginSwarmingName   = "login.js";
-//globalVerbosity = true;
+/**********************************************************************************************
+ * Variables
+ **********************************************************************************************/
+var go = require('../core/GenericOutlet.js');
+var staticServer = require('node-static');
 
-var myCfg = getMyConfig();
-var serverPort      = 8080;
-var serverHost      =  "localhost";
-var baseFolder      = "";
+var config;
+var serverPort;
+var serverHost;
+var baseFolder;
+var file;
+var app;
+var io;
 
-if(myCfg.port != undefined){
-    serverPort = myCfg.port;
-}
+/**********************************************************************************************
+ * Functions
+ **********************************************************************************************/
 
-if(myCfg.bindAddress != undefined){
-    serverHost = myCfg.bindAddress;
-    serverHost = serverHost.trim();
-    if (serverHost.length == 0 || serverHost == '*') {
-        serverHost = null;
+init();
+
+function init() {
+    proccessConfig();
+    initStaticServer();
+    initSocketIO();
+};
+
+function proccessConfig() {
+    config = getMyConfig();
+    if (config.port != undefined) {
+        serverPort = config.port;
+    }
+    if (config.bindAddress != undefined) {
+        serverHost = config.bindAddress.trim();
+        if (serverHost.length == 0 || serverHost == '*') {
+            serverHost = null;
+        }
+    }
+    if (config.home != undefined && config.home != "") {
+        baseFolder = config.home;
+    } else {
+        cprint("\'home\' property should be defined for SwarmHttpServer");
+        process.exit();
     }
 }
-if(myCfg.home != undefined && myCfg.home != ""){
-    baseFolder = myCfg.home;
-} else{
-    cprint("\'home\' property should be defined for SwarmHttpServer");
-    process.exit();
+
+function initStaticServer() {
+    file = new (staticServer.Server)(baseFolder);
+    app = require('http').createServer(staticServerHandler);
+    app.listen(serverPort, serverHost);
 }
 
-var file = new(static.Server)(baseFolder);
+function initSocketIO() {
+    io = require('socket.io').listen(app);
+    io.sockets.on('connection', socketIOHandler);
+}
 
-function handler (request, response) {
+function staticServerHandler(request, response) {
     request.addListener('end', function () {
-        //
-        // Serve files!
-        //
-        cprint("Serving: " +  request.url);
-        file.serve(request, response);
+        file.serve(request, response, function (error) {
+            fileRequestHandler(request, response, error);
+        });
     });
 }
 
-var app = require('http').createServer(handler);
-var io = require('socket.io').listen(app);
+function fileRequestHandler(request, response, error) {
+    if (error) {
+        console.error('Error serving %s - %s', request.url, error.message);
+        response.writeHead(error.status, error.headers);
+        response.end();
+    }
+}
 
-app.listen(serverPort,serverHost);
+function listDirectory(path) {
+    var realPath = baseFolder + path;
+    var stat;
+    var list;
+    var file;
+    var i, len;
+    var result = "<ul>";
+    try {
+        stat = fs.statSync(realPath);
+    }
+    catch (e) {
+        return null;
+    }
+    if (stat && stat.isDirectory()) {
+        list = fs.readdirSync(realPath);
+        for (i = 0; len = list.length, i < len; i++) {
+            file = list[i];
+            realPath = baseFolder + path + '/' + file;
+            stat = fs.statSync(realPath);
+            if (stat.isDirectory()) {
+                result += "<li><b><a href='" + (path + "/" + file) + "'>" + file + "</a></b></li>"
+            }
+        }
+        for (i = 0; len = list.length, i < len; i++) {
+            file = list[i];
+            realPath = baseFolder + path + '/' + file;
+            stat = fs.statSync(realPath);
+            if (!stat.isDirectory()) {
+                result += "<li><a href='" + (path + "/" + file) + "'>" + file + "</a></li>"
+            }
+        }
+    }
+    result += "</ul>";
+    return result;
+}
 
-io.sockets.on('connection', function (socket) {
+function socketIOHandler(socket) {
     cprint("Socket IO");
-    /*socket.emit('news', { hello: 'world' });
-    socket.on('my other event', function (data) {
-        console.log("XXX" + J(data));
-    });*/
-});
+
+    var outlet = go.newOutlet(socket, sendFunction, closeFunction);
+
+    socket.on('error', outlet.onCommunicationError.bind(outlet));
+    socket.on('close', outlet.onCommunicationError.bind(outlet));
+
+    watchSocket(socket, outlet);
+
+    outlet.onHostReady();
+}
+
+function watchSocket(socket, outlet) {
+    socket.on('data', function (data) {
+        outlet.executeFromSocket(data);
+    });
+}
+
+function sendFunction(socket, data) {
+    socket.emit('data', data);
+}
+
+function closeFunction(socket) {
+    socket.end();
+}
+
+
+
+
+

@@ -1,0 +1,87 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:	swarmSB
+### END INIT INFO
+
+NAME=swarmesb
+RUN_AS_USER=root
+RUN_AS_GROUP=root
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/bin
+NODE_PATH="/opt/nodeapps/node_modules"
+SWARM_PATH="/opt/nodeapps/swarmesb_extra"
+export SWARM_PATH
+export NODE_PATH
+DAEMON=/usr/local/bin/node
+
+
+LAUNCHER_ARGS=$SWARM_PATH/../swarmesb/adaptors/Launcher.js
+LAUNCHER_NAME=$NAME-launcher
+LAUNCHER_DESC=$NAME-launcher
+LAUNCHER_PIDFILE=/var/run/$LAUNCHER_NAME
+
+set -e
+
+cd $SWARM_PATH
+
+case "$1" in
+    default-start)
+    	${0} start
+    	;;
+    start)
+	  
+	  echo -n "Starting $LAUNCHER_DESC: "
+	  touch $LAUNCHER_PIDFILE
+	  chown $RUN_AS_USER:$RUN_AS_GROUP $LAUNCHER_PIDFILE
+	  if start-stop-daemon --background --make-pidfile --start --pidfile $LAUNCHER_PIDFILE --chuid $RUN_AS_USER:$RUN_AS_GROUP --exec $DAEMON -- $LAUNCHER_ARGS 
+	  then
+	        echo "$LAUNCHER_NAME started."
+	  else
+	        echo "failed"
+	  fi
+	  ;;          
+	default-start)
+	  ${0} stop
+	  ;;
+    stop)
+	 
+          
+         
+          echo -n "Stopping $LAUNCHER_DESC: "
+          LAUNCHER_PID=$(cat $LAUNCHER_PIDFILE)
+          #kill childs
+          pkill -9 -P $LAUNCHER_PID
+          #kill process
+          kill -9 $LAUNCHER_PID
+          #if start-stop-daemon --stop --retry forever/QUIT/1 --quiet --oknodo --pidfile $LAUNCHER_PIDFILE --exec $DAEMON
+          #then
+                echo "$LAUNCHER_NAME stopped."
+          #else
+          #      echo "failed" 
+          #fi 
+          rm -f $LAUNCHER_PIDFILE
+          
+	  ;;
+    restart)
+	  ${0} stop
+	  ${0} start
+	  ;;
+    status)
+	 
+	 
+	  
+	  echo -n "$LAUNCHER_DESC is "
+	  if start-stop-daemon --stop --quiet --signal 0 --pidfile $LAUNCHER_PIDFILE
+	  then
+		echo "running"
+	  else
+		echo "not running"
+		#exit 1
+	  fi
+	  ;;
+    *)
+    	  echo "Usage: /etc/init.d/$NAME {start|stop|restart}" >&2
+    	  exit 1
+    	  ;;
+esac
+
+exit 0	
