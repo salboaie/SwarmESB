@@ -17,7 +17,6 @@ var mailerSwarming =
         node: "Mailer",
         code: function () {
             sendMail(this.from, this.to, this.subject, this.text);
-            this.honey("notify");
         }
     }
 };

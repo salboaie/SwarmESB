@@ -1,0 +1,225 @@
+{
+    "logsPath": "logs",
+    "verbose": false,
+    "pingTimeout": 500,
+    "Core": {
+        "coreId": "mac_testMachine",
+        "redisHost": "192.168.20.122",
+        "redisPort": 6379,
+        "authHost": "localhost",
+        "authPort": "80",
+        "authPath": "/quark/quark-php/public/authorize.php?token=[token]",
+        "paths": [
+            {
+                "folder": "disabled",
+                "enabled": false
+            },
+            {
+                "folder": "./../SwarmESB/testSwarms",
+                "enabled": false
+            },
+            {
+                "folder": "./../SwarmESB/swarms",
+                "enabled": true
+            },
+            {
+                "folder": "swarms",
+                "enabled": true
+            },
+            {
+                "folder": "test/swarms",
+                "enabled": false
+            }
+        ]
+    },
+    "Logger": {},
+    "Launcher": {
+        "errorMails": ["marius.ciocan@trp.ro"],
+        "checkInterval": 120000,
+        "mailInterval": 300000,
+        "messageTimeout": 5000,
+        "autorun": [
+            {
+                "node": "./../SwarmESB/adaptors/Core.js",
+                "enabled": true
+            },
+            {
+                "node": "./../SwarmESB/adaptors/Logger.js",
+                "enabled": true
+            },
+
+            {
+                "node": "./../SwarmESB/adaptors/persistence/DbPersistence.js",
+                "enabled": false
+            },
+            {
+                "node": "./../SwarmESB/adaptors/persistence/PersistenceManager.js",
+                "enabled": true
+            },
+            {
+                "node": "./../SwarmESB/adaptors/persistence/PersistenceCache.js",
+                "enabled": true
+            },
+            {
+                "node": "./../SwarmESB/adaptors/persistence/RuleEngine.js",
+                "enabled": true
+            },
+
+            {
+                "node": "./../SwarmESB/adaptors/Null.js",
+                "enabled": false
+            },
+            {
+                "node": "./../SwarmESB/adaptors/Balancer.js",
+                "enabled": false
+            },
+            {
+                "node": "./../SwarmESB/adaptors/ClientAdapter.js",
+                "enabled": true
+            },
+            {
+                "node": "./../SwarmESB/adaptors/Mailer.js",
+                "enabled": true
+            },
+            {
+                "node": "./../SwarmESB/adaptors/WebClientAdapter.js",
+                "enabled": true
+            },
+            {
+                "node": "./../SwarmESB/adaptors/SwarmHttpServer.js",
+                "enabled": false
+            },
+            {
+                "node": "./../SwarmESB/adaptors/ChatServices.js",
+                "enabled": true
+            },
+            {
+                "node": "./../SwarmESB/adaptors/NotificationServices.js",
+                "enabled": true
+            },
+            {
+                "node": "./../SwarmESB/adaptors/VersionManager.js",
+                "enabled": true
+            },
+            {
+                "node": "./../SwarmESB/adaptors/HistoryManager.js",
+                "enabled": true
+            },
+            {
+                "node": "./../SwarmESB/adaptors/SessionsRegistry.js",
+                "enabled": true
+            },
+            {
+                "node": "./../SwarmESB/adaptors/SharedAdapter.js",
+                "enabled": false
+            },
+            {
+                "node": "adaptors/StatusNotification.js",
+                "enabled": true
+            },
+            {
+                "node": "adaptors/DocumentConvertor.js",
+                "enabled": false
+            },
+            {
+                "node": "adaptors/HRManagerAdapter.js",
+                "enabled": true
+            },
+            {
+                "node": "adaptors/QuarkLivePersistence.js",
+                "enabled": true
+            },
+            {
+                "node": "adaptors/LDAPAdapter.js",
+                "enabled": true
+            },
+            {
+                "node": "adaptors/SolrAdapter.js",
+                "enabled": false
+            },
+            {
+                "node": "adaptors/UrlMapper.js",
+                "enabled": false
+            },
+            {
+                "node": "adaptors/WebDAVProxyAdapter.js",
+                "enabled": false
+            }
+
+        ]
+    },
+    "DbPersistence": {
+        "database": "dbTestSwarm",
+        "username": "root",
+        "password": "",
+        "host": "localhost",
+        "port": 3306,
+        "schema":["d:/test"]
+    },
+    "SwarmHttpServer": {
+        "port": 80,
+        "bindAddress": "127.0.0.1",
+        "home": "d:/work/shape/"
+    },
+    "Mailer": {
+        "transport": "SMTP",
+        "service": "Gmail",
+        "auth": {
+            "user": "test@axiologic.net",
+            "pass": "Test12345"
+        }
+    },
+    "ClientAdapter": {
+        "port": 3000,
+        "bindAddress": "*"
+    },
+    "WebClientAdapter": {
+        "port": 8000,
+        "bindAddress": "*"
+    },
+    "UrlMapper": {
+        "downloadUrl": "http://localhost:7245",
+        "uploadUrl": "http://localhost:7245/upload",
+        "viewUrl": "http://localhost:7245/view",
+        "storage": "d:/Workspaces/WebStorm/pdf/swf"
+    },
+    "SolrAdapter": {
+        "cores": [
+            "collection1"
+        ],
+        "defaultCore": "collection1",
+        "host": "cercetare.trp.ro",
+        "port": 80
+    },
+    "DocumentConvertor": {
+        "storage": "d:/Workspaces/WebStorm/pdf/swf",
+        "doc2pdfCmdPath": "C:/Program Files/LibreOffice 3.5/program",
+        "doc2pdfCmd": "soffice.exe --headless --invisible --convert-to pdf [file] --outdir [outdir]",
+        "pdf2swfCmdPath": "C:/Program Files/SWFTools",
+        "pdf2swfCmd": "pdf2swf.exe [file] -o [swffile] -f -T 9 -t -s storeallcharacters"
+    },
+    "HRManagerAdapter": {
+        "host": "localhost",
+        "port": 3306,
+        "database": "hr",
+        "user": "root",
+        "password": ""
+    },
+    "LDAPAdapter": {
+        "url": "ldap://192.168.20.122:389",
+        "base_dn": "dc=qstack,dc=local",
+        "user_dn": "ou=users,dc=qstack,dc=local",
+        "user_id_field": "uid"
+    },
+    "WebDAVProxyAdapter": {
+        "authHost": "192.168.20.120",
+        "authPort": "80",
+        "authPath": "/delegate/DLAuthService?dl_token=[token]",
+        "davHost": "192.168.1.8",
+        "davPort": 80,
+        "davPath": "/tunnel-web/secure/webdav",
+        "davSessionID": "CERCETARE_MAC",
+        "host": "*",
+        "port": 7245
+    }
+}

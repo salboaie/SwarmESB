@@ -51,7 +51,7 @@ function init() {
     for (i = 0; len = adaptorList.length, i < len; i++) {
         adapter = adaptorList[i];
         if (adapter.node.indexOf('Core.js') != -1) {
-            localDelay = 10000;
+            localDelay = 1000;
             break;
         }
     }
