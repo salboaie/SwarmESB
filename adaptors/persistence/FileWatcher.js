@@ -3,7 +3,7 @@ var events = require('events');
 var fs = require('fs');
 var os = require('os');
 
-var FileWatcher = function () {
+var FileWatcher = function (name) {
 
     events.EventEmitter.call(this);
 
@@ -16,19 +16,15 @@ var FileWatcher = function () {
 
     allFiles = {};
 
-    this.init = function (name) {
+    var init = function (name) {
         cachePath = os.tmpDir() + '/filewatcher-' + name + '.cache';
-        this.on('fileChange', addFileChange);
-
+        self.on('fileChange', addFileChange);
     }
 
-    this.getAllFiles = function () {
-        return allFiles;
-    }
 
     this.run = function (folders) {
         listAndWatchFolders(folders, true);
-        self.emit('allFilesDone', allFiles);
+        self.emit('scanComplete', allFiles);
         loadCacheFile();
         compareCacheWithFiles();
     }
@@ -190,10 +186,9 @@ var FileWatcher = function () {
         watchers[folderPath] = watcher;
     }
 
+    init(name);
 }
 
 util.inherits(FileWatcher, events.EventEmitter);
 
-exports.init = function () {
-    return new FileWatcher();
-}
+module.exports = FileWatcher;

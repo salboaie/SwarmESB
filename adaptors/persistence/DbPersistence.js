@@ -9,12 +9,13 @@ thisAdaptor = require('swarmutil').createAdapter("DbPersistence");
  **********************************************************************************************/
 var config;
 var dbFactory = require("./DbFactory.js");
-var fileWatcher = require("./FileWatcher.js").init();
+var FileWatcher = require("./FileWatcher.js");
 var tableWatcher = require("./TableWatcher.js").init();
 var fs = require('fs');
 var schema = {};
 var dao = {};
 var isDaoRequest = false;
+var fileWatcher;
 
 
 /**********************************************************************************************
@@ -26,10 +27,11 @@ function init() {
     config = getMyConfig();
     dbAdaptor = dbFactory.getDbAdapter(config);
     tableWatcher.init(dbAdaptor);
+
+    fileWatcher = new FileWatcher(thisAdaptor.nodeName);
+    //TODO : compact changes from scanComplete with on runtime changes
     fileWatcher.on('changes', schemaChanges);
-    fileWatcher.on('allFilesDone', allFilesDone);
-    fileWatcher.init(thisAdaptor.nodeName);
-    //fileWatcher.deleteCache();
+    fileWatcher.on('scanComplete', allFilesDone);
     fileWatcher.run(config.schema);
 }
 
@@ -61,6 +63,7 @@ function loadFile(path, isDAO) {
             isDaoRequest = false;
         }
         catch (e) {
+            isDaoRequest = false;
         }
     });
 }
@@ -91,38 +94,68 @@ function getSchema(name) {
 }
 
 processDbRequest = function (request, callback) {
-    var model = getSchema(request.className);
-    switch (request.type) {
-        case "DELETE":
-            break;
-        case "UPDATE":
-            model.find(request.id).success(function (result) {
-                var key;
-                for (key in request.data) {
-                    result[key] = request.data[key];
-                }
-                result.save();
-                callback(result);
-            });
-            break;
-        case "PUT":
-            model.build(request.data).save().success(function (result) {
-                model.find(result.id).success(function (result) {
-                    callback(result);
-                });
-            });
-            break;
-        case "GET":
-            model.find(request.id).success(function (result) {
-                callback(result);
-            });
-            break;
+    var schema = getSchema(request.className);
+    var functionCall = global[request.type.toLowerCase() + "Call"];
+
+    //TODO : return error callback
+    if (!schema) {
+        console.error("No schema found for " + request.className);
+        return;
+    }
+    if (!functionCall) {
+        console.error("No function call found for " + request.type);
+        return;
+    }
+
+    try {
+        functionCall(schema, request, callback);
+    }
+    catch (e) {
+        console.error("Function call " + request.type + " error : " + e.toString());
+        //TODO : return result
     }
 }
 
 
 /**********************************************************************************************
- * Hack for compatibility
+ * CRUD Functions : functionName.toLowerCase()+"Call"
+ **********************************************************************************************/
+getCall = function (schema, request, callback) {
+    schema.find(request.id).success(function (result) {
+        callback(result);
+    });
+}
+
+
+putCall = function (schema, request, callback) {
+    schema.build(request.data).save().success(function (result) {
+        callback(result);
+    });
+}
+
+
+updateCall = function (schema, request, callback) {
+    //TODO:update object without getting from DB first
+    schema.find(request.id).success(function (result) {
+        for (var key in request.data) {
+            result[key] = request.data[key];
+        }
+        result.save();
+        callback(result);
+    });
+}
+
+
+deleteCall = function (schema, request, callback) {
+}
+
+
+refreshCall = function (schema, request, callback) {
+}
+
+
+/**********************************************************************************************
+ * Hack for compatibility with SwarmShape framework
  **********************************************************************************************/
 shape = {
     registerModel: function (name, config) {

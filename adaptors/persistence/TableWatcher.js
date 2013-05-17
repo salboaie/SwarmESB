@@ -25,7 +25,7 @@ var dataTypes = {
     'string': 'VARCHAR(255)',
     'text': 'TEXT',
     'int': 'INTEGER',
-    'number': 'BIGINT',
+    'number': 'FLOAT',
     'date': 'DATETIME',
     'boolean': 'TINYINT(1)',
     'float': 'FLOAT',
@@ -78,6 +78,7 @@ var TableWatcher = function () {
         }
     }
 
+    //TODO : refactor getDAO & compareTable functions
     this.getDAO = function (modelName, config) {
         var changes = {};
         var column;

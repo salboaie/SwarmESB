@@ -66,8 +66,9 @@ var persistenceManager =
             switch (this.request.type) {
                 case "DELETE":
                 case "UPDATE":
-                case "PUT":
                     invalidate(key);
+                    this.canContinue = true;
+                case "PUT":
                     this.canContinue = true;
                     break;
                 case "REFRESH":
