@@ -1,20 +1,16 @@
 /**********************************************************************************************
  * Vars
  **********************************************************************************************/
-//var util = require('util');
-//var events = require('events');
-//var os = require('os');
 var fs = require('fs');
 
 /*
- Sequelize.STRING  // VARCHAR(255)
- Sequelize.TEXT    // TEXT
- Sequelize.INTEGER // INTEGER
- Sequelize.BIGINT  // BIGINT
- Sequelize.DATE    // DATETIME
- Sequelize.BOOLEAN // TINYINT(1)
- Sequelize.FLOAT   // FLOAT
-
+ Sequelize.STRING                     // VARCHAR(255)
+ Sequelize.TEXT                       // TEXT
+ Sequelize.INTEGER                    // INTEGER
+ Sequelize.BIGINT                     // BIGINT
+ Sequelize.DATE                       // DATETIME
+ Sequelize.BOOLEAN                    // TINYINT(1)
+ Sequelize.FLOAT                      // FLOAT
  Sequelize.ENUM('value 1', 'value 2') // An ENUM with allowed values 'value 1' and 'value 2'
  Sequelize.DECIMAL(10, 2)             // DECIMAL(10,2)
  Sequelize.ARRAY(Sequelize.TEXT)      // Defines an array. PostgreSQL only.
@@ -45,175 +41,151 @@ var keywords = {
 /**********************************************************************************************
  * Functions
  **********************************************************************************************/
-var TableWatcher = function () {
-    var dbAdapter;
-    var queryAdapter;
-    var compareQueue = {};
+var TableWatcher = function (dataBaseAdapter) {
+    var queryAdapter = dataBaseAdapter.getQueryInterface();
 
-    this.init = function (dataBaseAdapter) {
-        dbAdapter = dataBaseAdapter;
-        queryAdapter = dataBaseAdapter.getQueryInterface();
+
+    this.createOrUpdateTable = function (name, config, callback) {
+        var self = this;
+        this.describeTable(name, function (result, error) {
+            if (error && !error.code == 'ER_NO_SUCH_TABLE') {
+                callback(null, error);
+                return;
+            }
+
+            var func = !result ? self['createTable'] : self['updateTable'];
+            var params = !result ? [name, config, callback] : [name, config, result, callback];
+            func.apply(self, params);
+        });
     }
 
-    this.compareModel = function (name, config) {
-        queryAdapter.describeTable(name).success(
-            function (data) {
-                compareQueue[name] = {db: data, config: config};
-                compareTables();
-            }).error(function (error) {
-                if (error.code == 'ER_NO_SUCH_TABLE') {
-                    console.log(name + ' not exists.');
-                    compareQueue[name] = { db: null, config: config};
-                    compareTables();
+
+    this.createTable = function (name, config, callback) {
+        var columns = convertToTableColumns(config);
+        if (!columns['id']) {
+            columns['id'] = getIdColumnConfig();
+        }
+        queryAdapterCall('createTable', [name, columns], callback);
+    }
+
+
+    this.updateTable = function (name, config, dbConfig, callback) {
+        var commands = [];
+        var cmd;
+        for (var key  in config) {
+            if (!isColumnValid(key, config[key])) {
+                continue;
+            }
+            cmd = null;
+            if (!dbConfig[key]) {
+                cmd = [this.addColumn, name, key, getAddColumnConfig(key, config[key])];
+            }
+            else if (isColumnDifferent(dbConfig[key], config[key])) {
+                cmd = [this.changeColumn, name, key, getChangeColumnConfig(key, config[key], dbConfig[key])];
+            }
+            if (cmd) {
+                commands.push(cmd);
+            }
+        }
+        if (!dbConfig['id']) {
+            commands.push([this.addColumn, name, 'id', getIdColumnConfig()]);
+        }
+        runCommands(this, commands, callback);
+    }
+
+    this.describeTable = function (name, callback) {
+        queryAdapterCall('describeTable', arguments, callback);
+    }
+
+
+    this.dropTable = function (name, callback) {
+        queryAdapterCall('dropTable', arguments, callback);
+    }
+
+
+    this.addColumn = function (tableName, columnName, config, callback) {
+        queryAdapterCall('addColumn', arguments, callback);
+    }
+
+
+    this.removeColumn = function (tableName, columnName, callback) {
+        queryAdapterCall('removeColumn', arguments, callback);
+    }
+
+
+    this.changeColumn = function (tableName, columnName, config, callback) {
+        queryAdapterCall('changeColumn', arguments, callback);
+    }
+
+
+    this.getDaoColumns = function (config) {
+        return convertToTableColumns(config);
+    }
+
+
+    function queryAdapterCall(name, params, callback) {
+        queryAdapter[name].apply(queryAdapter, params).success(function (result) {
+            if (callback) {
+                callback(result, null);
+            }
+        }).error(function (error) {
+                if (callback) {
+                    callback(null, error);
                 }
             });
     }
 
-    function compareTables() {
-        for (var key in compareQueue) {
-            var result = compareQueue[key];
-            delete compareQueue[key];
-            compareTable(key, result);
-
-        }
-    }
-
-    //TODO : refactor getDAO & compareTable functions
-    this.getDAO = function (modelName, config) {
-        var changes = {};
-        var column;
-        var key;
-
-        for (key  in config) {
-            column = config[key];
-            if (!isColumnValid(key, column)) {
-                continue;
-            }
-            changes[key] = addColumn(key, column);
-            changes[key].tableName = modelName;
-        }
-
-        if (!changes['id']) {
-            changes['id'] = createIdColumn('id', {});
-        }
-
-        var newCmds = {};
-        for (var key in changes) {
-            var c = changes[key];
-            newCmds[c.name] = c.data;
-        }
-
-        return newCmds;
-    }
-
-    function compareTable(modelName, config) {
-        var changes = {};
-        var dbConfig = config.db;
-        var clientConfig = config.config;
-        var isNew = !!(config.db == null);
-        var key;
-
-        if (isNew) {
-            dbConfig = {};
-        }
-
-        for (key  in clientConfig) {
-            if (!isColumnValid(key, clientConfig[key])) {
-                continue;
-            }
-            if (!dbConfig[key]) {
-                changes[key] = addColumn(key, clientConfig[key]);
-                changes[key].tableName = modelName;
-            }
-            else if (isColumnDifferent(dbConfig[key], clientConfig[key])) {
-                changes[key] = changeColumn(key, clientConfig[key], dbConfig[key]);
-                changes[key].tableName = modelName;
-            }
-        }
-
-        if (!changes['id'] && !dbConfig['id']) {
-            changes['id'] = createIdColumn('id', {});
-            changes['id'].tableName = modelName;
-        }
-
-        if (isNew) {
-            var newCmds = {};
-            for (var key in changes) {
-                var c = changes[key];
-                newCmds[c.name] = c.data;
-            }
-            runCommands([
-                {command: "CREATE_TABLE", name: modelName, columns: newCmds}
-            ]);
+    function runCommands(context, commands, callback, errors) {
+        var cmd = commands.pop();
+        if (!cmd) {
+            callback(null, errors);
         }
         else {
-            var newCmds = [];
-            for (var key in changes) {
-                var c = changes[key];
-                newCmds.push(c);
-            }
-            runCommands(newCmds);
+            var funct = cmd.shift();
+            cmd.push(function (result, err) {
+                if (err) {
+                    if (!errors) {
+                        errors = [];
+                    }
+                    errors.push(err);
+                }
+                runCommands(context, commands, callback, errors);
+            });
+            funct.apply(context, cmd);
         }
     }
 
-    function runCommands(cmds) {
-        var i, len, cmd;
 
-        for (i = 0; len = cmds.length, i < len; i++) {
-            cmd = cmds[i];
-            switch (cmd.command) {
-                case "CREATE_TABLE":
-                    queryAdapter.createTable(cmd.name, cmd.columns).success(function () {
-                        console.log("model ok.")
-                    }).error(function (error) {
-                            console.log("model err : " + error);
-                        });
-                    break;
-
-
-                case "CHANGE_COLUMN":
-                    queryAdapter.changeColumn(cmd.tableName, cmd.name, cmd.data).success(function () {
-                        console.log("change ok.")
-                    }).error(function (error) {
-                            console.log("change err : " + error);
-                        });
-                    break;
-
-
-                case "ADD_COLUMN":
-                    queryAdapter.addColumn(cmd.tableName, cmd.name, cmd.data).success(function () {
-                        console.log("add ok.")
-                    }).error(function (error) {
-                            console.log("add err : " + error);
-                        });
-                    break;
+    function convertToTableColumns(config) {
+        var columns = {};
+        for (var key  in config) {
+            if (!isColumnValid(key, config[key])) {
+                continue;
             }
+            columns[ key] = getAddColumnConfig(key, config[key]);
         }
 
+        return columns;
     }
+
 
     function isColumnValid(columnName, columnConfig) {
-        if (columnName == 'meta' || columnName == 'id') {
-            return false;
-        }
-        if (columnConfig && !columnConfig.type) {
-            return false;
-        }
-        if (columnConfig && (columnConfig.code || columnConfig.transient)) {
-            return false;
-        }
-        if (typeof  columnConfig == 'function') {
+        if (columnName == 'meta' ||
+            columnName == 'id' ||
+            (columnConfig && (typeof  columnConfig == 'function' || !columnConfig.type ||
+                columnConfig.code ||
+                columnConfig.transient))) {
             return false;
         }
         return true;
     }
 
+
     function isColumnDifferent(dbColumn, clientColumn) {
-        var key;
         if (dataTypes[clientColumn.type] != dbColumn.type) {
             return true;
         }
-        for (key in keywords) {
+        for (var key in keywords) {
             if (clientColumn.hasOwnProperty(key) && clientColumn[key] != dbColumn[keywords[key]]) {
                 return true;
             }
@@ -221,45 +193,42 @@ var TableWatcher = function () {
         return false;
     }
 
-    function addColumn(columnName, clientColumn) {
-        var key;
-        var result = createDefaultColumn();
-        if (dataTypes[clientColumn.type]) {
-            result.type = dataTypes[clientColumn.type];
+
+    function getAddColumnConfig(name, column) {
+        var result = getDefaultColumnConfig();
+        if (dataTypes[column.type]) {
+            result.type = dataTypes[column.type];
         }
         else {
             result.type = dataTypes.int;
         }
 
-        for (key in keywords) {
-            if (clientColumn[key]) {
-                result[keywords[key]] = clientColumn[key];
+        for (var key in keywords) {
+            if (column[key]) {
+                result[keywords[key]] = column[key];
             }
         }
-
-        return {name: columnName, command: 'ADD_COLUMN', data: result};
-    }
-
-    function changeColumn(columnName, clientColumn, dbColumn) {
-        var result = addColumn(columnName, clientColumn);
-        result.command = 'CHANGE_COLUMN';
         return result;
     }
 
-    function createIdColumn(columnName, columnConfig) {
+
+    function getChangeColumnConfig(name, column, dbColumn) {
+        return getAddColumnConfig(name, column);
+    }
+
+
+    function getIdColumnConfig(columnName, columnConfig) {
         return {
-            name: 'id',
-            command: "ADD_COLUMN",
-            data: {
-                type: dataTypes.int,
-                allowNull: false,
-                unique: true,
-                autoIncrement: true,
-                primaryKey: true }
+            type: dataTypes.int,
+            allowNull: false,
+            unique: true,
+            autoIncrement: true,
+            primaryKey: true
         };
     }
 
-    function createDefaultColumn() {
+
+    function getDefaultColumnConfig() {
         return {
             type: dataTypes.string,
             defaultValue: null,
@@ -275,6 +244,4 @@ var TableWatcher = function () {
 /**********************************************************************************************
  * Export
  **********************************************************************************************/
-exports.init = function () {
-    return new TableWatcher();
-}
+module.exports = TableWatcher;

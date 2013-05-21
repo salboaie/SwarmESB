@@ -51,6 +51,7 @@ function init() {
     for (i = 0; len = adaptorList.length, i < len; i++) {
         adapter = adaptorList[i];
         if (adapter.node.indexOf('Core.js') != -1) {
+            //TODO : set to 10 seconds or more
             localDelay = 1000;
             break;
         }
@@ -230,7 +231,7 @@ function checkForksState() {
             }
             restartCount[fork.name] = restartCount[fork.name] + 1;
 
-            if (restartCount[fork.name] < 11) {
+            if (restartCount[fork.name] < 51) {
                 logEvent(fork.name + " need restart[" + restartCount[fork.name] + "]." + fork.restartDetails);
                 restartFork(fork);
             }
@@ -238,7 +239,7 @@ function checkForksState() {
                 killFork(fork);
                 adaptorForks[fork.name] = null;
                 delete adaptorForks[fork.name];
-                logEvent(fork.name + " restarted 10 times We stop the process.");
+                logEvent(fork.name + " restarted 50 times We stop the process.");
             }
 
         }

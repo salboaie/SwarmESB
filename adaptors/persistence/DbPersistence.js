@@ -7,15 +7,15 @@ thisAdaptor = require('swarmutil').createAdapter("DbPersistence");
 /**********************************************************************************************
  * Vars
  **********************************************************************************************/
-var config;
-var dbFactory = require("./DbFactory.js");
-var FileWatcher = require("./FileWatcher.js");
-var tableWatcher = require("./TableWatcher.js").init();
 var fs = require('fs');
+var FileWatcher = require("./FileWatcher.js");
+var TableWatcher = require("./TableWatcher.js");
+var dbFactory = require("./DbFactory.js");
 var schema = {};
 var dao = {};
+var config;
 var isDaoRequest = false;
-var fileWatcher;
+var fileWatcher, tableWatcher;
 
 
 /**********************************************************************************************
@@ -26,8 +26,7 @@ init();
 function init() {
     config = getMyConfig();
     dbAdaptor = dbFactory.getDbAdapter(config);
-    tableWatcher.init(dbAdaptor);
-
+    tableWatcher = new TableWatcher(dbAdaptor);
     fileWatcher = new FileWatcher(thisAdaptor.nodeName);
     //TODO : compact changes from scanComplete with on runtime changes
     fileWatcher.on('changes', schemaChanges);
@@ -68,25 +67,32 @@ function loadFile(path, isDAO) {
     });
 }
 
-function registerDbModel(name, config) {
+function registerDbModel(name, modelConfig, callback) {
     if (isDaoRequest === false) {
-        tableWatcher.compareModel(name, config);
+        tableWatcher.createOrUpdateTable(name, modelConfig, function (result, err) {
+            if (err) {
+                console.log('Error updating table :' + name);
+            }
+            callback(result, err);
+        });
     }
-    registerDAO(name, config);
+    registerDAO(name, modelConfig);
 }
 
 function registerDAO(name, config) {
-    dao[name] = tableWatcher.getDAO(name, config);
+    dao[name] = tableWatcher.getDaoColumns(config);
 }
 
 function getSchema(name) {
     if (dao[name]) {
         schema[name] = dbAdaptor.define(name, dao[name],
-            {timestamps: true,
-                paranoid: true,
+            {
+                timestamps: false,
+                paranoid: false,
                 underscored: false,
                 freezeTableName: true,
-                tableName: name});
+                tableName: name
+            });
         delete dao[name];
     }
     //var dao = dbAdaptor.daoFactoryManager.getDAO(name);
@@ -100,11 +106,11 @@ processDbRequest = function (request, callback) {
     //TODO : return error callback
     if (!schema) {
         console.error("No schema found for " + request.className);
-        return;
+        //return;
     }
     if (!functionCall) {
         console.error("No function call found for " + request.type);
-        return;
+        //return;
     }
 
     try {
@@ -155,10 +161,31 @@ refreshCall = function (schema, request, callback) {
 
 
 /**********************************************************************************************
+ * Table Functions : functionName.toLowerCase()+"Call"
+ **********************************************************************************************/
+
+
+createCall = function (schema, request, callback) {
+    isDaoRequest = false;
+    registerDbModel(request.name, request.description, function (result, err) {
+        callback(result, err);
+    });
+}
+
+
+dropCall = function (schema, request, callback) {
+    tableWatcher.dropTable(request.name, function (result, err) {
+        callback(result, err);
+    });
+}
+
+
+/**********************************************************************************************
  * Hack for compatibility with SwarmShape framework
  **********************************************************************************************/
 shape = {
     registerModel: function (name, config) {
-        registerDbModel(name, config);
+        registerDbModel(name, config, function (result, err) {
+        });
     }
 };

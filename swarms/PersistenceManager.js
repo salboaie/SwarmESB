@@ -14,18 +14,31 @@ var persistenceManager =
         this.result = {};
         this.result.data = [];
         this.request = request;
+        if (!this.request.filters) {
+            this.request.filters = [];
+        }
         this.decideRequestFilters(request);
         this.runNextFilter();
     },
     decideRequestFilters: function (request) {
         switch (request.type) {
+            case "CREATE":
+            case "DROP":
+                this.requestFilters = ['DbPersistencePhase'].reverse();
+                break;
             case "DELETE":
                 this.requestFilters = [];
                 break;
             case "UPDATE":
             case "PUT":
             case "GET":
-                this.requestFilters = ['RuleEnginePhase', 'PersistenceCachePhase', 'DbPersistencePhase', 'PersistenceCachePhase', 'RuleEnginePhase'].reverse();
+                if (this.request.skipCache) {
+                    this.requestFilters = ['RuleEnginePhase', 'DbPersistencePhase', 'PersistenceCachePhase', 'RuleEnginePhase'].reverse();
+                }
+                else {
+                    this.requestFilters = ['RuleEnginePhase', 'PersistenceCachePhase', 'DbPersistencePhase', 'PersistenceCachePhase', 'RuleEnginePhase'].reverse();
+                }
+
                 break;
         }
     },
@@ -84,6 +97,9 @@ var persistenceManager =
                     else {
                         this.canContinue = true;
                     }
+                    break;
+
+                default :
                     break;
             }
             this.runNextFilter();
