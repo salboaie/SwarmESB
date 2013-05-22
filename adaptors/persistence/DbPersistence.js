@@ -85,7 +85,10 @@ function registerDAO(name, config) {
 
 function getSchema(name) {
     if (dao[name]) {
-        schema[name] = dbAdaptor.define(name, dao[name],
+        var tableDao = dao[name];
+        dao[name] = null;
+        delete dao[name];
+        schema[name] = dbAdaptor.define(name, tableDao,
             {
                 timestamps: false,
                 paranoid: false,
@@ -93,7 +96,6 @@ function getSchema(name) {
                 freezeTableName: true,
                 tableName: name
             });
-        delete dao[name];
     }
     //var dao = dbAdaptor.daoFactoryManager.getDAO(name);
     return schema[name];
@@ -126,8 +128,8 @@ updateCall = function (tableName, id, data, callback) {
         for (var key in data) {
             result[key] = data[key];
         }
-        result.save();
         callback(result);
+        result.save();
     });
 }
 
