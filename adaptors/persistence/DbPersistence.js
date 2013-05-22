@@ -99,52 +99,32 @@ function getSchema(name) {
     return schema[name];
 }
 
-processDbRequest = function (request, callback) {
-    var schema = getSchema(request.className);
-    var functionCall = global[request.type.toLowerCase() + "Call"];
-
-    //TODO : return error callback
-    if (!schema) {
-        console.error("No schema found for " + request.className);
-        //return;
-    }
-    if (!functionCall) {
-        console.error("No function call found for " + request.type);
-        //return;
-    }
-
-    try {
-        functionCall(schema, request, callback);
-    }
-    catch (e) {
-        console.error("Function call " + request.type + " error : " + e.toString());
-        //TODO : return result
-    }
-}
-
 
 /**********************************************************************************************
  * CRUD Functions : functionName.toLowerCase()+"Call"
  **********************************************************************************************/
-getCall = function (schema, request, callback) {
-    schema.find(request.id).success(function (result) {
+getCall = function (tableName, id, callback) {
+    var schema = getSchema(tableName);
+    schema.find(id).success(function (result) {
         callback(result);
     });
 }
 
 
-putCall = function (schema, request, callback) {
-    schema.build(request.data).save().success(function (result) {
+putCall = function (tableName, data, callback) {
+    var schema = getSchema(tableName);
+    schema.build(data).save().success(function (result) {
         callback(result);
     });
 }
 
 
-updateCall = function (schema, request, callback) {
+updateCall = function (tableName, id, data, callback) {
+    var schema = getSchema(tableName);
     //TODO:update object without getting from DB first
-    schema.find(request.id).success(function (result) {
-        for (var key in request.data) {
-            result[key] = request.data[key];
+    schema.find(id).success(function (result) {
+        for (var key in data) {
+            result[key] = data[key];
         }
         result.save();
         callback(result);
@@ -152,29 +132,34 @@ updateCall = function (schema, request, callback) {
 }
 
 
-deleteCall = function (schema, request, callback) {
+deleteCall = function (tableName, id, callback) {
 }
 
 
-refreshCall = function (schema, request, callback) {
+refreshCall = function (tableName, id, callback) {
+}
+
+
+queryCall = function (tableName, query, callback) {
+    dbAdaptor.query(query).success(function (result) {
+        callback(result);
+    });
 }
 
 
 /**********************************************************************************************
  * Table Functions : functionName.toLowerCase()+"Call"
  **********************************************************************************************/
-
-
-createCall = function (schema, request, callback) {
+createCall = function (tableName, data, callback) {
     isDaoRequest = false;
-    registerDbModel(request.name, request.description, function (result, err) {
+    registerDbModel(tableName, data, function (result, err) {
         callback(result, err);
     });
 }
 
 
-dropCall = function (schema, request, callback) {
-    tableWatcher.dropTable(request.name, function (result, err) {
+dropCall = function (tableName, callback) {
+    tableWatcher.dropTable(tableName, function (result, err) {
         callback(result, err);
     });
 }

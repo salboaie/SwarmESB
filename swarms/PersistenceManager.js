@@ -5,25 +5,28 @@ var persistenceManager =
     },
     vars: {
         debug: true,
+        type: null,
+        result: null,
         request: null,
-        requestFilters: [],
+        historyFilters: null,
+        requestFilters: null,
         currentFilter: null,
         canContinue: true
     },
     processRequest: function (request) {
-        this.result = {};
-        this.result.data = [];
+        this.type = request.type;
         this.request = request;
-        if (!this.request.filters) {
-            this.request.filters = [];
+        if (!this.historyFilters) {
+            this.historyFilters = [];
         }
-        this.decideRequestFilters(request);
+        this.decideRequestFilters(this.type);
         this.runNextFilter();
     },
-    decideRequestFilters: function (request) {
-        switch (request.type) {
+    decideRequestFilters: function (type) {
+        switch (type) {
             case "CREATE":
             case "DROP":
+            case "QUERY":
                 this.requestFilters = ['DbPersistencePhase'].reverse();
                 break;
             case "DELETE":
@@ -48,6 +51,10 @@ var persistenceManager =
             this.swarm(this.currentFilter);
         }
         else {
+            delete this['debug'];
+            delete this['canContinue'];
+            delete this['currentFilter'];
+            delete this['requestFilters'];
             this.home("done");
         }
     },
@@ -59,12 +66,19 @@ var persistenceManager =
             return null;
         }
     },
+    getRequestParams: function (paramsDict) {
+        var result = [];
+        for (var key in paramsDict) {
+            result.push(paramsDict[key]);
+        }
+        return result;
+    },
 
 
     RuleEnginePhase: {
         node: "RuleEngine",
         code: function () {
-            this.request.filters.push("RuleEngine");
+            this.historyFilters.push("RuleEngine");
             this.canContinue = true;
             this.runNextFilter();
         }
@@ -72,11 +86,11 @@ var persistenceManager =
     PersistenceCachePhase: {
         node: "PersistenceCache",
         code: function () {
-            this.request.filters.push("PersistenceCache");
+            this.historyFilters.push("PersistenceCache");
 
-            var key = getKey(this.request.className, this.request.id);
+            var key = getKey(this.request.className, this.request.params['id']);
 
-            switch (this.request.type) {
+            switch (this.type) {
                 case "DELETE":
                 case "UPDATE":
                     invalidate(key);
@@ -85,13 +99,15 @@ var persistenceManager =
                     this.canContinue = true;
                     break;
                 case "REFRESH":
-                    update(key, this.request.data);
+                    key = getKey(this.request.className, this.result['id']);
+                    update(key, this.result);
+                    this.canContinue = true;
                     break;
                 case "GET":
                     var value = search(key);
                     if (value) {
                         value.cacheInfo = "This data is from cache"; // for testing
-                        this.request.data = value;
+                        this.result = value;
                         this.canContinue = false;
                     }
                     else {
@@ -100,6 +116,7 @@ var persistenceManager =
                     break;
 
                 default :
+                    this.canContinue = true;
                     break;
             }
             this.runNextFilter();
@@ -108,16 +125,30 @@ var persistenceManager =
     DbPersistencePhase: {
         node: "DbPersistence",
         code: function () {
-            var self = this;
-            this.request.filters.push("DbPersistence");
+            this.historyFilters.push("DbPersistence");
 
-            processDbRequest(this.request, function (result) {
-                self.request.data = result;
-                self.request.type = "REFRESH";
+            var self = this;
+            var reqType = this.type.toLowerCase();
+            var functionCall = global[reqType + "Call"];
+            var params = [this.request.className].concat(this.getRequestParams(this.request.params));
+
+            if (!functionCall) {
+                console.error("No function call found for " + reqType);
+            }
+
+            params.push(function (result) {
+                self.result = result;
+                self.type = "REFRESH";
                 self.canContinue = true;
                 self.runNextFilter();
             });
 
+            try {
+                functionCall.apply(this, params);
+            }
+            catch (e) {
+                console.error("Function call " + this.type + " error : " + e.toString());
+            }
         }
     }
 };
