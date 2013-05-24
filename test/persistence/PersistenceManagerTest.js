@@ -298,6 +298,59 @@ exports.PersistenceManagerTest = {
     },
 
 
+    MULTIPLE_REQUEST_test: function (test) {
+        var results = 0;
+
+        var newData = {
+            m_string: 'multiple req update test',
+            m_int: 1000,
+            m_boolean: true,
+            m_date: new Date()
+        };
+
+        var req1 = {};
+        req1.type = "UPDATE";
+        req1.persistence = "DbPersistence";
+        req1.className = defaultMembersModel.name;
+        req1.params = {
+            id: testData.id,
+            data: newData
+        };
+
+        var getReq2 = {};
+        getReq2.type = "GET";
+        getReq2.persistence = "DbPersistence";
+        getReq2.className = defaultMembersModel.name;
+        getReq2.params = {
+            id: testData.id
+        };
+
+        client.removeAllListeners("PersistenceManager.js");
+        client.startSwarm("PersistenceManager.js", "processRequest", [req1, getReq2]);
+        client.on("PersistenceManager.js", function (req) {
+            console.log("GET_AFTER_UPDATE_test_with_cache result " + nodeUtil.inspect(req.result));
+            console.log("GET_AFTER_UPDATE_test_with_cache filters " + nodeUtil.inspect(req.historyFilters));
+            var key;
+            for (key  in testData) {
+                if (testData[key] instanceof Date) {
+                    test.equal(testData[key].time, req.result[key].time, "Checking " + key + ".");
+                }
+                else {
+                    test.equal(testData[key], req.result[key], "Checking " + key + ".");
+                }
+            }
+            var expectedFilters = ['RuleEngine', 'PersistenceCache'];
+            test.deepEqual(req.historyFilters, expectedFilters);
+            test.ok(req.result.id, "Id is set.");
+            test.equal(req.result.id, testData['id']);
+
+            results++;
+            if (results == 2) {
+                test.done();
+            }
+        });
+    },
+
     QUERY_test: function (test) {
         var selectQueryReq = {};
         selectQueryReq.type = "QUERY";

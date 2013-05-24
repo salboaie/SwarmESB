@@ -8,19 +8,28 @@ var persistenceManager =
         type: null,
         result: null,
         request: null,
+        error: null,
         historyFilters: null,
         requestFilters: null,
         currentFilter: null,
         canContinue: true
     },
     processRequest: function (request) {
-        this.type = request.type;
-        this.request = request;
-        if (!this.historyFilters) {
-            this.historyFilters = [];
+        var requests, i, len;
+        requests = request instanceof Array ? request : [request];
+
+        //TODO : this is a parallel executionn
+        //TODO :    -> do we need a sequential execution for [UPDATE,GET] ????
+        for (i = 0, len = requests.length; i < len; i++) {
+            request = requests[i];
+            this.type = request.type;
+            this.request = request;
+            if (!this.historyFilters) {
+                this.historyFilters = [];
+            }
+            this.decideRequestFilters(this.type);
+            this.runNextFilter();
         }
-        this.decideRequestFilters(this.type);
-        this.runNextFilter();
     },
     decideRequestFilters: function (type) {
         switch (type) {
@@ -88,7 +97,11 @@ var persistenceManager =
         code: function () {
             this.historyFilters.push("PersistenceCache");
 
-            var key = getKey(this.request.className, this.request.params['id']);
+            var id = '';
+            if (this.request && this.request.params) {
+                id = this.request.params['id']
+            }
+            var key = getKey(this.request.className, id);
 
             switch (this.type) {
                 case "DELETE":

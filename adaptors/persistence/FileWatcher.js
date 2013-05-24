@@ -113,7 +113,7 @@ var FileWatcher = function (name) {
         var files;
         var i, j, dLen, fLen;
 
-        for (i = 0; dLen = folders.length, i < dLen; i++) {
+        for (i = 0, dLen = folders.length; i < dLen; i++) {
             folderPath = folders[i];
             try {
                 files = fs.readdirSync(folderPath);
@@ -122,7 +122,7 @@ var FileWatcher = function (name) {
                 console.log("Error reading files from : " + folderPath);
                 files = [];
             }
-            for (j = 0; fLen = files.length, j < fLen; j++) {
+            for (j = 0, fLen = files.length; j < fLen; j++) {
                 checkFile(folderPath, files[j]);
             }
             watchFolder(folderPath);

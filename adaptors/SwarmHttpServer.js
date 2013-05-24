@@ -116,12 +116,13 @@ function listDirectory(path) {
 }
 
 function socketIOHandler(socket) {
-    cprint("Socket IO");
+    cprint("Socket IO new socket");
 
     var outlet = go.newOutlet(socket, sendFunction, closeFunction);
 
     socket.on('error', outlet.onCommunicationError.bind(outlet));
     socket.on('close', outlet.onCommunicationError.bind(outlet));
+    socket.on('disconnect', outlet.onCommunicationError.bind(outlet));
 
     watchSocket(socket, outlet);
 
@@ -139,7 +140,9 @@ function sendFunction(socket, data) {
 }
 
 function closeFunction(socket) {
-    socket.end();
+    try {
+    } catch (e) {
+    }
 }
 
 

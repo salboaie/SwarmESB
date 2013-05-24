@@ -16,6 +16,7 @@ var dao = {};
 var config;
 var isDaoRequest = false;
 var fileWatcher, tableWatcher;
+var tableConfig;
 
 
 /**********************************************************************************************
@@ -24,6 +25,7 @@ var fileWatcher, tableWatcher;
 init();
 
 function init() {
+    tableConfig = {};
     config = getMyConfig();
     dbAdaptor = dbFactory.getDbAdapter(config);
     tableWatcher = new TableWatcher(dbAdaptor);
@@ -77,6 +79,7 @@ function registerDbModel(name, modelConfig, callback) {
         });
     }
     registerDAO(name, modelConfig);
+    tableConfig[name] = modelConfig;
 }
 
 function registerDAO(name, config) {
@@ -126,7 +129,12 @@ updateCall = function (tableName, id, data, callback) {
     //TODO:update object without getting from DB first
     schema.find(id).success(function (result) {
         for (var key in data) {
-            result[key] = data[key];
+            if (data[key] instanceof Array) {
+                result[key] = JSON.stringify(data[key]);
+            }
+            else {
+                result[key] = data[key];
+            }
         }
         callback(result);
         result.save();
@@ -134,7 +142,7 @@ updateCall = function (tableName, id, data, callback) {
 }
 
 
-deleteCall = function (tableName, id, callback) {
+deleteCall = function (tableName, id, data, callback) {
 }
 
 
