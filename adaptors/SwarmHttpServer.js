@@ -6,7 +6,6 @@ var util = require('util');
 var fs = require('fs');
 thisAdapter = sutil.createAdapter("SwarmHttpServer", null, null, false);
 thisAdapter.loginSwarmingName = "login.js";
-
 /**********************************************************************************************
  * Variables
  **********************************************************************************************/

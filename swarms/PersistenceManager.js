@@ -111,7 +111,7 @@ var persistenceManager =
                 case "PUT":
                     this.canContinue = true;
                     break;
-                case "REFRESH":
+                case "RESULT":
                     key = getKey(this.request.className, this.result['id']);
                     update(key, this.result);
                     this.canContinue = true;
@@ -119,7 +119,7 @@ var persistenceManager =
                 case "GET":
                     var value = search(key);
                     if (value) {
-                        value.cacheInfo = "This data is from cache"; // for testing
+                        this.cached = true;
                         this.result = value;
                         this.canContinue = false;
                     }
@@ -151,7 +151,7 @@ var persistenceManager =
 
             params.push(function (result) {
                 self.result = result;
-                self.type = "REFRESH";
+                self.type = "RESULT";
                 self.canContinue = true;
                 self.runNextFilter();
             });
