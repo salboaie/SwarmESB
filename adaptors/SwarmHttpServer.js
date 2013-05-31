@@ -27,12 +27,12 @@ var io;
 init();
 
 function init() {
-    proccessConfig();
+    processConfig();
     initStaticServer();
     initSocketIO();
 };
 
-function proccessConfig() {
+function processConfig() {
     config = getMyConfig();
     if (config.port != undefined) {
         serverPort = config.port;
@@ -63,10 +63,10 @@ function initSocketIO() {
 }
 
 function staticServerHandler(request, response) {
-    request.addListener('end', function () {
-        file.serve(request, response, function (error) {
-            fileRequestHandler(request, response, error);
-        });
+    cprint("Requesting " + request.url);
+    cprint("Serving file...");
+    file.serve(request, response, function (error) {
+        fileRequestHandler(request, response, error);
     });
 }
 
@@ -76,6 +76,7 @@ function fileRequestHandler(request, response, error) {
         response.writeHead(error.status, error.headers);
         response.end();
     }
+    cprint("Serving " + request.url);
 }
 
 function listDirectory(path) {

@@ -38,8 +38,8 @@
                "bindAddress":"localhost"
   },
   "SwarmHttpServer":{
-         "port":8080,
-         "bindAddress":"localhost",
-         "home" : "c://work//shape//"
+         "port":5000,
+         "bindAddress":"127.0.0.1",
+         "home" : "e:/jswork/SwarmShape/"
     }
 }
