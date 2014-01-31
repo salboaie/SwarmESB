@@ -1,13 +1,6 @@
 ## SwarmESB  
+Swarm communication is a new architecture and a new message communication pattern for cloud and enterprise systems. The usual method of doing message passing is to have relatively intelligent processes, objects or actors sending and receiving dumb messages. Thinking to messages as relatively smart beings visiting relatively non intelligent places, we noticed a positive effect on the quality of the code and a new path for decomposing complex applications in small services. SwarmESB is using swarm communication to create an Enterprise Service Bus.
 
-Swarm communication is a new approach for message communication in a distributed system.
-The usual method of doing message passing is to have relatively intelligent processes, objects or 
-actors sending and receiving dumb messages. Thinking to messages as relatively smart beings visiting
-relatively non intelligent places, we noticed a positive effect on the quality of the code
-and a new path for decomposing complex applications in small services.  
-
-SwarmESB is using swarm communication to create an Enterprise Service Bus.
-Swarms can be for SOA's orchestration what REST is for SOAP.
 
 ![Overview](http://salboaie.github.com/images/swarmDiagram.png "SwarmESB")
 
@@ -25,6 +18,9 @@ parallel computing and loose coupling usually obtained with asynchronous message
 using a message or service bus. While this project is build using Node.js and Redis, this project will present "swarming"
 as a new fundamental concept, comparable, but from the code maintainability perspective a lot simpler than direct 
 usage of Enterprise Integration Patterns or the Actor model used in Scala and Erlang.
+
+
+Imagine, Swarms can be for SOA's orchestration what REST was for SOAP!
 
 ## Examples
     
