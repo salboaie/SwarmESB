@@ -62,8 +62,7 @@ Waw: each node could be on a different continent!  Check other swarms for parall
     Check our wiki: https://github.com/salboaie/SwarmESB/wiki
 
     Technologies: node.js, Redis, PUB/SUB
-    Usage of JavaScript is accidental, the swarming concept can be implemented on any modern platform!
-
+    
 SwarmESB ca be used as a light, open source, ESB (or Message Bus) for your enterprise applications.
 Instead of message oriented communication or web services, you describe your communication between "nodes" in what
 we call "swarm descriptions" or simple "swarms".
