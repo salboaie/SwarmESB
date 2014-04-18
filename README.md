@@ -97,3 +97,6 @@ Your adapters can use web services as a particular case of providing existing AP
     
    
     
+
+#Supporters
+![WebStorm](http://www.jetbrains.com/img/logos/webstorm_logo142x29.gif "WebStorm, the best IDE for node.js and JS")
