@@ -1,7 +1,9 @@
+(c) Axiologic. The content of the README and of the wiki is Public Domain
+
 ## SwarmESB  
 
 
-Swarm communication is a microservices architecture [http://martinfowler.com/articles/microservices.html] based on a new message communication pattern we call "swarms" It offers an starting arhitecture for cloud and enterprise systems. The usual method of doing message passing is to have relatively intelligent processes, objects or actors sending and receiving dumb messages. Thinking to messages as relatively smart beings visiting relatively non intelligent places, we noticed a positive effect on the quality of the code and a new path for decomposing complex applications in small services. SwarmESB is using swarm communication for creating an easy to grow Enterprise Service Bus. You add your own microservices (we call adapters) and describe how  microservices get composed for your usecases in a coupling free DSL (swarm descriptions). 
+Swarm communication is a microservices architecture [http://martinfowler.com/articles/microservices.html] based on a new message communication pattern we call "swarms" It offers an starting architecture for cloud and enterprise systems. The usual method of doing message passing is to have relatively intelligent processes, objects or actors sending and receiving dumb messages. Thinking to messages as relatively smart beings visiting relatively non intelligent places, we noticed a positive effect on the quality of the code and a new path for decomposing complex applications in small services. SwarmESB is using swarm communication for creating an easy to grow Enterprise Service Bus. You add your own microservices (we call adapters) and describe how  microservices get composed for your usecases in a coupling free DSL (swarm descriptions). 
 
 
 ![Overview](http://salboaie.github.com/images/swarmDiagram.png "SwarmESB")
