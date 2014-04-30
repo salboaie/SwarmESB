@@ -3,38 +3,39 @@
  "verbose":false,
  "pingTimeout":500,
  "Core":{
-     "coreId":"default_partition",
+     "coreId":"ChannelsCore",
      "redisHost":"localhost",
      "redisPort":6379,
      "paths":[
         {"folder":"disabled"        ,"enabled":false},
-        {"folder":"testSwarms"      ,"enabled":true},
+        {"folder":"testSwarms"      ,"enabled":false},
         {"folder":"swarms"          ,"enabled":true}
      ]
   },
  "Logger":{},
  "Launcher":{
            "autorun":[
-                       {"node":"adaptors/Null.js",                  "enabled":true  },
-                       {"node":"adaptors/Balancer.js",              "enabled":true  },
-                       {"node":"adaptors/ClientAdapter.js",         "enabled":false },
-                       {"node":"adaptors/ChatServices.js",          "enabled":false },
-                       {"node":"adaptors/FollowerListService.js",   "enabled":true  },
-                       {"node":"adaptors/SharedAdapter.js",         "enabled":true  },
-                       {"node":"adaptors/Worker.js",                "times":5,      "wait":300}
+                       {"node":"adapters/Null.js",                  "enabled":true },
+                       {"node":"adapters/Logger.js",                "enabled":true },
+                       {"node":"adapters/Mailer.js",                "enabled":false },
+                       {"node":"adapters/SessionsRegistry.js",      "enabled":true },
+                       {"node":"adapters/WSServer.js",              "enabled":true },
+                       {"node":"adapters/UsersRepo.js",             "enabled":true }
            ]
   },
   "ClientAdapter":{
                 "port":3000,
                 "bindAddress":"localhost"
   },
-  "WebClientAdapter":{
-               "port":8000,
-               "bindAddress":"localhost"
-  },
   "SwarmHttpServer":{
-         "port":8080,
-         "bindAddress":"localhost",
-         "home" : "c://work//shape//"
-    }
+         "port":5000,
+         "bindAddress":"0.0.0.0",
+         "home" : "e:/work/swarmESB/static"
+    },
+   "WSServer":{
+              "port":5001,
+              "bindAddress":"0.0.0.0",
+              "home" : "e:/work/swarmESB/static"
+         }
+
 }

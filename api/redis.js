@@ -9,6 +9,7 @@
 
 var redis = require("redis");
 
+
 exports.newRedisContext = function(redisPort,redisHost,context){
     var ctxt = new RedisContext(context);
     ctxt.client = redis.createClient(redisPort,redisHost);
@@ -103,7 +104,7 @@ function createFunction(command){
                 }
             }
         });
-        //cprint("Redis command: " + command + J(args));
+        cprint("Redis command: " + command + J(args));
         this.client.send_command(command,args);
     }
 }
@@ -120,5 +121,6 @@ function init(){
 init();
 
 RedisContext.prototype.createTenantURI =  function (resourceId) {
-    return getCurrentTenant() + ":"+ this.context +"/"+ resourceId;
+    var uri = getCurrentTenant() + ":"+ this.context +"/"+ resourceId;
+    return uri;
 }

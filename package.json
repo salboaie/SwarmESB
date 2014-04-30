@@ -1,0 +1,60 @@
+{
+  "name": "channelsESB",
+  "description": "Channels ESB",
+  "version": "0.9.9",
+  "homepage": "https://github.com/salboaie/asynchron",
+  "author": {
+    "name": "Alboaie Sinica",
+    "email": "salboaie@gmail.com"
+  },
+  "contributors": [
+    {
+      "name": "Alboaie Sinica",
+      "email": "salboaie@gmail.com"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/salboaie/asynchron.git"
+  },
+  "bugs": {
+    "email": "salboaie@gmail.com",
+    "url": "https://github.com/salboaie/asynchron/issues"
+  },
+  "directories": {
+    "lib": "./lib"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "main": "./adapters/Core.js",
+  "licenses": [
+    {
+      "type": "GPL",
+      "url": "http://www.gnu.org/licenses/gpl.html"
+    }
+  ],
+  "_id": "channelsESB@0.9.9",
+  "dependencies" : {
+          "swarmutil"       : ">=1.0.9",
+          "asynchron"       : ">=1.0.3",
+          "redsindex"       : ">=0.1.0",
+          "clone"           : ">=0.1.8",
+          "embedly"         : ">=1.0.2",
+          "geoip-lite"      : ">=1.1.3",
+          "MD5"             : ">=1.2.0",
+          "nodemailer"      : ">=0.5.2",
+          "node-uuid"       : ">=1.4.0",
+          "q"               : ">=1.0.0",
+          "redis"           : ">=0.9.1",
+          "ws"             : ">=0.4.31"
+  },
+  "optionalDependencies": {},
+  "_engineSupported": true,
+  "_npmVersion": "1.1.12",
+  "_nodeVersion": "v0.6.14",
+  "_defaultsLoaded": true,
+  "dist": {
+    
+  }
+}

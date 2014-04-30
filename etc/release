@@ -1,0 +1,35 @@
+{
+ "logsPath":"/home/logs/",
+ "verbose":false,
+ "pingTimeout":500,
+ "Core":{
+     "coreId":"ChannelsCore",
+     "redisHost":"localhost",
+     "redisPort":6379,
+     "paths":[
+        {"folder":"disabled"        ,"enabled":false},
+        {"folder":"testSwarms"      ,"enabled":false},
+        {"folder":"swarms"          ,"enabled":true}
+     ]
+  },
+ "Logger":{},
+ "Launcher":{
+           "autorun":[
+                       {"node":"adapters/Core.js",                  "enabled":true  },
+                       {"node":"adapters/Null.js",                  "enabled":true  },
+                       {"node":"adapters/Logger.js",                "enabled":true  },
+                       {"node":"adapters/Mailer.js",                "enabled":true  },
+                       {"node":"adapters/SessionsRegistry.js",      "enabled":true  },
+                       {"node":"adapters/WSServer.js",              "enabled":true  },
+                       {"node":"adapters/BizzChan.js",              "enabled":true  },
+                       {"node":"adapters/UsersRepo.js",             "enabled":true  },
+                       {"node":"adapters/ExcelBuilder.js",          "enabled":true  }
+           ]
+  },
+  "WSServer":{
+              "port":8080,
+              "bindAddress":"0.0.0.0",
+              "home" : "/opt/static/"
+  }
+
+}
