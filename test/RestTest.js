@@ -6,17 +6,23 @@ var util                = require("swarmutil");
 var assert              = require('assert');
 
 //globalVerbosity = true;
-swarmSettings.authentificationMethod = "testCtor";
-var client             = util.createClient(adapterHost, adapterPort, "testLoginUser", "ok","testTenant");
+//swarmSettings.authentificationMethod = "testCtor";
+//var client             = util.createClient(adapterHost, adapterPort, "testLoginUser", "ok","testTenant");
 
-client.startSwarm("LaunchingTest.js","clientCtor");
-client.on("LaunchingTest.js",getGreetings);
+//client.startSwarm("LaunchingTest.js","clientCtor");
+//client.on("LaunchingTest.js",getGreetings);
+
+
+//util.wsStartSwarm("localhost", 8000, getGreetings, "intern", "restAuth.js", "start", "ok");
+//function getGreetings(obj){
+    //host, port, callBack,sessionId, swarmName, ctor
+//}
+
+
+//intern should not be used, is a quick hack, a better session management should be implemented
+util.wsStartSwarm("localhost", 8000, getEchoGreetings, "intern", "RemoteEcho.js", "start", 'testParam1', 'testParam2');
 
 var msg = "none";
-function getGreetings(obj){
-    //host, port, callBack,sessionId, swarmName, ctor
-    util.wsStartSwarm("localhost", 8000, getEchoGreetings, client.sessionId, "RemoteEcho.js", "start", 'testParam1', 'testParam2');
-}
 
 function getEchoGreetings(obj){
     msg = "OK!";
@@ -28,5 +34,6 @@ setTimeout (
         assert.equal(msg,"OK!");
         process.exit(1);
     },
-    1000);
+    1000
+);
 

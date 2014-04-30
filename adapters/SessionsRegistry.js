@@ -45,6 +45,16 @@ registerSession = function(sessionId, swarm){
 
 }
 
+registerSession("intern", {
+    sessionId   :"intern",
+    entryAdapter: "RestAdapter",
+    userId      : "system",
+    tenantId    : "systemTenant",
+    meta:{
+
+    }
+});
+
 dropSession = function(sessionId){
     console.log("Session dropped " + sessionId ,  " Sessions:" + J(sessions));
     var session             = sessions[sessionId];
