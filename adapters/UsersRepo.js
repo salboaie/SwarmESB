@@ -1,3 +1,8 @@
+/*
+ Provided as example only,not used in tests,
+  use REDIS, has support for facebook integration for users, etc
+ */
+
 var redisBinder = require("../api/redisBind.js");
 var redis = require("redis");
 var util  = require('swarmutil');
@@ -36,7 +41,7 @@ function getUserKey(userId){
 validateFbResponse = function(tokenAuthFb, callBack){
     var dataFB;
     var crypto = require('crypto');
-       var key = '8a8342a56e78f409d2437a0e058c3ed5'   // app secret from facebook
+       var key = ' SECRET '   // app secret from facebook
 
     var appSecret_proof = crypto.createHmac('sha256', key).update(tokenAuthFb).digest('hex')
     var https = require('https');
@@ -63,10 +68,6 @@ validateFbResponse = function(tokenAuthFb, callBack){
         }
 
     });
-
-
-
-
 }
 
 function doSave(key, userInfo){
@@ -552,7 +553,3 @@ resetPassword = function(userId, callBack){
             }
         });
 }
-
-
-
-

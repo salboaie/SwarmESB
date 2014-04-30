@@ -3,7 +3,7 @@
  "verbose":false,
  "pingTimeout":500,
  "Core":{
-     "coreId":"ChannelsCore",
+     "coreId":"SwarmCoreExample",
      "redisHost":"localhost",
      "redisPort":6379,
      "paths":[
@@ -17,10 +17,15 @@
            "autorun":[
                        {"node":"adapters/Null.js",                  "enabled":true },
                        {"node":"adapters/Logger.js",                "enabled":true },
+                       {"node":"adapters/SharedAdapter.js",         "enabled":true },
+                       {"node":"adapters/Balancer.js",              "enabled":true },
+                       {"node":"adapters/Worker.js",                "enabled":true },
                        {"node":"adapters/Mailer.js",                "enabled":false },
                        {"node":"adapters/SessionsRegistry.js",      "enabled":true },
                        {"node":"adapters/WSServer.js",              "enabled":true },
-                       {"node":"adapters/UsersRepo.js",             "enabled":true }
+                       {"node":"adapters/UsersRepo.js",             "enabled":true },
+                       {"node":"adapters/ClientAdapter.js",         "enabled":true },
+                       {"node":"adapters/WebClientAdapter.js",      "enabled":false }
            ]
   },
   "ClientAdapter":{

@@ -1,16 +1,16 @@
 /**
- * Adapter that opens swarmESB to php or other environments that can't do sockets but can do REST
+ * Adapter that opens swarmESB to php or other environments that can't do sockets, WebSockets, etc but can do REST
  *
  */
 var sutil   = require('swarmutil');
 var journey = require('journey');
 var util    = require("util");
 
-thisAdapter = sutil.createAdapter("WebClientAdapter", null, null, false);
+thisAdapter = sutil.createAdapter("RestAdapter", null, null, false);
 //thisAdapter.loginSwarmingName   = "login.js";
 //globalVerbosity = true;
 
-var myCfg = getMyConfig("WebClientAdapter");
+var myCfg = getMyConfig("RestAdapter");
 var serverPort      = 8000;
 var serverHost      = "localhost";
 
@@ -41,8 +41,6 @@ function requestOutlet(request, response){
         response.end(J(swarm));
         thisAdapter.deleteOutlet(this);
     }
-
-
 }
 
 /**
@@ -54,9 +52,7 @@ function requestOutlet(request, response){
 function startMySwarm(req, res, jo) {
     try{
 
-        cprint("Cucu " + J(jo));
         //var jo = typeof(data) === 'string' ? JSON.parse(data) : data;
-
          //dprint("Start swarm request " + util. data);
 
         var reqOutlet = new requestOutlet(req, res);

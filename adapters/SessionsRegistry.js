@@ -13,8 +13,6 @@ thisAdapter = require('swarmutil').createAdapter("SessionsRegistry");
 
 var redisContext = require("redis").createClient(thisAdapter.redisPort,thisAdapter.redisHost);
 
-var chapi = require("../api/channelsUtil.js");
-
 function sessionInfo(sessionId){
     this.sessionId = sessionId;
     this.onCloseSwarms = {};
