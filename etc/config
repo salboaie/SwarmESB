@@ -20,12 +20,12 @@
                        {"node":"adapters/SharedAdapter.js",         "enabled":true },
                        {"node":"adapters/Balancer.js",              "enabled":true },
                        {"node":"adapters/Worker.js",                "enabled":true },
-                       {"node":"adapters/Mailer.js",                "enabled":false },
+                       {"node":"adapters/Mailer.js",                "enabled":false},
                        {"node":"adapters/SessionsRegistry.js",      "enabled":true },
                        {"node":"adapters/WSServer.js",              "enabled":true },
-                       {"node":"adapters/UsersRepo.js",             "enabled":true },
+                       {"node":"adapters/UsersRepo.js",             "enabled":false},
                        {"node":"adapters/ClientAdapter.js",         "enabled":true },
-                       {"node":"adapters/WebClientAdapter.js",      "enabled":false }
+                       {"node":"adapters/WebClientAdapter.js",      "enabled":true }
            ]
   },
   "ClientAdapter":{
