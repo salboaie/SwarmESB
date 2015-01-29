@@ -1,7 +1,20 @@
-(c) Axiologic. The content of the README and of the wiki is Public Domain
+(c) Axiologic Research & Alboaie Sînică. 
+Code License: LGPL or MIT 
+The content of the README and of the wiki is Public Domain
 
-## SwarmESB  
+Commercial versions derived from this project are allowed. 
+However, it would be desirable that all ESBs developed around swarm communication idea to get identical APIs and compatible programming styles.
+Contact salboaie@gmail.com for details. 
 
+We are working on a new version of SwarmESB, called (https://github.com/salboaie/swarmcore "SwarmCore") that:
+ - have new fewstures (eg.syntax to describe guaranteed message delivery)
+ - default load distribution between Adapters
+ - broadcast primitive
+ - distributed transactions mechanisms
+ - system monitor and deplyment, support for docker containers
+ - allows creation of personalised/custom ESBs that can use other middleware than Redis
+
+## What is SwarmESB ?
 
 Swarm communication is a micro-services architecture [http://martinfowler.com/articles/microservices.html] based on a new message communication pattern we call "swarms" It offers an starting architecture for cloud and enterprise systems. The usual method of doing message passing is to have relatively intelligent processes, objects or actors sending and receiving dumb messages. Thinking to messages as relatively smart beings visiting relatively non intelligent places, we noticed a positive effect on the quality of the code and a new path for decomposing complex applications in small services. SwarmESB is using swarm communication for creating an easy to grow Enterprise Service Bus. You add your own microservices (we call adapters) and describe how  microservices get composed for your usecases in a coupling free DSL (swarm descriptions).
 
@@ -88,7 +101,7 @@ Your adapters can use web services as a particular case of providing existing AP
 
 ## License:
 
-    LGPL
+    LGPL & MIT
     
 ## Project SWARM
 
