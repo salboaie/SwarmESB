@@ -7,7 +7,7 @@ However, it would be desirable that all ESBs developed around swarm communicatio
 Contact salboaie@gmail.com for details. 
 
 We are working on a new version of SwarmESB, called [SwarmCore] (https://github.com/salboaie/swarmcore "SwarmCore") that:
- - have new fewstures (eg.syntax to describe guaranteed message delivery)
+ - has  new features (eg.syntax to describe guaranteed message delivery)
  - default load distribution between Adapters
  - broadcast primitive
  - distributed transactions mechanisms
