@@ -6,7 +6,7 @@ Commercial versions derived from this project are allowed.
 However, it would be desirable that all ESBs developed around swarm communication idea to get identical APIs and compatible programming styles.
 Contact salboaie@gmail.com for details. 
 
-We are working on a new version of SwarmESB, called (https://github.com/salboaie/swarmcore "SwarmCore") that:
+We are working on a new version of SwarmESB, called [SwarmCore] (https://github.com/salboaie/swarmcore "SwarmCore") that:
  - have new fewstures (eg.syntax to describe guaranteed message delivery)
  - default load distribution between Adapters
  - broadcast primitive
