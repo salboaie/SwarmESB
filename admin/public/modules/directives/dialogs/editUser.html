@@ -1,0 +1,38 @@
+<div class="dialog-contents" >
+    <div>{{labelTitle}} {{user.userId}}</div>
+    <div ng-show="editUID">
+        <span class="formLabel"> UserId(CNP) </span>   <input type="text" ng-model="user.userId"/>
+    </div>
+    <div>
+        <span class="formLabel">User Name</span>
+          <input type="text" ng-model="user.userName"/>
+    </div>
+
+    <div>
+        <span class="formLabel">E-mail</span>
+        <input type="text" ng-model="user.email"/>
+    </div>
+
+    <div>
+        <span class="formLabel">Address</span>
+        <input type="text" ng-model="user.address"/>
+    </div>
+
+    <div>
+        <span class="formLabel">Phone</span>
+        <input type="text" ng-model="user.phone"/>
+    </div>
+
+    <div>
+        <span class="formLabel">Password</span>
+        <input type="password" ng-model="user.password"/>
+    </div>
+
+    <div>
+        <span class="formLabel">Is Doctor</span>
+        <input  type="checkbox" value="true"  ng-model="user.isDoctor"/>
+    </div>
+    <input type="button" value="Save" ng-click="saveUser()"/>
+    <input type="button" value="Delete" ng-click="deleteUser()" ng-show="!editUID"/>
+    <div>{{status}}</div>
+</div>

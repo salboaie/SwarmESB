@@ -1,0 +1,18 @@
+<div class="dialog-contents" >
+    <div ng-show="createNew">
+        <span class="formLabel" > OrganisationId       </span>
+        <input type="text" ng-model="organisation.organisationId"/>
+    </div>
+    <div>
+        <span class="formLabel"> Display Name </span>
+        <input type="text" ng-model="organisation.displayName"/>
+    </div>
+    <div>
+        <span class="formLabel"> Agent </span>
+        <input type="text" ng-model="organisation.agent"/>
+    </div>
+    <input type="button" value="Save" ng-click="checkInput()"/>
+    <input type="button" value="Synchronise" ng-click="synchronise()" ng-show="!createNew"/>
+    <div>{{status}}</div>
+    <br>
+</div>

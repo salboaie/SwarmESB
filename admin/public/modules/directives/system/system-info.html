@@ -1,0 +1,23 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        System Info
+    </div>
+    <!-- /.panel-heading -->
+    <div class="panel-body">
+        <table st-table="info"  class="table table-striped table-responsive">
+            <thead>
+            <tr>
+                <th>Type</th>
+                <th>Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="row in info">
+                <td>{{row.type}}</td>
+                <td>{{row.value}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- /.panel-body -->
+</div>

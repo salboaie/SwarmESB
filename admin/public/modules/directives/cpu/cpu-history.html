@@ -1,0 +1,17 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        CPU Activity 
+        <!--<a href="" ng-click="liveView = !liveView" style="float: right">
+            <i class="glyphicon " ng-class="{'glyphicon-pause': liveView, 'glyphicon-play': !liveView}"></i>
+        </a>-->
+        <button type="button" class="btn btn-xs btn-default" ng-click="liveView = !liveView" style="float: right" 
+                title="{{liveView ? 'Stop Live View' : 'Start Live View'}}">
+            <i class="glyphicon " ng-class="{'glyphicon-pause': liveView, 'glyphicon-play': !liveView}"></i>
+        </button>
+    </div>
+    <!-- /.panel-heading -->
+    <div class="panel-body">
+        <area-chart-with-time config="config" live-view="liveView" data="data"></area-chart-with-time>
+    </div>
+    <!-- /.panel-body -->
+</div>

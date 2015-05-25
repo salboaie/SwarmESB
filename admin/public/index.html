@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Administration page</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
+    <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.css">
+    <!-- MetisMenu CSS -->
+    <link href="bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+    <!-- Chart.js-->
+    <!--<link rel="stylesheet" href="bower_components/angular-chart.js/dist/angular-chart.css">-->
+    <!-- Morris Charts CSS -->
+    <link href="bower_components/morrisjs/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    
+    <link rel="stylesheet" href="css/style.css">
+    
+    <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+</head>
+<body id="ng-app" ng-app="SwarmMonitor" ng-controller="BaseCtrl">
+<!--<div style="position: fixed; right: 0px; top: 100px;">-->
+    <growl-notifications></growl-notifications>
+    <div ng-repeat="(id, notification) in notifications track by id">
+        <growl-notification ng-class="{success: notification.type === 'success', error: notification.type === 'error'}">
+            {{notification.text}}</growl-notification>
+    </div>
+<!--</div>-->
+<div id="wrapper" ui-view>
+    
+</div>
+
+<script src="js/mockup.js"></script>
+<script src="js/amcharts/amcharts.js"></script>
+<script src="js/amcharts/serial.js"></script>
+<script src="js/amcharts/responsive.min.js"></script>
+<!-- In production use:
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+-->
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+
+<!-- jQuery -->
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/underscore/underscore-min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+
+<!-- Metis Menu Plugin JavaScript -->
+<script src="bower_components/metisMenu/dist/metisMenu.min.js"></script>
+<!-- Chart.js -->
+<!--<script src="bower_components/angular-chart.js/dist/angular-chart.js"></script>-->
+
+<!-- Morris Charts JavaScript -->
+<script src="bower_components/raphael/raphael-min.js"></script>
+<script src="bower_components/morrisjs/morris.min.js"></script>
+
+
+<script src="bower_components/angular-smart-table/dist/smart-table.min.js"></script>
+<script src="bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="bower_components/angular-growl-notifications/dist/angular-growl-notifications.min.js"></script>
+
+<script src="https://cdn.socket.io/socket.io-1.0.6.js"></script>
+<script src="https://rawgit.com/salboaie/WSSwarmClient/master/src/SwarmDebug.js"></script>
+<script src="https://rawgit.com/salboaie/WSSwarmClient/master/src/SwarmClient.js"></script>
+<script src="https://rawgit.com/salboaie/WSSwarmClient/master/src/SwarmHub.js"></script>
+
+
+<!-- ngdialog -->
+<script src="bower_components/ngDialog/js/ngDialog.js"></script>
+<link rel="stylesheet" href="bower_components/ngDialog/css/ngDialog.css">
+<link rel="stylesheet" href="bower_components/ngDialog/css/ngDialog-theme-default.css">
+
+<script src="bower_components/angular-local-storage/dist/angular-local-storage.min.js"></script>
+
+<script src="js/sb-admin-2.js"></script>
+<script src="modules/core/swarm-monitor.js"></script>
+<script src="modules/core/controllers/dashboard-controller.js"></script>
+<script src="modules/core/controllers/swarms-controller.js"></script>
+<script src="modules/core/controllers/logs-controller.js"></script>
+<script src="modules/core/controllers/organisations-controller.js"></script>
+<script src="modules/directives/cpu/cpu-history.js"></script>
+<script src="modules/directives/memory/memory-history.js"></script>
+<script src="modules/directives/system/system-info.js"></script>
+<script src="modules/directives/system/adaptor-list-view.js"></script>
+<script src="modules/directives/charts/areaChartWithTime.js"></script>
+<script src="modules/directives/dialogs/editOrganisation.js"></script>
+<script src="modules/directives/dialogs/editUser.js"></script>
+<script src="modules/directives/dialogs/login.js"></script>
+
+</body>
+</html>

@@ -1,22 +1,27 @@
-(c) Axiologic Research & Alboaie Sînică. 
-Code License: LGPL or MIT 
-The content of the README and of the wiki is Public Domain
+#Hello visitors: These days we are refactoring SwarmESB repository so for a few days just look directly in SwarmCore module to start working with Swarms. Still, the main documentation is here! 
 
-Commercial versions derived from this project are allowed. 
-However, it would be desirable that all ESBs developed around swarm communication idea to get identical APIs and compatible programming styles.
-Contact salboaie@gmail.com for details. 
-
-We are working on a new version of SwarmESB, called [SwarmCore] (https://github.com/salboaie/swarmcore "SwarmCore") that:
- - has  new features (eg.syntax to describe guaranteed message delivery)
+#SwarmESB central repository. Refactoring and master plan:
+This is the new version of SwarmESB, based on [SwarmCore] (https://github.com/salboaie/swarmcore "SwarmCore") that:  
  - default load distribution between Adapters
- - broadcast primitive
- - distributed transactions mechanisms
- - system monitor and deplyment, support for docker containers
+ - new broadcast primitive
+ - "do" syntax to describe guaranteed message delivery (at least once)  
  - allows creation of personalised/custom ESBs that can use other middleware than Redis
+ - refactoring in progress to grow it around a DI container for better stability (semnatic-firewall module)
+ - based on a new powerful ACl module (acl-magic module)
+ - system monitor and deployment, support for docker containers
+ - support for typed persistences ("apersistence" module)
+ - distributed transactions mechanisms (work in progress)
+ - support for executable coreography (work in progress based on PubSubChor module)
 
 ## What is SwarmESB ?
 
-Swarm communication is a micro-services architecture [http://martinfowler.com/articles/microservices.html] based on a new message communication pattern we call "swarms" It offers an starting architecture for cloud and enterprise systems. The usual method of doing message passing is to have relatively intelligent processes, objects or actors sending and receiving dumb messages. Thinking to messages as relatively smart beings visiting relatively non intelligent places, we noticed a positive effect on the quality of the code and a new path for decomposing complex applications in small services. SwarmESB is using swarm communication for creating an easy to grow Enterprise Service Bus. You add your own microservices (we call adapters) and describe how  microservices get composed for your usecases in a coupling free DSL (swarm descriptions).
+Swarm communication is a micro-services architecture based on a new message communication pattern we call "swarms" 
+It offers an starting architecture for cloud and enterprise systems. 
+The usual method of doing message passing is to have relatively intelligent processes, objects or actors sending and receiving dumb messages. 
+Thinking to messages as relatively smart beings visiting relatively non intelligent places, we noticed a positive effect on the quality of the code and a new path for 
+decomposing complex applications in small services. 
+SwarmESB is using swarm communication for creating an easy to grow Enterprise Service Bus. 
+You add your own microservices (we call adapters) and describe how  microservices get composed for your usecases in a coupling free DSL (swarm descriptions).
 
 
 Presentation:  https://docs.google.com/presentation/d/1xn1L9bbiD1TUY7ku5d0V_zF7SBkH3ANQ2uN8AxAXaA8/
@@ -99,21 +104,25 @@ Your adapters can use web services as a particular case of providing existing AP
     4. High availability: Still at the research level but looks promising
 
 
-## License:
-
-    LGPL & MIT
     
 ## Project SWARM
 
     SwarmESB is part of the open source project "Swarm project" together with:
     
 * SwarmShape: https://github.com/salboaie/SwarmShape : a MVVM framework with swarm based persistence
-* FlexSwarm: https://github.com/salboaie/FlexSwarm  : swarm client for Flex applications
-* SwarmWebSocket https://github.com/salboaie/SwarmWebSocket : swarm client for web sockets
-* SwarmUtil https://github.com/salboaie/SwarmUtil : a node.js module for swarm applications
+* WSSearmClient: https://github.com/salboaie/WSSearmClient : swarm client for web sockets
+* SwarmCore https://github.com/salboaie/SwarmCore : a reusable node.js module containing the SwarmESB implementation 
     
    
     
+#Copyright
+(c) Axiologic Research & Alboaie Sînică. 
+Code License: LGPL or MIT 
+The content of the README and of the wiki is Public Domain
+
+Commercial versions derived from this project are allowed. However, it would be desirable that all ESBs developed around swarm communication idea to get identical APIs and compatible programming styles.
+Contact salboaie@gmail.com for details. 
+
 
 #Supporters
 ![WebStorm, the best IDE for node.js and JS](http://www.jetbrains.com/img/logos/webstorm_logo142x29.gif) 

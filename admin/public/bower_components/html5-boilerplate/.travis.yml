@@ -1,0 +1,62 @@
+# For more information about the configurations used
+# in this file, please see the Travis CI documentation:
+# http://docs.travis-ci.com
+
+after_success:
+
+  # If the tests past, Travis will automatically download and execute
+  # the following script(s).
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  # The `commit_build_changes.sh` script will run `npm run build`,
+  # and if that generates changes, it will commit them to the `master`
+  # branch:
+  #
+  #   * ensuring that the content from the `dist/` directory is always
+  #     in sync with the rest of the content
+  #
+  #   * removing the need to execute the build step locally everytime
+  #     a change is made (especially in the case of trivial changes
+  #     such as typos)
+  #
+  # Note: The `commit_build_changes.sh` script will only run if the
+  # commit was made to the `master` branch.
+
+  - curl -sSL "https://raw.githubusercontent.com/h5bp-bot/scripts/0.6.0/commit_build_changes.sh" |
+      bash -s -- --branch "master"
+                 --commands "npm install && npm run build"
+                 --commit-message "Update content from the \`dist\` directory [skip ci]"
+
+env:
+  global:
+
+    # The `secure` key contains three encrypted environment variables
+    # (GH_TOKEN, GH_USER_EMAIL and GH_USER_NAME), the values of which
+    # are used by the scripts that are automatically executed by Travis.
+    #
+    # Note: The `secure` key will only work for this repository, so if
+    # you create your own fork, you will need to generate your own key:
+    #
+    #   travis encrypt -r "<username>/<repository>" \
+    #     GH_TOKEN="<your_github_access_token>" \
+    #     GH_USER_EMAIL="<your_email>" \
+    #     GH_USER_NAME="<your_name>"
+    #
+    # To learn more about how to generate the:
+    #
+    #   * `secure` key, see:
+    #     http://docs.travis-ci.com/user/encryption-keys/
+    #
+    #   * GitHub access token, see:
+    #     https://help.github.com/articles/creating-an-access-token-for-command-line-use/
+
+    - secure: "mkLhS1ajE7gYNUdHsAfcW6vU9THb2DmPA01PQlXz2y/F3Ld0IwEpqrGGLWyg9ZSYr0g7xq+M46pPiZsfZgCYSLv0flA/RFLmiXcVQfap3BZf8sqTtE3M9AHuy9sxUgus2M9GA7Wupws2KC2PXZM0OT12GSSOCYQCLD3ySD4b4mE="
+
+git:
+  depth: 10
+
+language: node_js
+
+node_js:
+  - "0.10"
