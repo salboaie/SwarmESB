@@ -36,7 +36,12 @@
   ],
   "_id": "swarmesb@2.0.0",
   "dependencies" : {
-          "swarmcore"       : ">=2.2.6"
+    "swarmcore"     :    ">=2.2.6",
+    "acl-magic"    :     ">=1.0.10",
+    "apersistence" :      ">=1.0.24",
+    "semantic-firewall" : ">=0.5.1",
+    "dateformat"      : ">=1.0.11",
+    "commander"       :   ">=2.8.1"
   },
   "optionalDependencies": {},
   "_engineSupported": true,
