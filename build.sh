@@ -1,1 +1,1 @@
-docker build --rm=true -t SwarmESB .
+docker build --rm=true -t swarmesb .

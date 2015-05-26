@@ -1,8 +1,8 @@
 {
-  "name": "channelsESB",
-  "description": "Channels ESB",
-  "version": "1.1.0",
-  "homepage": "https://github.com/salboaie/asynchron",
+  "name": "swarmesb",
+  "description": "swarmesb demo package",
+  "version": "2.0.0",
+  "homepage": "https://github.com/salboaie/SwarmESB",
   "author": {
     "name": "Alboaie Sinica",
     "email": "salboaie@gmail.com"
@@ -25,7 +25,7 @@
     "lib": "./lib"
   },
   "engines": {
-    "node": ">=0.8.0"
+    "node": ">=0.12.0"
   },
   "main": "./adapters/Core.js",
   "licenses": [
@@ -34,18 +34,9 @@
       "url": "http://www.gnu.org/licenses/gpl.html"
     }
   ],
-  "_id": "channelsESB@1.1.0",
+  "_id": "swarmesb@2.0.0",
   "dependencies" : {
-          "swarmutil"       : ">=1.0.9",
-          "asynchron"       : ">=1.0.3",
-          "redsindex"       : ">=0.1.0",
-          "clone"           : ">=0.1.8",
-          "MD5"             : ">=1.2.0",
-          "nodemailer"      : ">=0.5.2",
-          "node-uuid"       : ">=1.4.0",
-          "q"               : ">=1.0.0",
-          "redis"           : ">=0.9.1",
-          "ws"              : ">=0.4.31"
+          "swarmcore"       : ">=2.2.6"
   },
   "optionalDependencies": {},
   "_engineSupported": true,

@@ -27,8 +27,7 @@
                         {"node":"admin/adapters/UsersManager.js",                    "enabled":true  , "step":3},
                         {"node":"adapters/DicomMetadata.js",                         "enabled":true  , "step":3},
                         {"node":"adapters/NotificationsCenter.js",                   "enabled":true  , "step":3},
-                        {"node":"adapters/argsDemo.js",                             "args":[]
-                                                                                      ], "enabled":false  , "step":4},
+                        {"node":"adapters/argsDemo.js",                             "args":[], "enabled":false  , "step":4},
                         {"core":"etc/adapters/WSServer.js",                          "enabled":true  , "step":9}
             ]
    },
