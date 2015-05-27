@@ -115,7 +115,9 @@ createUser = function(userData, callback){
         }
         redisPersistence.externalUpdate(user, userData);
         redisPersistence.save(user);
-        callback(null, user);
+        if(callback)  {
+            callback(null, user);
+        }
     }).wait(user);
 }
 
@@ -214,11 +216,6 @@ getUserInfo = function(userId, callback){
             }
             callback(null, user);
     }).wait(user);
-}
-
-currentUserHasAccessToAllDocs = function(otherUser, callback){
-    var currentUser = getCurrentUser();
-    acl.doctorHasAccessToAllDocuments(currentUser,otherUser, callback )
 }
 
 
