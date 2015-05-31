@@ -1,4 +1,4 @@
-###Hello visitors: These days we are refactoring SwarmESB repository to prepare SwarmESb2.0 release. For a few days just look directly in SwarmCore module to start working with Swarms. Still, the main documentation is here! 
+###Hello visitors: These days we are refactoring SwarmESB repository to prepare SwarmESB 2.0 release candidate. Please report any issues you notice.
 
 #SwarmESB central repository. Refactoring and master plan:
 This is the new version of SwarmESB, based on [SwarmCore] (https://github.com/salboaie/swarmcore "SwarmCore") that adds:  
