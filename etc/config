@@ -22,13 +22,11 @@
             "responseTimeout":500,
             "serverAlias":"development",
             "watch":[
-                        {"core":"etc/adapters/Core.js",                             "enabled":true, "step":1},
-                        {"core":"etc/adapters/DefaultLogger.js",                    "enabled":true, "step":2},
-                        {"node":"admin/adapters/UsersManager.js",                   "enabled":true  , "step":3},
-                        {"core":"etc/adapters/GenericNode.js",                      "args":["-n", "TestAdapter"],   "enabled":true , "step":8},
-                        {"core":"etc/adapters/GenericNode.js",                      "args":["-n", "SharedAdapter"], "enabled":true , "step":8},
-                        {"core":"etc/adapters/WSServer.js",                         "enabled":true  , "step":9},
-                        {"core":"etc/adapters/ClientAdapter.js",                    "enabled":true  , "step":9}
+                        {"core":"etc/adapters/Core.js",                              "enabled":true, "step":1},
+                        {"core":"etc/adapters/DefaultLogger.js",                     "enabled":true, "step":2},
+                        {"node":"admin/adapters/UsersManager.js",                    "enabled":true  , "step":3},
+                        {"node":"adapters/argsDemo.js",                             "args":[], "enabled":false  , "step":4},
+                        {"core":"etc/adapters/WSServer.js",                          "enabled":true  , "step":9}
             ]
    },
   "ClientAdapter":{
