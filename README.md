@@ -10,7 +10,7 @@ This is the new version of SwarmESB, based on [SwarmCore] (https://github.com/sa
  - deployment support for docker containers
  - UI with system monitoring (work in progress)
  - better logging (work in progress) 
- - support for typed persistence and complex custom type representation ("apersistence" module) 
+ - support for typed persistence, complex custom type representation, privacy ontologies ("apersistence" module) 
  - support for executable choreography (work in progress based on PubSubChor module)
  - distributed transactions mechanisms (work in progress)
  - support for representation of long living processes (work in progress)
