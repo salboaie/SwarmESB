@@ -1,4 +1,3 @@
-###Hello visitors: These days we are refactoring SwarmESB repository to prepare SwarmESB 2.0 release candidate. Please report any issues you notice.
 
 #SwarmESB central repository. Refactoring and master plan:
 This is the new version of SwarmESB, based on [SwarmCore] (https://github.com/salboaie/swarmcore "SwarmCore") that adds:  
