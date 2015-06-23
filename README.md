@@ -45,9 +45,6 @@ using a message or service bus. While this project is build using Node.js and Re
 as a new fundamental concept, comparable, but from the code maintainability perspective a lot simpler than direct 
 usage of Enterprise Integration Patterns or the Actor model used in Scala and Erlang.
 
-
-Imagine, Swarms can be for SOA's orchestration what REST is for SOAP!
-
 ## Examples
     
 A swarm description is written in Java Script and is composed from:  variable declarations (for defaults),
