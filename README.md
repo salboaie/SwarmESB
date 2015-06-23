@@ -24,6 +24,7 @@ Thinking to messages as relatively smart beings visiting relatively non intellig
 decomposing complex applications in small services. 
 SwarmESB is using swarm communication for creating an easy to grow Enterprise Service Bus. 
 You add your own microservices (we call adapters) and describe how  microservices get composed for your usecases in a coupling free DSL (swarm descriptions).
+SwarmESB it is groing in the direction of executable coreographies to offer by design an improved architecture for security and privacy .
 
 
 Presentation:  https://docs.google.com/presentation/d/1xn1L9bbiD1TUY7ku5d0V_zF7SBkH3ANQ2uN8AxAXaA8/
@@ -35,14 +36,14 @@ A "swarm" is a set of related messages with some basic intelligence and is based
  computer processes communicating by asynchronous messages are more like "dumb trees/flowers" visited by "smart 
 swarms of bees" than "smart people" communicating by "dumb messages".
 This intuition have a powerful effect on reducing complexity of many distributed systems (already proved by SOA)
-Service orchestration with SwarmESB is elegant, there is no need to learn new languages and difficult new concepts: just use Java Script code and a few simple concepts.
+Service orchestration with SwarmESB is elegant, there is no need to learn new languages and difficult concepts: just use Java Script code and a few simple concepts.
 
 
  SwarmESB is an open source project implementing a new approach: "Swarming architecture" that you could reuse
 for your new multi-tenant systems that will transparently acquire the benefits of scalability, high availability, highly
 parallel computing and loose coupling usually obtained with asynchronous messages, message queues, pub/sub channels and
 using a message or service bus. While this project is build using Node.js and Redis, this project will present "swarming"
-as a new fundamental concept, comparable, but from the code maintainability perspective a lot simpler than direct 
+as a new  concept, comparable, but simpler than direct 
 usage of Enterprise Integration Patterns or the Actor model used in Scala and Erlang.
 
 ## Examples
@@ -74,7 +75,7 @@ The swarm described bellow will magically get executed without any other program
             }
  
 
-Waw: each node could be on a different continent!  Check other swarms for parallel execution examples.
+See: each node could be on a different continent or hosted by a different organisation!  
 
 
 
