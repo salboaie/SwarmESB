@@ -115,10 +115,10 @@ Contact salboaie@gmail.com for details.
 
 
 #Supporters
-![WebStorm, the best IDE for node.js and JS] 
+WebStorm, the best IDE for node.js and JS 
 * http://www.jetbrains.com
 
-![A free book about swarms] 
+A free book about swarms
 
 * https://github.com/jwulf/SwarmCoreByExample/
 
