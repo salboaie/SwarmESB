@@ -106,16 +106,6 @@ Your adapters can use web services as a particular case of providing existing AP
     3. Scalability: Load balancing and sharding (research) can be implemented using swarming concepts
     4. High availability: Still at the research level but looks promising
 
-
-    
-## Project SWARM
-
-    SwarmESB is part of the open source project "Swarm project" together with:
-    
-* SwarmShape: https://github.com/salboaie/SwarmShape : a MVVM framework with swarm based persistence
-* WSSearmClient: https://github.com/salboaie/WSSearmClient : swarm client for web sockets
-* SwarmCore https://github.com/salboaie/SwarmCore : a reusable node.js module containing the SwarmESB implementation 
-    
    
     
 #Copyright
