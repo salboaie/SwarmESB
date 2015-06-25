@@ -26,8 +26,8 @@
                         {"core":"etc/adapters/DefaultLogger.js",                     "enabled":true, "step":2},
                         {"node":"admin/adapters/UsersManager.js",                    "enabled":true  , "step":3},
                         {"node":"adapters/argsDemo.js",                              "args":[], "enabled":false  , "step":4},
-                        {"core":"etc/adapters/ClientAdapter.js",                     "enabled":true  , "step":8}
-                        {"core":"etc/adapters/WSServer.js",                          "enabled":true  , "step":9}
+                        {"core":"etc/adapters/ClientAdapter.js",                     "enabled":true  , "step":7}
+                        {"core":"etc/adapters/WSServer.js",                          "enabled":true  , "step":7}
             ]
    },
   "ClientAdapter":{
