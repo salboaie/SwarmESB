@@ -44,10 +44,10 @@ var broadcast = {
         code:function () {
             console.log("Running in ", thisAdapter.nodeName, thisAdapter.instanceUID);
             //this.swarm("home",this.currentInstanceUID);
-            this.swarm("home");
+            this.swarm("pong");
         }
     },
-    home: {
+    pong: {
         node: "DemoBroadcast",
         code: function () {
                 decCounter(this.requestUID);
