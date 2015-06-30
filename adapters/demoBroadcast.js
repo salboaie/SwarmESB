@@ -3,6 +3,7 @@
  */
 var core = require ("swarmcore");
 thisAdapter = core.createAdapter("DemoBroadcast");
+var container = require("semantic-firewall").container;
 
 var instances = {};
 
@@ -28,3 +29,22 @@ getCounter = function(UID){
     console.log("Get ",instances[UID]);
     return instances[UID];
 }
+
+adapterDebugMessage = function (msg, callback) {
+    console.log(msg);
+    if (callback) callback();
+};
+
+container.declareDependency("DemoServiceForTestAndExamples", ["swarmingIsWorking"], function(outOfService, redis){
+    if(!outOfService){
+        function  launchParallelSwarms(PARALLEL_SWARMS){
+            for (var worker=1; worker < PARALLEL_SWARMS; worker ++ ) {
+                startSwarm('ParallelSwarmsTest.js', "start", worker);
+            }
+
+        }
+
+        launchParallelSwarms(5);
+    }
+})
+

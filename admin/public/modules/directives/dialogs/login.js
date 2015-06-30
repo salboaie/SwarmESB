@@ -12,16 +12,22 @@ SwarmMonitor.directive('login', ['$location','localStorageService', function(){
 
             $scope.login = function(){
                 //init swarm system connection
-                var swarmClient = new SwarmClient($location.host(), 8080,  $scope.user.userId,
-                    $scope.user.password, "swarmMonitor", "testCtor",
-                    function securityErrorFunction(err, data) {
-                        $scope.status = 'Invalid user or password...';
-                        $scope.$apply();
-                    }, function errorFunction(err) {
-                        $scope.status = 'Invalid connection...';
-                        $scope.$apply();
-                    });
-                swarmHub.resetConnection(swarmClient);
+                var swarmClient =  swarmHub.getConnection();
+                if(!swarmClient){
+                    swarmClient = new SwarmClient(  $location.host(), 8080,  $scope.user.userId,
+                        $scope.user.password, "swarmMonitor", "userLogin",
+                        function securityErrorFunction(err, data) {
+                            $scope.status = 'Invalid user or password...';
+                            $scope.$apply();
+                        }, function errorFunction(err) {
+                            $scope.status = 'Invalid connection...';
+                            $scope.$apply();
+                        }
+                    );
+                    swarmHub.resetConnection(swarmClient);
+                } else {
+                    swarmClient.tryLogin($scope.user.userId, $scope.user.password,  "swarmMonitor", "userLogin", true);
+                }
 
                 function closeMe(){
                     localStorageService.set('user', $scope.user.userId);

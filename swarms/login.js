@@ -14,9 +14,13 @@ var loginSwarming = {
     vars:{
         authenticated:false
     },
-    usmedLogin:function(clientSessionId, userId, authorisationToken){
+    userLogin:function(clientSessionId, userId, authorisationToken){
         this.authenticated = false;
         this.userId = userId;
+        if(!userId){
+            this.swarm('failed');
+            return ;
+        }
         this.authorisationToken = authorisationToken;
         this.clientAdapter = thisAdapter.nodeName;
         this.swarm('checkPassword');

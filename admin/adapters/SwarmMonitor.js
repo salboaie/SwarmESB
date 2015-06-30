@@ -15,7 +15,6 @@ var moment      = require('moment');
 thisAdapter = core.createAdapter("SwarmMonitor");
 
 var config  = getMyConfig('SwarmMonitor');
-var adminPhone = config.adminPhone;
 
 var redisClient = function(){
     return thisAdapter.nativeMiddleware.privateRedisClient;
