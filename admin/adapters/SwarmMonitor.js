@@ -7,14 +7,14 @@
 */
 
 
-var core = require ("swarmcore");
+var core        = require ("swarmcore");
 var os          = require('os');
 var fs          = require('fs');
 var moment      = require('moment');
-
-thisAdapter = core.createAdapter("SwarmMonitor");
+thisAdapter     = core.createAdapter("SwarmMonitor");
 
 var config  = getMyConfig('SwarmMonitor');
+var adminPhone = config.adminPhone;
 
 var redisClient = function(){
     return thisAdapter.nativeMiddleware.privateRedisClient;
@@ -60,13 +60,13 @@ function tick(rts){
 }
 
 
-
-container.service("osMonitor", ["redisConnection",], function(outOfService,redis){
+container.service("osMonitor", ["redisConnection"], function(outOfService,redis){
     var donotsave = false;
     if(outOfService){
         donotsave = true;
     } else {
         donotsave = false;
+        //maybe instantiate rts out of this function ?
         var rts = require('rts')({
             redis: thisAdapter.nativeMiddleware.privateRedisClient,
             gran: '5m, 1h, 1d, 1w, 1M, 1y',
@@ -75,6 +75,7 @@ container.service("osMonitor", ["redisConnection",], function(outOfService,redis
         });
 
         function doTick(){
+            console.log("Swarm monitor in action!!!!!!!!!!!!!");
             if(!donotsave){
                 tick(rts);
             }
@@ -91,7 +92,47 @@ var memoryHistory = {};
 
 
 
+var periodToMiliseconds=function(period){
+    //really ugly stuff...
+    switch (period){
+        case "Last 5 minutes": return 300000;
+        case "Last hour": return 3600000;
+        case "Last day": return 86400000;
+        case "Last month": return 2592000000;
+        case "Last year": return 31536000000;
+    }
+}
 
+
+getCpuHistory=function(period) {
+    var rts = require('rts')({
+        redis: thisAdapter.nativeMiddleware.privateRedisClient,
+        gran: '5m, 1h, 1d, 1w, 1M, 1y',
+        points: 360,
+        prefix: ''
+    });
+    ;
+    length=new Date(periodToMiliseconds(period)); //the length of the period in date format; period is the number of miliseconds
+    console.log("getCpuHistory:"+length);
+    return{
+        cpuHistory:rts.avg('cpu','5m',Date.now()-length,Date.now())  // '5m?....should be dependent on the period
+        }
+};
+getMemHistory=function(period){
+    var rts = require('rts')({
+        redis: thisAdapter.nativeMiddleware.privateRedisClient,
+        gran: '5m, 1h, 1d, 1w, 1M, 1y',
+        points: 360,
+        prefix: ''
+    });
+    ;
+    length=new Date(periodToMiliseconds(period)); //the length of the period in date format; period is the number of miliseconds
+    console.log("getMemHistory:"+length);
+    return{
+        memoryHistory:rts.avg('mem','5m',Date.now()-length,Date.now()),
+        info:{totalMemory:os.totalmem()}
+    }
+};
 
 
 
