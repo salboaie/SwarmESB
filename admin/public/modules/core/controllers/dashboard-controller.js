@@ -43,25 +43,26 @@ SwarmMonitor.controller('DashboardController', ['$scope', '$state', '$rootScope'
             $scope.restartAdaptersCount = 0;
         };
 
+        var packDataNicely=function(containingObject){
+            var addition={};
+            addition.date= new Date(containingObject[0]);
+            addition.value=containingObject[1].toFixed(2);
+            return addition;
+        };
+
         swarmHub.on('monitoring.js','cpuHistory',function(response){
             $scope.serverData.cpuHistory=[];
             for(var i=0;i<response.status.data.length;i++){
-                var addition={};
-                addition.date= new Date(response.status.data[i][0]);
-                addition.value=response.status.data[i][1].toFixed(2);
-                $scope.serverData.cpuHistory.push(addition);
+
+                $scope.serverData.cpuHistory.push(packDataNicely(response.status.data[i]));
             }
-            console.log($scope.serverData.cpuHistory);
             $scope.$apply();
         });
 
         swarmHub.on('monitoring.js','memoryHistory',function(response){
             $scope.serverData.memoryHistory=[];
             for(var i=0;i<response.status.data.length;i++){
-                var addition={};
-                addition.date= new Date(response.status.data[i][0]);
-                addition.value=response.status.data[i][1].toFixed(2);
-                $scope.serverData.memoryHistory.push(addition);
+                $scope.serverData.memoryHistory.push(packDataNicely(response.status.data[i]));
             }
             $scope.serverData.totalMemory=(((response.status.totalMemory)/1024)/1024).toFixed(2);
             $scope.$apply();

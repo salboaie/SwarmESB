@@ -20,7 +20,7 @@ var redisClient = function(){
     return thisAdapter.nativeMiddleware.privateRedisClient;
 };
 
-
+var rts;
 
 var container = require("semantic-firewall").container;
 
@@ -64,7 +64,7 @@ container.service("osMonitor", ["redisConnection"], function(outOfService,redis)
     } else {
         donotsave = false;
         //maybe instantiate rts out of this function ?
-        var rts = require('rts')({
+         rts = require('rts')({
             redis: thisAdapter.nativeMiddleware.privateRedisClient,
             gran: '1m, 5m, 1h, 1d, 1w, 1M, 1y',
             points: 360,
@@ -117,13 +117,6 @@ var queryParametersDetermination=function(period){
 
 
 getCpuHistory=function(period,callback) {
-
-    var rts = require('rts')({
-        redis: thisAdapter.nativeMiddleware.privateRedisClient,
-        gran: '1m, 5m, 1h, 1d, 1w, 1M, 1y',
-        points: 360,
-        prefix: ''
-    });
     var end=Date.now();
     var queryParams=queryParametersDetermination(period);
     var begin=new Date(end-queryParams.periodLength);
@@ -132,12 +125,6 @@ getCpuHistory=function(period,callback) {
 
 
 getMemoryHistory=function(period,callback) {
-    var rts = require('rts')({
-        redis: thisAdapter.nativeMiddleware.privateRedisClient,
-        gran: '1m, 5m, 1h, 1d, 1w, 1M, 1y',
-        points: 360,
-        prefix: ''
-    });
     var end = Date.now();
     var queryParams = queryParametersDetermination(period);
     var begin = new Date(end - queryParams.periodLength);
