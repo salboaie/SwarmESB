@@ -1207,4 +1207,40 @@
      Err: [object Object][6-7,9:23][_UsersManager(13c35058-7707-4eb0-9a6d-4d74a0b25e9d)] Redis reconnecting attempt [4] with delay [736] !
      Err: [object Object][6-7,9:23][_Launcher(0388e512-fce3-40d0-958f-44d53800c2e4)] Redis reconnecting attempt [4] with delay [736] !
      Err: [object Object][6-7,9:23][_Core(a9f9d583-fffc-4c31-acc1-5e8403a44f47)] Redis reconnecting attempt [4] with delay [736] !
+     Err: [object Object][6-7,10:23][_Launcher(966f1995-68a9-468d-9a3a-b8b7ba0848cc)] Redis reconnecting attempt [2] with delay [255] !
+     Err: [object Object][6-7,10:23][_UsersManager(8497ab3c-54c4-4272-ac1b-3cf88ca2add2)] Redis reconnecting attempt [2] with delay [255] !
+     Err: [object Object][6-7,10:23][_SwarmMonitor(5454cb76-3b45-4859-85c4-d727daab7bd2)] Redis reconnecting attempt [2] with delay [255] !
+     Err: [object Object][6-7,10:23][_SwarmMonitor(5454cb76-3b45-4859-85c4-d727daab7bd2)] Redis reconnecting attempt [2] with delay [255] !
+     Err: [object Object][6-7,10:23][_UsersManager(8497ab3c-54c4-4272-ac1b-3cf88ca2add2)] Redis reconnecting attempt [2] with delay [255] !
+     Err: [object Object][6-7,10:23][_Launcher(966f1995-68a9-468d-9a3a-b8b7ba0848cc)] Redis reconnecting attempt [2] with delay [255] !
+     Err: [object Object][6-7,10:23][_UsersManager(8497ab3c-54c4-4272-ac1b-3cf88ca2add2)] Redis reconnecting attempt [3] with delay [433] !
+     Err: [object Object][6-7,10:23][_SwarmMonitor(5454cb76-3b45-4859-85c4-d727daab7bd2)] Redis reconnecting attempt [3] with delay [433] !
+     Err: [object Object][6-7,10:23][_Launcher(966f1995-68a9-468d-9a3a-b8b7ba0848cc)] Redis reconnecting attempt [3] with delay [433] !
+     Err: [object Object][6-7,10:23][_UsersManager(8497ab3c-54c4-4272-ac1b-3cf88ca2add2)] Redis reconnecting attempt [3] with delay [5533] !
+     Err: [object Object][6-7,10:23][_SwarmMonitor(5454cb76-3b45-4859-85c4-d727daab7bd2)] Redis reconnecting attempt [3] with delay [5533] !
+     Err: [object Object][6-7,10:23][_Launcher(966f1995-68a9-468d-9a3a-b8b7ba0848cc)] Redis reconnecting attempt [3] with delay [5533] !
+     Err: [object Object][6-7,10:23][_Launcher(966f1995-68a9-468d-9a3a-b8b7ba0848cc)] Redis reconnecting attempt [4] with delay [736] !
+     Err: [object Object][6-7,10:23][_SwarmMonitor(5454cb76-3b45-4859-85c4-d727daab7bd2)] Redis reconnecting attempt [4] with delay [736] !
+     Err: [object Object][6-7,10:23][_UsersManager(8497ab3c-54c4-4272-ac1b-3cf88ca2add2)] Redis reconnecting attempt [4] with delay [736] !
+     Err: [object Object][6-7,10:23][_SwarmMonitor(5454cb76-3b45-4859-85c4-d727daab7bd2)] Redis reconnecting attempt [5] with delay [1251] !
+     Err: [object Object][6-7,10:23][_UsersManager(8497ab3c-54c4-4272-ac1b-3cf88ca2add2)] Redis reconnecting attempt [5] with delay [1251] !
+     Err: [object Object][6-7,10:23][_Launcher(966f1995-68a9-468d-9a3a-b8b7ba0848cc)] Redis reconnecting attempt [5] with delay [1251] !
+     Err: [object Object][6-7,10:23][_SwarmMonitor(5454cb76-3b45-4859-85c4-d727daab7bd2)] Redis reconnecting attempt [6] with delay [2126] !
+     Err: [object Object][6-7,10:23][_Launcher(966f1995-68a9-468d-9a3a-b8b7ba0848cc)] Redis reconnecting attempt [6] with delay [2126] !
+     Err: [object Object][6-7,10:23][_UsersManager(8497ab3c-54c4-4272-ac1b-3cf88ca2add2)] Redis reconnecting attempt [6] with delay [2126] !
+     Err: [object Object][6-7,10:23][_Launcher(966f1995-68a9-468d-9a3a-b8b7ba0848cc)] Redis reconnecting attempt [4] with delay [16206] !
+     Err: [object Object][6-7,10:23][_SwarmMonitor(5454cb76-3b45-4859-85c4-d727daab7bd2)] Redis reconnecting attempt [4] with delay [16206] !
+     Err: [object Object][6-7,10:23][_UsersManager(8497ab3c-54c4-4272-ac1b-3cf88ca2add2)] Redis reconnecting attempt [4] with delay [16206] !
+     Err: [object Object][6-7,10:23][_SwarmMonitor(5454cb76-3b45-4859-85c4-d727daab7bd2)] Redis reconnecting attempt [7] with delay [3614] !
+     Err: [object Object][6-7,10:23][_Launcher(966f1995-68a9-468d-9a3a-b8b7ba0848cc)] Redis reconnecting attempt [7] with delay [3614] !
+     Err: [object Object][6-7,10:23][_UsersManager(8497ab3c-54c4-4272-ac1b-3cf88ca2add2)] Redis reconnecting attempt [7] with delay [3614] !
+     Err: [object Object][6-7,10:23][_SwarmMonitor(5454cb76-3b45-4859-85c4-d727daab7bd2)] Redis reconnecting attempt [8] with delay [6143] !
+     Err: [object Object][6-7,10:23][_Launcher(966f1995-68a9-468d-9a3a-b8b7ba0848cc)] Redis reconnecting attempt [8] with delay [6143] !
+     Err: [object Object][6-7,10:23][_UsersManager(8497ab3c-54c4-4272-ac1b-3cf88ca2add2)] Redis reconnecting attempt [8] with delay [6143] !
+     Err: [object Object][6-7,10:23][_SwarmMonitor(5454cb76-3b45-4859-85c4-d727daab7bd2)] Redis reconnecting attempt [9] with delay [10443] !
+     Err: [object Object][6-7,10:23][_Launcher(966f1995-68a9-468d-9a3a-b8b7ba0848cc)] Redis reconnecting attempt [9] with delay [10443] !
+     Err: [object Object][6-7,10:23][_UsersManager(8497ab3c-54c4-4272-ac1b-3cf88ca2add2)] Redis reconnecting attempt [9] with delay [10443] !
+     Err: [object Object][6-7,10:24][_Launcher(966f1995-68a9-468d-9a3a-b8b7ba0848cc)] Redis reconnecting attempt [5] with delay [34350] !
+     Err: [object Object][6-7,10:24][_SwarmMonitor(5454cb76-3b45-4859-85c4-d727daab7bd2)] Redis reconnecting attempt [5] with delay [34350] !
+     Err: [object Object][6-7,10:24][_UsersManager(8497ab3c-54c4-4272-ac1b-3cf88ca2add2)] Redis reconnecting attempt [5] with delay [34350] !
      Err: [object Object]
