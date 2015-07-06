@@ -54,9 +54,6 @@ function tick(rts){
     var mLoad = memLoad();
     rts.record('cpu',cLoad, ['avg','max','min'], ['hm','hq','hy','dm','dq','dy']);
     rts.record('memory',mLoad, ['avg','max','min'], ['hm','hq','hy','dm','dq','dy']);
-    console.log("CPU load "     +  cLoad + "%");
-    console.log("Memory load "  +  mLoad + "%");
-
 }
 
 
@@ -69,13 +66,12 @@ container.service("osMonitor", ["redisConnection"], function(outOfService,redis)
         //maybe instantiate rts out of this function ?
         var rts = require('rts')({
             redis: thisAdapter.nativeMiddleware.privateRedisClient,
-            gran: '5m, 1h, 1d, 1w, 1M, 1y',
+            gran: '1m, 5m, 1h, 1d, 1w, 1M, 1y',
             points: 360,
             prefix: ''
         });
 
         function doTick(){
-            console.log("Swarm monitor in action!!!!!!!!!!!!!");
             if(!donotsave){
                 tick(rts);
             }
@@ -92,48 +88,65 @@ var memoryHistory = {};
 
 
 
-var periodToMiliseconds=function(period){
+var queryParametersDetermination=function(period){
     //really ugly stuff...
     switch (period){
-        case "Last 5 minutes": return 300000;
-        case "Last hour": return 3600000;
-        case "Last day": return 86400000;
-        case "Last month": return 2592000000;
-        case "Last year": return 31536000000;
-    }
-}
+        case "Last 5 minutes": return {
+            periodLength:300000,
+            granularity:"1m"
+        };
+        case "Last hour"     : return {
+            periodLength:3600000,
+            granularity:"5m"
+        };
 
-
-getCpuHistory=function(period) {
-    var rts = require('rts')({
-        redis: thisAdapter.nativeMiddleware.privateRedisClient,
-        gran: '5m, 1h, 1d, 1w, 1M, 1y',
-        points: 360,
-        prefix: ''
-    });
-    ;
-    length=new Date(periodToMiliseconds(period)); //the length of the period in date format; period is the number of miliseconds
-    console.log("getCpuHistory:"+length);
-    return{
-        cpuHistory:rts.avg('cpu','5m',Date.now()-length,Date.now())  // '5m?....should be dependent on the period
-        }
-};
-getMemHistory=function(period){
-    var rts = require('rts')({
-        redis: thisAdapter.nativeMiddleware.privateRedisClient,
-        gran: '5m, 1h, 1d, 1w, 1M, 1y',
-        points: 360,
-        prefix: ''
-    });
-    ;
-    length=new Date(periodToMiliseconds(period)); //the length of the period in date format; period is the number of miliseconds
-    console.log("getMemHistory:"+length);
-    return{
-        memoryHistory:rts.avg('mem','5m',Date.now()-length,Date.now()),
-        info:{totalMemory:os.totalmem()}
+        case "Last day"      : return {
+            periodLength:86400000,
+            granularity:"1h"
+        };
+        case "Last month"    : return {
+            periodLength:2592000000,
+            granularity:"1d"
+        };
+        case "Last year"     : return {
+            periodLength:31536000000,
+            granularity:"1M"
+        };
     }
 };
 
+
+getCpuHistory=function(period,callback) {
+
+    var rts = require('rts')({
+        redis: thisAdapter.nativeMiddleware.privateRedisClient,
+        gran: '1m, 5m, 1h, 1d, 1w, 1M, 1y',
+        points: 360,
+        prefix: ''
+    });
+    var end=Date.now();
+    var queryParams=queryParametersDetermination(period);
+    var begin=new Date(end-queryParams.periodLength);
+    rts.getStat('avg','cpu',queryParams.granularity,begin,end,callback);
+};
+
+
+getMemoryHistory=function(period,callback) {
+    var rts = require('rts')({
+        redis: thisAdapter.nativeMiddleware.privateRedisClient,
+        gran: '1m, 5m, 1h, 1d, 1w, 1M, 1y',
+        points: 360,
+        prefix: ''
+    });
+    var end = Date.now();
+    var queryParams = queryParametersDetermination(period);
+    var begin = new Date(end - queryParams.periodLength);
+    rts.getStat('avg', 'memory', queryParams.granularity, begin, end, callback);
+};
+
+getFreeMemory=function(){
+    return os.freemem();
+};
 
 
 /////////////////////////////////////////////////

@@ -12,8 +12,8 @@ SwarmMonitor.directive('memoryHistory', [function() {
             $scope.memPeriod="Last 5 minutes";
 
             $scope.memChanged=function(){
-                $scope.$parent.input.memPeriod=$scope.memPeriod;
-                $scope.$parent.input.updateMemChart();
+                $scope.$parent.memPeriod=$scope.memPeriod;
+                $scope.$parent.updateMemChart();
             }
 
         }];

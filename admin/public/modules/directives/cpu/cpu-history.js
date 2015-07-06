@@ -10,10 +10,9 @@ SwarmMonitor.directive('cpuHistory', [function() {
         function($scope, $state, $rootScope, $element){
             $scope.liveView = $scope.liveViewEnabled;
             $scope.cpuPeriod="Last 5 minutes";
-
             $scope.cpuChanged=function(){
-                $scope.$parent.input.cpuPeriod=$scope.cpuPeriod;
-                $scope.$parent.input.updateCpuChart();
+                $scope.$parent.cpuPeriod=$scope.cpuPeriod;
+                $scope.$parent.updateCpuChart();
             }
         }];
 

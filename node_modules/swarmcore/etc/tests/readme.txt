@@ -1,0 +1,1 @@
+This are not official (yet) tests. Ths stable tests will stay in SwarmESB project. When a feature is declared stable the test will be moved in swarmESB.

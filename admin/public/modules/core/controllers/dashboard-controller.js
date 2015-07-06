@@ -14,6 +14,26 @@ SwarmMonitor.controller('DashboardController', ['$scope', '$state', '$rootScope'
 
 
         /* initial values */
+        $scope.activeServersCount = 0;
+        $scope.activeAdaptersCount = 0;
+        $scope.activeServers = {};
+        $scope.serverData = {};
+        $scope.restartAdaptersCount = 0;
+        $scope.serverData.cpuHistory=[];
+        $scope.serverData.memoryHistory=[];
+        $scope.serverData.totalMemory={};
+        $scope.memPeriod={};
+        $scope.cpuPeriod={};
+
+
+        $scope.updateCpuChart=function(){
+            swarmHub.startSwarm('monitoring.js','fetchCpuHistory',$scope.cpuPeriod)
+        };
+
+        $scope.updateMemChart=function(){
+            swarmHub.startSwarm('monitoring.js','fetchMemHistory',$scope.memPeriod)
+        };
+
 
         function refresh(){
             $scope.activeServersCount = 0;
@@ -21,31 +41,29 @@ SwarmMonitor.controller('DashboardController', ['$scope', '$state', '$rootScope'
             $scope.activeServers = {};
             $scope.serverData = {};
             $scope.restartAdaptersCount = 0;
-
-            $scope.input={};
-            $scope.input.memPeriod="Last 5 minutes";
-            $scope.input.cpuPeriod="Last 5 minutes";
-            $scope.input.updateCpuChart=function(){
-                swarmHub.startSwarm('monitoring.js','updateCpu',$scope.input.cpuPeriod)
-            };
-
-            $scope.input.updateMemChart=function(){
-                swarmHub.startSwarm('monitoring.js','updateMem',$scope.input.memPeriod)
-            };
         };
 
-
-        swarmHub.on('monitoring.js','updateCpu',function(response){
-            $scope.serverData.cpuHistory=response.status.cpuHistory;
-            console.log("!!!!!!!!!!!!!!!!!!!!");
-            console.log(response.status);
-            console.log("!!!!!!!!!!!!!!!!!!!!");
+        swarmHub.on('monitoring.js','cpuHistory',function(response){
+            $scope.serverData.cpuHistory=[];
+            for(var i=0;i<response.status.data.length;i++){
+                var addition={};
+                addition.date= new Date(response.status.data[i][0]);
+                addition.value=response.status.data[i][1].toFixed(2);
+                $scope.serverData.cpuHistory.push(addition);
+            }
+            console.log($scope.serverData.cpuHistory);
             $scope.$apply();
         });
 
-        swarmHub.on('monitoring.js','updateMem',function(response){
-            $scope.serverData.memoryHistory=response.status.memoryHistory;
-            $scope.serverData.info=response.status.info;
+        swarmHub.on('monitoring.js','memoryHistory',function(response){
+            $scope.serverData.memoryHistory=[];
+            for(var i=0;i<response.status.data.length;i++){
+                var addition={};
+                addition.date= new Date(response.status.data[i][0]);
+                addition.value=response.status.data[i][1].toFixed(2);
+                $scope.serverData.memoryHistory.push(addition);
+            }
+            $scope.serverData.totalMemory=(((response.status.totalMemory)/1024)/1024).toFixed(2);
             $scope.$apply();
         });
 
