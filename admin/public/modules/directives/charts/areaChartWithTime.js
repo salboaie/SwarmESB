@@ -9,12 +9,12 @@ SwarmMonitor.directive('areaChartWithTime', [function() {
     
     var controller = ['$scope', '$state', '$rootScope', '$element',
         function($scope, $translate, $state, $rootScope, $element){
-            
+
         }];
 
     var defaultConfig = {
         categoryField: 'date',
-        valueField: 'data',
+        valueField: 'value',
         enableScrollBar: true,
         category: {
             parseDates: true, // in order char to understand dates, we should set parseDates to true
@@ -47,11 +47,11 @@ SwarmMonitor.directive('areaChartWithTime', [function() {
         controller: controller,
         link: function (scope, element, attr) {
             var chart;
-            
+
             var id = _.uniqueId('chart-');
             element.attr('id', id);
             var config = scope.config || defaultConfig;
-            
+
             var initChart = function() {
                 if (chart) {
                     chart.destroy();
@@ -86,18 +86,15 @@ SwarmMonitor.directive('areaChartWithTime', [function() {
                         lineColor: config.graph.lineColor || defaultConfig.graph.lineColor,
                         fillAlphas: config.graph.fillAlphas || defaultConfig.graph.fillAlphas
                     }],
-                    chartScrollbar: {},
+                    chartScrollbar: null,
                     chartCursor: {
                         categoryBalloonDateFormat: config.category.categoryBalloonDateFormat || defaultConfig.category.categoryBalloonDateFormat,
                         //"cursorAlpha": 0.2,
                         "cursorPosition": "mouse"
                     }
                 });
-                /*var chartScrollbar = new AmCharts.ChartScrollbar();
-                chart.addChartScrollbar(chartScrollbar);
-                chart.validateData();*/
             };
-            
+
             var checker;
             scope.$watch('liveView', function(newValue, oldValue){
                 if (newValue !== true) {
@@ -109,22 +106,22 @@ SwarmMonitor.directive('areaChartWithTime', [function() {
                         //console.log(chart.dataProvider.length);
                         if (chart) {
                             chart.validateData();
-                            chart.zoomToIndexes(chart.dataProvider.length - 40, chart.dataProvider.length - 1);
+                           // chart.zoomToIndexes(chart.dataProvider.length - 40, chart.dataProvider.length - 1);
                         }
                     },1000);
                 }
             });
-            
+
             scope.$watch('data', function(newValue,oldValue){
-                //console.log('chart data changed', newValue ? newValue.length : 'null');
+                console.log('chart data changed', newValue ? newValue.length : 'null');
                 if (newValue) {
                     initChart();
                     chart.dataProvider = newValue;
                     chart.validateData();
-                    chart.zoomToIndexes(chart.dataProvider.length - 40, chart.dataProvider.length - 1);
+                    //chart.zoomToIndexes(chart.dataProvider.length - 40, chart.dataProvider.length - 1);
                 }
             });
-            
+
             scope.$on('$destroy', function(){
                 //console.log('CHART destroyed for id:' + id);
                 clearInterval(checker);

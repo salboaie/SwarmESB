@@ -7,12 +7,11 @@
 */
 
 
-var core = require ("swarmcore");
+var core        = require ("swarmcore");
 var os          = require('os');
 var fs          = require('fs');
 var moment      = require('moment');
-
-thisAdapter = core.createAdapter("SwarmMonitor");
+thisAdapter     = core.createAdapter("SwarmMonitor");
 
 var config  = getMyConfig('SwarmMonitor');
 var adminPhone = config.adminPhone;
@@ -21,7 +20,7 @@ var redisClient = function(){
     return thisAdapter.nativeMiddleware.privateRedisClient;
 };
 
-
+var rts;
 
 var container = require("semantic-firewall").container;
 
@@ -55,22 +54,19 @@ function tick(rts){
     var mLoad = memLoad();
     rts.record('cpu',cLoad, ['avg','max','min'], ['hm','hq','hy','dm','dq','dy']);
     rts.record('memory',mLoad, ['avg','max','min'], ['hm','hq','hy','dm','dq','dy']);
-    console.log("CPU load "     +  cLoad + "%");
-    console.log("Memory load "  +  mLoad + "%");
-
 }
 
 
-
-container.service("osMonitor", ["redisConnection",], function(outOfService,redis){
+container.service("osMonitor", ["redisConnection"], function(outOfService,redis){
     var donotsave = false;
     if(outOfService){
         donotsave = true;
     } else {
         donotsave = false;
-        var rts = require('rts')({
+        //maybe instantiate rts out of this function ?
+         rts = require('rts')({
             redis: thisAdapter.nativeMiddleware.privateRedisClient,
-            gran: '5m, 1h, 1d, 1w, 1M, 1y',
+            gran: '1m, 5m, 1h, 1d, 1w, 1M, 1y',
             points: 360,
             prefix: ''
         });
@@ -92,8 +88,52 @@ var memoryHistory = {};
 
 
 
+var queryParametersDetermination=function(period){
+    //really ugly stuff...
+    switch (period){
+        case "Last 5 minutes": return {
+            periodLength:300000,
+            granularity:"1m"
+        };
+        case "Last hour"     : return {
+            periodLength:3600000,
+            granularity:"5m"
+        };
+
+        case "Last day"      : return {
+            periodLength:86400000,
+            granularity:"1h"
+        };
+        case "Last month"    : return {
+            periodLength:2592000000,
+            granularity:"1d"
+        };
+        case "Last year"     : return {
+            periodLength:31536000000,
+            granularity:"1M"
+        };
+    }
+};
 
 
+getCpuHistory=function(period,callback) {
+    var end=Date.now();
+    var queryParams=queryParametersDetermination(period);
+    var begin=new Date(end-queryParams.periodLength);
+    rts.getStat('avg','cpu',queryParams.granularity,begin,end,callback);
+};
+
+
+getMemoryHistory=function(period,callback) {
+    var end = Date.now();
+    var queryParams = queryParametersDetermination(period);
+    var begin = new Date(end - queryParams.periodLength);
+    rts.getStat('avg', 'memory', queryParams.granularity, begin, end, callback);
+};
+
+getFreeMemory=function(){
+    return os.freemem();
+};
 
 
 /////////////////////////////////////////////////

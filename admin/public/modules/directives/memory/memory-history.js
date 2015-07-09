@@ -9,7 +9,13 @@ SwarmMonitor.directive('memoryHistory', [function() {
     var controller = ['$scope', '$state', '$rootScope', '$element',
         function($scope, $state, $rootScope, $element){
             $scope.liveView = $scope.liveViewEnabled;
-            $scope.bytesFormat = $rootScope.bytesFormat;
+            $scope.memPeriod="Last 5 minutes";
+
+            $scope.memChanged=function(){
+                $scope.$parent.memPeriod=$scope.memPeriod;
+                $scope.$parent.updateMemChart();
+            }
+
         }];
 
     return {
@@ -25,3 +31,5 @@ SwarmMonitor.directive('memoryHistory', [function() {
         controller: controller
     }
 }]);
+
+

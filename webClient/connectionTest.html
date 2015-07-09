@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<script src="https://cdn.socket.io/socket.io-1.0.6.js"></script>
+<script src="https://rawgit.com/salboaie/WSSwarmClient/master/src/SwarmDebug.js"></script>
+<script src="https://rawgit.com/salboaie/WSSwarmClient/master/src/SwarmClient.js"></script>
+<script src="https://rawgit.com/salboaie/WSSwarmClient/master/src/SwarmHub.js"></script>
+
+
+
+<script type="text/javascript">
+    function lprint(){
+        var output = "";
+        for(var i=0;i<arguments.length;i++ ){
+            var arg = arguments[i];
+            if(typeof arg  != "object"){
+                output+= arg;
+            } else {
+                output+= JSON.stringify(arg);
+            }
+            output+= " ";
+        }
+        console.log("lprint#", output);
+    }
+    alert("Creating a connection to localhost:8080. A success or fail message should be displayed. No alert means fail..");
+</script>
+
+
+    <script type="text/javascript">
+
+
+                var client = new SwarmClient("localhost", 8080,
+                    "testUser", "ok", "testTenant", "testCtor",
+                    function securityErrorFunction(err){
+                        alert(err);
+                    }, function errorFunction(err){
+                    alert(err);
+                });
+
+        swarmHub.resetConnection(client);
+
+        swarmHub.on("login.js", "success", function(){
+            alert("Test success")
+        });
+
+        swarmHub.on("login.js", "fail", function(){
+            alert("Test failed")
+        });
+
+    </script>
+</body>
+</html>

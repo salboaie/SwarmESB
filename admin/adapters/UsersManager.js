@@ -17,6 +17,7 @@ core.createAdapter("UsersManager");
 var apersistence = require('apersistence');
 
 
+var  container = require("semantic-firewall").container;
 
 /*
  Default User model
@@ -66,9 +67,6 @@ apersistence.registerModel("DefaultUser","Redis", {
     },
     zip_code: {
         type: "string"
-    },
-    isDoctor: {
-        type: "boolean"
     }
 });
 
@@ -220,9 +218,9 @@ getUserInfo = function(userId, callback){
 
 
 validPassword = function(userId, pass, callback){
-    var user = redisPersistence.lookup.async("DefaultUser", userId);
+    var user = redisPersistence.findById.async("DefaultUser", userId);
     (function(user){
-        if(user.password  == pass){
+        if(user && user.password  == pass){
             callback(null, true);
         } else {
             callback(null, false);
@@ -244,9 +242,11 @@ function bootSystem(){
     }).wait(organisation);
 }
 
-/*
-    Apelat la conectarea reusita cu Redis-ul
- */
-registerResetCallback(function(){
-    bootSystem();
+
+container.declareDependency("UsersManagerAdapter", ["redisPersistence"], function(outOfService, redis){
+    if(!outOfService){
+        console.log("!!!!!!!!!!dec dependency");
+        bootSystem();
+    }
 })
+

@@ -1,13 +1,16 @@
 <div class="panel panel-default">
     <div class="panel-heading">
-        CPU Activity 
-        <!--<a href="" ng-click="liveView = !liveView" style="float: right">
-            <i class="glyphicon " ng-class="{'glyphicon-pause': liveView, 'glyphicon-play': !liveView}"></i>
-        </a>-->
-        <button type="button" class="btn btn-xs btn-default" ng-click="liveView = !liveView" style="float: right" 
-                title="{{liveView ? 'Stop Live View' : 'Start Live View'}}">
-            <i class="glyphicon " ng-class="{'glyphicon-pause': liveView, 'glyphicon-play': !liveView}"></i>
-        </button>
+        CPU Activity
+        <div style="float:right">
+            <select  ng-model='cpuPeriod' ng-change='cpuChanged()'>
+                <option value="Last 5 minutes"> Last 5 minutes</option>
+                <option value="Last hour"> Last hour</option>
+                <option value="Last day"> Last day</option>
+                <option value="Last month"> Last month</option>
+                <option value="Last year"> Last year</option>
+
+            </select>
+        </div>
     </div>
     <!-- /.panel-heading -->
     <div class="panel-body">
