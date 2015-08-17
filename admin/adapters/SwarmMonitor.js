@@ -56,16 +56,21 @@ function tick(rts){
     rts.record('memory',mLoad, ['avg','max','min'], ['hm','hq','hy','dm','dq','dy']);
 }
 
+var currentRedisConnection = null;
 
-container.service("osMonitor", ["redisConnection"], function(outOfService,redis){
+container.service("osMonitor", ["redisConnection"], function(outOfService,redisConnection){
     var donotsave = false;
     if(outOfService){
         donotsave = true;
     } else {
+        currentRedisConnection = redisConnection;
+        if(!redisConnection){
+            throw new Error("Shared Redis connection can't be null!");
+        }
         donotsave = false;
         //maybe instantiate rts out of this function ?
          rts = require('rts')({
-            redis: thisAdapter.nativeMiddleware.privateRedisClient,
+            redis: redisConnection,
             gran: '1m, 5m, 1h, 1d, 1w, 1M, 1y',
             points: 360,
             prefix: ''
@@ -164,7 +169,7 @@ updateSystemLoad = function(info) {
 
 listSwarms = function(callBack){
     var redisKey = thisAdapter.nativeMiddleware.makeRedisKey("system","code");
-    var result = redisClient().hkeys.async(redisKey);
+    var result = currentRedisConnection.hkeys.async(redisKey);
     (function(result){
         callBack(null, result);
     }).swait(result);
@@ -172,7 +177,7 @@ listSwarms = function(callBack){
 
 loadSwarm = function(swarmName, callBack){
     var redisKey = thisAdapter.nativeMiddleware.makeRedisKey("system","code");
-    var result = redisClient().hget.async(redisKey,swarmName);
+    var result = currentRedisConnection.hget.async(redisKey,swarmName);
     (function(result){
         callBack(null, result);
     }).swait(result);

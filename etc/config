@@ -23,10 +23,12 @@
             "serverAlias":"development",
             "watch":[
                         {"core":"etc/adapters/Core.js",                              "enabled":true, "step":1},
+                        {"core":"etc/relay/RedisRelay.js",                           "enabled":true, "args":["-n", "RESEARCH", "-r", "localhost", "-p", "6379", "-u", "localhost:5000"], "step":1},
                         {"core":"etc/adapters/DefaultLogger.js",                     "enabled":true, "step":2},
                         {"node":"admin/adapters/UsersManager.js",                    "enabled":true  , "step":3},
                         {"node":"admin/adapters/SwarmMonitor.js",                    "enabled":true  , "step":4},
-                        {"node":"adapters/argsDemo.js",                              "args":[], "enabled":false  , "step":4},
+                        {"core":"etc/adapters/GenericNode.js",                       "args":["-n" ,"Node1"], "enabled":true  , "step":4},
+                        {"core":"etc/adapters/GenericNode.js",                       "args":["-n" ,"Node2"], "enabled":true  , "step":4},
                         {"core":"etc/adapters/ClientAdapter.js",                     "enabled":true  , "step":7},
                         {"core":"etc/adapters/WSServer.js",                          "enabled":true  , "step":7}
             ]

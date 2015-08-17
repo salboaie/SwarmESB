@@ -1,7 +1,7 @@
 {
   "name": "swarmesb",
   "description": "swarmesb demo package",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "homepage": "https://github.com/salboaie/SwarmESB",
   "author": {
     "name": "Alboaie Sinica",
@@ -34,7 +34,7 @@
       "url": "http://www.gnu.org/licenses/gpl.html"
     }
   ],
-  "_id": "swarmesb@2.0.0",
+  "_id": "swarmesb@2.0.1",
   "dependencies" : {
     "swarmcore"     :    ">=2.2.6",
     "acl-magic"    :     ">=1.0.10",
@@ -43,7 +43,8 @@
     "dateformat"      : ">=1.0.11",
     "commander"       :   ">=2.8.1",
     "moment"        : ">=2.10.3",
-    "rts"       :">=0.0.0"
+    "rts"       :">=0.0.0",
+    "tmp"       :">=0.0.0"
   },
   "optionalDependencies": {},
   "_engineSupported": true,

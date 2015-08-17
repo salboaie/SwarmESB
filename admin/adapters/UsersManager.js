@@ -243,10 +243,12 @@ function bootSystem(){
 }
 
 
-container.declareDependency("UsersManagerAdapter", ["redisPersistence"], function(outOfService, redis){
+container.declareDependency("UsersManagerAdapter", ["redisPersistence"], function(outOfService, redisPersistence){
     if(!outOfService){
-        console.log("!!!!!!!!!!dec dependency");
+        console.log("Enabling persistence...", redisPersistence);
         bootSystem();
+    } else {
+        console.log("Disabling persistence...");
     }
 })
 
