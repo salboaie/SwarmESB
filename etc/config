@@ -30,7 +30,8 @@
                         {"core":"etc/adapters/GenericNode.js",                       "args":["-n" ,"Node1"], "enabled":true  , "step":4},
                         {"core":"etc/adapters/GenericNode.js",                       "args":["-n" ,"Node2"], "enabled":true  , "step":4},
                         {"core":"etc/adapters/ClientAdapter.js",                     "enabled":true  , "step":7},
-                        {"core":"etc/adapters/WSServer.js",                          "enabled":true  , "step":7}
+                        {"core":"etc/adapters/WSServer.js",                          "enabled":true  , "step":7},
+                        {"node":"adapters/demoBroadcast.js",                         "enabled":true  , "step":8}
             ]
    },
   "ClientAdapter":{

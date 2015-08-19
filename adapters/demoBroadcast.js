@@ -35,7 +35,8 @@ adapterDebugMessage = function (msg, callback) {
     if (callback) callback();
 };
 
-container.declareDependency("DemoServiceForTestAndExamples", ["swarmingIsWorking"], function(outOfService, redis){
+/*
+container.declareDependency("DemoServiceForTestAndExamples", ["swarmingIsWorking"], function(outOfService, swarmingIsWorking){
     if(!outOfService){
         function  launchParallelSwarms(PARALLEL_SWARMS){
             for (var worker=1; worker < PARALLEL_SWARMS; worker ++ ) {
@@ -48,3 +49,4 @@ container.declareDependency("DemoServiceForTestAndExamples", ["swarmingIsWorking
     }
 })
 
+*/

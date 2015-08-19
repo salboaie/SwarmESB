@@ -22,13 +22,14 @@ var fileTransferTest = {
         }
     },
     node2Confirm:{
-        node:"Node2",
+        node:"!RESEARCH/Node2",
         do:function () {
+            var fs = require("fs");
             //waked up when transfer was done
             console.log("File: ", this.fileName, " from Node1 is now available for node2 as ", this.__transferId);
             var fileName = "tmp/"+this.__transferId;
             var self = this;
-            this.download(this.__transferId, fileName, function(err, res){
+            this.download(this.__transferId, fileName, S(function(err, res){
                 if(require("fs").readFileSync(fileName) == self.fileContent){
                     self.result = "Passed";
                 } else {
@@ -36,8 +37,9 @@ var fileTransferTest = {
                 }
                 fs.unlink(fileName);
                 fs.unlink(self.fileName);
+                self.unshare(self.__transferId);
                 self.home("result");
-            })
+            }))
         }
     }
 }

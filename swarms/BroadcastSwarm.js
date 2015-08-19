@@ -34,7 +34,7 @@ var broadcast = {
          var counter            = this.broadcast.async("heartbeat",undefined);
          var self               = this;
             (function(counter){
-                self.counter=counter;
+                self.counter = counter;
                 console.log(counter, "start");
                 self.swarm("initCounter");
             }).swait(counter);
@@ -55,7 +55,6 @@ var broadcast = {
                     console.log("Running in home ", thisAdapter.nodeName, thisAdapter.instanceUID);
                     this.home("Success");
                 }
-
         }
     },
     initCounter: {
