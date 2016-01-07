@@ -1,11 +1,10 @@
 {
  "logsPath":"logs",
  "verbose":false,
- "pingTimeout":500,
  "systemId": "dockerTestServer",
  "Core":{
      "coreId":"dockertest",
-     "redisHost":"localhost",
+     "redisHost":"127.0.0.1",
      "redisPort":6379,
      "paths":[
         {"core":"etc/coreSwarms"      ,"enabled":true},
@@ -17,19 +16,19 @@
   },
  "Logger":{},
  "Launcher":{
-            "stepsDelay":300,
+            "stepsDelay":500,
             "pingTimeout":2000,
             "responseTimeout":500,
             "serverAlias":"development",
             "watch":[
                         {"core":"etc/adapters/Core.js",                              "enabled":true, "step":1},
-                        {"core":"etc/relay/RedisRelay.js",                           "enabled":true, "args":["-n", "RESEARCH", "-r", "localhost", "-p", "6379", "-u", "localhost:5000"], "step":1},
-                        {"core":"etc/adapters/DefaultLogger.js",                     "enabled":true, "step":2},
-                        {"node":"admin/adapters/UsersManager.js",                    "enabled":true  , "step":3},
-                        {"node":"admin/adapters/SwarmMonitor.js",                    "enabled":true  , "step":4},
+                        {"core":"etc/relay/RedisRelay.js",                           "enabled":true, "args":["-n", "RESEARCH", "-r", "127.0.0.1", "-p", "6379" ], "step":2},
+                        {"core":"etc/adapters/DefaultLogger.js",                     "enabled":true, "step":3},
+                        {"node":"admin/adapters/UsersManager.js",                    "enabled":true  , "step":4},
+                        {"node":"admin/adapters/SwarmMonitor.js",                    "enabled":true  , "step":5},
                         {"core":"etc/adapters/GenericNode.js",                       "args":["-n" ,"Node1"], "enabled":true  , "step":4},
                         {"core":"etc/adapters/GenericNode.js",                       "args":["-n" ,"Node2"], "enabled":true  , "step":4},
-                        {"core":"etc/adapters/ClientAdapter.js",                     "enabled":true  , "step":7},
+                        {"core":"etc/adapters/ClientAdapter.js",                     "enabled":true  , "step":6},
                         {"core":"etc/adapters/WSServer.js",                          "enabled":true  , "step":7},
                         {"node":"adapters/demoBroadcast.js",                         "enabled":true  , "step":8}
             ]
