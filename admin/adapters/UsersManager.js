@@ -17,7 +17,7 @@ core.createAdapter("UsersManager");
 var apersistence = require('apersistence');
 
 
-var  container = require("semantic-firewall").container;
+var  container = require("safebox").container;
 
 /*
  Default User model

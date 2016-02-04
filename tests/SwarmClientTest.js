@@ -2,7 +2,7 @@
 var adapterPort     = 3000;
 var adapterHost     = "localhost";
 var util            = require("swarmcore");
-var assert          = require('semantic-firewall').assert;
+var assert          = require('double-check').assert;
 globalVerbosity     = false;
 
 var client2 = util.createClient(adapterHost, adapterPort, "Client2", "ok","SwarmClientTest", "testCtor");
