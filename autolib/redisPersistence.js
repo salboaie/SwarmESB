@@ -3,7 +3,7 @@ var persistenceModule = require("apersistence");
 
 redisPersistence = null;
 
-var container=require("semantic-firewall").container;
+var container=require("safebox").container;
 
 
 container.declareDependency("redisPersistence", ["redisConnection"], function(outOfService, redisConnection){

@@ -22,7 +22,7 @@ var redisClient = function(){
 
 var rts;
 
-var container = require("semantic-firewall").container;
+var container = require("safebox").container;
 
 
 function cpuLoad(){
