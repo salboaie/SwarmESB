@@ -1,18 +1,18 @@
 #SwarmESB central repository. Refactoring and master plan:
 This is the new version of SwarmESB, based on [SwarmCore] (https://github.com/salboaie/swarmcore "SwarmCore") that adds:  
- - default load distribution between Adapters
- - new broadcast primitive
+ - default load distribution between Adapters (done)
+ - new broadcast primitive (done)
  - "do" syntax to describe guaranteed message delivery (at least once)  
- - allows creation of personalised/custom ESBs that can use other middleware than Redis
- - refactoring in progress to grow it around a DI container for better stability (semnatic-firewall module)
- - based on a new powerful ACl module (acl-magic module)
- - deployment support for docker containers
- - UI with system monitoring (work in progress)
- - better logging (work in progress) 
+ - allow creation of personalised/custom ESBs that can use other middleware than Redis (done)
+ - refactoring in progress to grow it around a DI container for better stability (almoust done)
+ - based on a new powerful ACl module (acl-magic module/done)
+ - deployment support for docker containers (done)
+ - UI with system monitoring (done)
+ - better logging (done) 
  - support for typed persistence, complex custom type representation, privacy ontologies ("apersistence" module) 
- - support for executable choreography (work in progress based on PubSubChor module)
- - distributed transactions mechanisms (work in progress)
- - support for representation of long living processes (work in progress)
+ - support for executable choreography (done, more improvements in progress)
+ - distributed transactions mechanisms (planned)
+ - support for representation of long living processes (planned)
 
 ## What is SwarmESB ?
 
