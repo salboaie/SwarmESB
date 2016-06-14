@@ -46,7 +46,8 @@
     "rts"       :">=0.0.0",
     "tmp"       :">=0.0.0",
     "callflow"  :">=0.5.4",
-    "whys" : ">=0.2.1"
+    "whys" : ">=0.2.1",
+    "transrest": ">=0.5.0"
   },
   "optionalDependencies": {},
   "_engineSupported": true,
