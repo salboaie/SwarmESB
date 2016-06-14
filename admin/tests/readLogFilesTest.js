@@ -5,7 +5,7 @@
 
 var adapterPort         = 3000;
 var adapterHost         = "localhost";
-var util                = require("../../../SwarmCore/nodeClient/nodeClient.js");
+var util                = require("../.././nodeClient/nodeClient.js");
 var assert              = require('assert');
 var client              = util.createClient(adapterHost, adapterPort, "TestUser", "ok","genericTenant", "testCtor");
 globalVerbosity = false;

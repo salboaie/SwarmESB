@@ -18,8 +18,8 @@
    The name "heartbeat" used for the second phase is quite descriptive of the whole
    process... the initial swarm sends little swarms to every node in the system and then expects them to come back;
    very similar to the systole-diastole cycle of the heart. (This shows that programmers have a heart)
-
  */
+
 var broadcast = {
     vars:{
         currentInstanceUID:null,

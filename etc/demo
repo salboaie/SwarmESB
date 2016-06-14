@@ -1,7 +1,6 @@
 {
  "logsPath":"logs",
  "verbose":false,
- "pingTimeout":500,
  "systemId": "dockerTestServer",
  "Core":{
      "coreId":"dockertest",
@@ -19,16 +18,18 @@
  "Launcher":{
             "stepsDelay":300,
             "pingTimeout":2000,
-            "responseTimeout":500,
+            "responseTimeout":5000,
             "serverAlias":"development",
             "watch":[
-                        {"core":"etc/adapters/Core.js",                             "enabled":true, "step":1},
-                        {"core":"etc/adapters/DefaultLogger.js",                    "enabled":true, "step":2},
-                        {"node":"admin/adapters/UsersManager.js",                   "enabled":true  , "step":3},
-                        {"core":"etc/adapters/GenericNode.js",                      "args":["-n", "TestAdapter"],   "enabled":true , "step":8},
-                        {"core":"etc/adapters/GenericNode.js",                      "args":["-n", "SharedAdapter"], "enabled":true , "step":8},
-                        {"core":"etc/adapters/WSServer.js",                         "enabled":true  , "step":9},
-                        {"core":"etc/adapters/ClientAdapter.js",                    "enabled":true  , "step":9}
+                        {"core":"etc/adapters/Core.js",                              "enabled":true, "step":1},
+                        {"core":"etc/relay/RedisRelay.js",                           "enabled":true, "args":["-n", "RESEARCH", "-r", "localhost", "-p", "6379" ], "step":2},
+                        {"core":"etc/adapters/DefaultLogger.js",                     "enabled":true, "step":3},
+                        {"node":"admin/adapters/UsersManager.js",                    "enabled":true  , "step":4},
+                        {"node":"admin/adapters/SessionManager.js",                  "enabled":true  , "step":4},
+                        {"node":"admin/adapters/SwarmMonitor.js",                    "enabled":true  , "step":5},
+                        {"core":"etc/adapters/ClientAdapter.js",                     "enabled":true  , "step":6},
+                        {"core":"etc/adapters/WSServer.js",                          "enabled":true  , "step":10},
+                        {"node":"admin/adapters/TestsManager.js",                    "enabled":true, "step":5,"args":["/home/ciprian/storage/Workspace"]}
             ]
    },
   "ClientAdapter":{
@@ -43,7 +44,12 @@
   },
   "WSServer":{
            "host":"0.0.0.0",
-           "port":"8080"
+           "port":"8080",
+           "wwwroot":"/admin/public"
+  },
+
+  "SessionManager":{
+        "sessionTime":"3600000"
   }
 
 }

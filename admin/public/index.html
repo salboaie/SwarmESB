@@ -1,101 +1,99 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" data-ng-app="app">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Administration page</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
-    <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
-    <!-- Bootstrap CSS-->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.css">
-    <!-- MetisMenu CSS -->
-    <link href="bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
-    <!-- Chart.js-->
-    <!--<link rel="stylesheet" href="bower_components/angular-chart.js/dist/angular-chart.css">-->
-    <!-- Morris Charts CSS -->
-    <link href="bower_components/morrisjs/morris.css" rel="stylesheet">
+  <meta charset="utf-8" />
+  <title>Operando | Dashboard</title>
+  <meta name="description" content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
+  <link rel="stylesheet" href="css/animate.css" type="text/css" />
+  <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" />
+  <link rel="stylesheet" href="css/simple-line-icons.css" type="text/css" />
+  <link rel="stylesheet" href="css/font.css" type="text/css" />
+  <link rel="stylesheet" href="css/app.css" type="text/css" />
+  <link rel="stylesheet" href="css/custom.css" type="text/css" />
 
-    <!-- Custom Fonts -->
-    <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    
-    <link rel="stylesheet" href="css/style.css">
-    
-    <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+  <link rel="stylesheet" href="css/awesome-tabs.css" type="text/css" />
+  <link rel="stylesheet" href="css/angular-material.min.css">
 </head>
-<body id="ng-app" ng-app="SwarmMonitor" ng-controller="BaseCtrl">
-<!--<div style="position: fixed; right: 0px; top: 100px;">-->
-    <growl-notifications></growl-notifications>
-    <div ng-repeat="(id, notification) in notifications track by id">
-        <growl-notification ng-class="{success: notification.type === 'success', error: notification.type === 'error'}">
-            {{notification.text}}</growl-notification>
-    </div>
-<!--</div>-->
-<div id="wrapper" ui-view>
-    
-</div>
 
-<script src="js/mockup.js"></script>
-<script src="js/amcharts/amcharts.js"></script>
-<script src="js/amcharts/serial.js"></script>
-<script src="js/amcharts/responsive.min.js"></script>
-<!-- In production use:
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
--->
-<script src="bower_components/angular/angular.js"></script>
-<script src="bower_components/angular-resource/angular-resource.js"></script>
-<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<body ng-controller="AppCtrl" ng-init="init()">
+  <div class="app" id="app" ng-class="{'app-header-fixed':app.settings.headerFixed, 'app-aside-fixed':app.settings.asideFixed, 'app-aside-folded':app.settings.asideFolded, 'app-aside-dock':app.settings.asideDock, 'container':app.settings.container}" ui-view></div>
 
-<!-- jQuery -->
-<script src="bower_components/jquery/dist/jquery.min.js"></script>
-<script src="bower_components/underscore/underscore-min.js"></script>
-
-<!-- Bootstrap Core JavaScript -->
-<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-
-<!-- Metis Menu Plugin JavaScript -->
-<script src="bower_components/metisMenu/dist/metisMenu.min.js"></script>
-<!-- Chart.js -->
-<!--<script src="bower_components/angular-chart.js/dist/angular-chart.js"></script>-->
-
-<!-- Morris Charts JavaScript -->
-<script src="bower_components/raphael/raphael-min.js"></script>
-<script src="bower_components/morrisjs/morris.min.js"></script>
+  <!--Swarms stuff-->
+  <script src="https://cdn.socket.io/socket.io-1.0.6.js"></script>
+  <script src="https://rawgit.com/salboaie/WSSwarmClient/master/src/SwarmDebug.js"></script>
+  <script src="https://rawgit.com/salboaie/WSSwarmClient/master/src/SwarmClient.js"></script>
+  <script src="https://rawgit.com/salboaie/WSSwarmClient/master/src/SwarmHub.js"></script>
 
 
-<script src="bower_components/angular-smart-table/dist/smart-table.min.js"></script>
-<script src="bower_components/angular-animate/angular-animate.min.js"></script>
-<script src="bower_components/angular-growl-notifications/dist/angular-growl-notifications.min.js"></script>
+  <!-- jQuery -->
+  <script src="vendor/jquery/jquery.min.js"></script>
 
-<script src="https://cdn.socket.io/socket.io-1.0.6.js"></script>
-<script src="https://rawgit.com/salboaie/WSSwarmClient/master/src/SwarmDebug.js"></script>
-<script src="https://rawgit.com/salboaie/WSSwarmClient/master/src/SwarmClient.js"></script>
-<script src="https://rawgit.com/salboaie/WSSwarmClient/master/src/SwarmHub.js"></script>
+  <!-- Angular -->
+  <script src="vendor/angular/angular.js"></script>
+
+  <!-- Angular Material -->
+  <script src="vendor/angular/angular-aria.min.js"></script>
+  <script src="vendor/angular/angular-messages.min.js"></script>
+  <script src="vendor/angular/angular-material.min.js"></script>
 
 
-<!-- ngdialog -->
-<script src="bower_components/ngDialog/js/ngDialog.js"></script>
-<link rel="stylesheet" href="bower_components/ngDialog/css/ngDialog.css">
-<link rel="stylesheet" href="bower_components/ngDialog/css/ngDialog-theme-default.css">
+  <script src="vendor/angular/angular-animate/angular-animate.js"></script>
+  <script src="vendor/angular/angular-cookies/angular-cookies.js"></script>
+  <script src="vendor/angular/angular-resource/angular-resource.js"></script>
+  <script src="vendor/angular/angular-sanitize/angular-sanitize.js"></script>
+  <script src="vendor/angular/angular-touch/angular-touch.js"></script>
+  <script src="vendor/angular/angular-recursion/angular-recursion.min.js"></script>
+  <!-- Vendor -->
+  <script src="vendor/angular/angular-ui-router/angular-ui-router.js"></script> 
+  <script src="vendor/angular/ngstorage/ngStorage.js"></script>
 
-<script src="bower_components/angular-local-storage/dist/angular-local-storage.min.js"></script>
+  <!-- bootstrap -->
+  <script src="vendor/angular/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <!-- lazyload -->
+  <script src="vendor/angular/oclazyload/ocLazyLoad.js"></script>
+  <!-- translate -->
+  <script src="vendor/angular/angular-translate/angular-translate.js"></script>
+  <script src="vendor/angular/angular-translate/loader-static-files.js"></script>
+  <script src="vendor/angular/angular-translate/storage-cookie.js"></script>
+  <script src="vendor/angular/angular-translate/storage-local.js"></script>
+  <script src="vendor/modules/angular-bootstrap-nav-tree/abn_tree_directive.js"></script>
+  <link rel="stylesheet" type="text/css" href="vendor/modules/angular-bootstrap-nav-tree/abn_tree.css">
 
-<script src="js/sb-admin-2.js"></script>
-<script src="modules/core/swarm-monitor.js"></script>
-<script src="modules/core/controllers/dashboard-controller.js"></script>
-<script src="modules/core/controllers/swarms-controller.js"></script>
-<script src="modules/core/controllers/logs-controller.js"></script>
-<script src="modules/core/controllers/organisations-controller.js"></script>
-<script src="modules/directives/cpu/cpu-history.js"></script>
-<script src="modules/directives/memory/memory-history.js"></script>
-<script src="modules/directives/system/system-info.js"></script>
-<script src="modules/directives/system/adaptor-list-view.js"></script>
-<script src="modules/directives/charts/areaChartWithTime.js"></script>
-<script src="modules/directives/dialogs/editOrganisation.js"></script>
-<script src="modules/directives/dialogs/editUser.js"></script>
-<script src="modules/directives/dialogs/login.js"></script>
+  <!-- infinite-scroll -->
+  <script src="vendor/modules/ng-infinite-scroll/ng-infinite-scroll.min.js"></script>
+  <!-- App -->
+  <script src="js/app.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/config.lazyload.js"></script>
+  <script src="js/config.router.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/services/swarm-service.js"></script>
+  <script src="js/services/authentication-service.js"></script>
+  <script src="js/services/ui-load.js"></script>
+  <script src="js/services/loggingService.js"></script>
+  <!--<script src="js/filters/fromNow.js"></script>-->
+  <script src="js/directives/setnganimate.js"></script>
+  <script src="js/directives/ui-butterbar.js"></script>
+  <script src="js/directives/ui-focus.js"></script>
+  <script src="js/directives/ui-fullscreen.js"></script>
+  <script src="js/directives/ui-jq.js"></script>
+  <script src="js/directives/ui-module.js"></script>
+  <script src="js/directives/ui-nav.js"></script>
+  <script src="js/directives/ui-scroll.js"></script>
+  <script src="js/directives/ui-shift.js"></script>
+  <script src="js/directives/ui-toggleclass.js"></script>
+  <script src="js/directives/ui-validate.js"></script>
+  <script src="js/directives/usage-stats.js"></script>
+  <script src="js/controllers/bootstrap.js"></script>
 
+
+  <script type="text/javascript" src="vendor/modules/angular-tree-widget-master/dist/angular-tree-widget.js"></script>
+  <link rel="stylesheet" type="text/css" href="vendor/modules/angular-tree-widget-master/dist/angular-tree-widget.css">
+  <!-- Lazy loading -->
+
+
+  <script src="js/controllers/userCtrl.js"></script>
 </body>
 </html>
