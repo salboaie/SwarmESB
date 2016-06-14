@@ -1,0 +1,37 @@
+Ontological semantic firewall (not really fully implemented yet, wip)
+
+declare infomation about ontologic tags
+
+        firewall.tag(tagname, {
+            identity:boolean,
+            private:boolean,
+            sensitivity:0-10,
+            related:"list of tags"
+            })
+
+Example:
+
+      firewall.tag("Social Security Number", {
+          identity:true,
+          private:true,
+          sensitivity:5
+          })
+
+      firewall.tag("Birth Date", {
+          identity:false,
+          private:true,
+          sensitivity:3
+          })
+Declare annotation for privacy ontologic tag
+
+firewall.tag(objectType, field, tagName)
+Example:
+
+      firewall.tag("User", "SSN",   "Social Security Number");
+      firewall.tag("User", "birthDate", "Birth Date");
+Declare rules about use of combinations between identity, private fields and access zones. It is possbile to declare access zones and parent relations between resources and zones
+
+      firewall.grant(zone, resourseType)
+      firewall.parentZone(zone, parentZone)
+      firewall.parentResourceType(resourseType, ParentresourseType)
+Resource can be: tags, fields, objects, combination of objects with common identity fields Zones: can be userids, groups,

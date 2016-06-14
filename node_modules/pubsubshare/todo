@@ -1,0 +1,4 @@
+
+1. ensure safe authentication between relays (for example that a connections is made only between nodes with certificates from the same CA)
+2. improve the API to make vissible the communication peer
+
