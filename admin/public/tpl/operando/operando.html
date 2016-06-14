@@ -1,0 +1,154 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm" ng-init="
+    app.settings.asideFolded = false;
+    app.settings.asideDock = false;
+  ">
+    <!-- main -->
+    <div class="col">
+        <!-- main header -->
+        <div class="bg-light lter b-b wrapper-md">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <h1 class="m-n font-thin h3 text-black">Dashboard</h1>
+                    <small class="text-muted">OPERANDO ControlPanel</small>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="wrapper-md" ng-controller="SwarmsUsage">
+            <div ng-repeat="stat in usageStats">
+                <div usage-stats stat="stat"></div>
+            </div>
+
+
+        <!-- / main header -->
+        <div class="wrapper-md" >
+
+
+            <!-- stats -->
+           <!-- <div class="row">
+                <div class="col-md-12">
+                    <div class="row row-sm text-center">
+                        <div class="col-xs-6">
+                            <div class="panel padder-v item">
+                                <div class="h1 text-info font-thin h1">521</div>
+                                <span class="text-muted text-xs">Servers</span>
+                                <div class="top text-right w-full">
+                                    <i class="fa fa-caret-down text-warning m-r-sm"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <a href class="block panel padder-v bg-primary item">
+                                <span class="text-white font-thin h1 block">930</span>
+                                <span class="text-muted text-xs">Adapters</span>
+                <span class="bottom text-right w-full">
+                  <i class="fa fa-cloud-upload text-muted m-r-sm"></i>
+                </span>
+                            </a>
+                        </div>
+                        <div class="col-xs-6">
+                            <a href class="block panel padder-v bg-info item">
+                                <span class="text-white font-thin h1 block">432</span>
+                                <span class="text-muted text-xs">Restarted Adapters</span>
+                <span class="top text-left">
+                  <i class="fa fa-caret-up text-warning m-l-sm"></i>
+                </span>
+                            </a>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="panel padder-v item">
+                                <div class="font-thin h1">129</div>
+                                <span class="text-muted text-xs">Critical errors</span>
+                                <div class="bottom text-left">
+                                    <i class="fa fa-caret-up text-warning m-l-sm"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 m-b-md">
+                            <div class="r bg-light dker item hbox no-border">
+                                <div class="col w-xs v-middle hidden-md">
+                                    <div ng-init="data1=[60,40]" ui-jq="sparkline" ui-options="{{data1}}, {type:'pie', height:40, sliceColors:['{{app.color.warning}}','#fff']}" class="sparkline inline"></div>
+                                </div>
+                                <div class="col dk padder-v r-r">
+                                    <div class="text-primary-dk font-thin h1"><span>Uptime 99,85%</span></div>
+                                    <span class="text-muted text-xs">Last downtime was 4 min, 48 sec</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- / stats -->
+
+            <!-- service -->
+            <div class="panel hbox hbox-auto-xs no-border">
+                <div class="col wrapper">
+                    <i class="fa fa-circle-o text-info m-r-sm pull-right"></i>
+                    <h4 class="font-thin m-t-none m-b-none text-primary-lt">CPU History</h4>
+                    <span class="m-b block text-sm text-muted">Service report of this year (updated 1 hour ago)</span>
+                    <div ui-jq="plot" ui-data="cpuHistory" ui-options="
+              [
+                { data: {{cpuHistory}}, points: { show: true, radius: 6}, splines: { show: true, tension: 0.45, lineWidth: 5, fill: 0 } }
+              ],
+              {
+                colors: ['{{app.color.info}}'],
+                series: { shadowSize: 3 },
+                xaxis:{
+                  font: { color: '#ccc' },
+                  position: 'bottom',
+                  ticks: [
+                    [ 1, 'Jan' ], [ 2, 'Feb' ], [ 3, 'Mar' ], [ 4, 'Apr' ], [ 5, 'May' ], [ 6, 'Jun' ], [ 7, 'Jul' ], [ 8, 'Aug' ], [ 9, 'Sep' ], [ 10, 'Oct' ], [ 11, 'Nov' ], [ 12, 'Dec' ]
+                  ]
+                },
+                yaxis:{ font: { color: '#ccc' } },
+                grid: { hoverable: true, clickable: true, borderWidth: 0, color: '#ccc' },
+                tooltip: true,
+                tooltipOpts: { content: '%x.1 is %y.4',  defaultTheme: false, shifts: { x: 0, y: 20 } }
+              }
+          " style="height:240px" >
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="panel hbox hbox-auto-xs no-border">
+                <div class="col wrapper">
+                    <i class="fa fa-circle-o text-info m-r-sm pull-right"></i>
+                    <h4 class="font-thin m-t-none m-b-none text-primary-lt">Memory History</h4>
+                    <span class="m-b block text-sm text-muted">Service report of this year (updated 1 hour ago)</span>
+                    <div ui-jq="plot" ui-data="cpuHistory" ui-options="
+              [
+                { data: {{memoryHistory}}, points: { show: true, radius: 6}, splines: { show: true, tension: 0.45, lineWidth: 5, fill: 0 } }
+              ],
+              {
+                colors: ['{{app.color.info}}'],
+                series: { shadowSize: 3 },
+                xaxis:{
+                  font: { color: '#ccc' },
+                  position: 'bottom',
+                  ticks: [
+                    [ 1, 'Jan' ], [ 2, 'Feb' ], [ 3, 'Mar' ], [ 4, 'Apr' ], [ 5, 'May' ], [ 6, 'Jun' ], [ 7, 'Jul' ], [ 8, 'Aug' ], [ 9, 'Sep' ], [ 10, 'Oct' ], [ 11, 'Nov' ], [ 12, 'Dec' ]
+                  ]
+                },
+                yaxis:{ font: { color: '#ccc' } },
+                grid: { hoverable: true, clickable: true, borderWidth: 0, color: '#ccc' },
+                tooltip: true,
+                tooltipOpts: { content: '%x.1 is %y.4',  defaultTheme: false, shifts: { x: 0, y: 20 } }
+              }
+          " style="height:240px" >
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- / service -->
+        </div>
+
+        </div>
+    </div>
+    <!-- / main -->
+
+</div>

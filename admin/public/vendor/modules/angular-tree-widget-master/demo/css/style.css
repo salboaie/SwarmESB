@@ -1,0 +1,114 @@
+﻿body {
+    background-color: #D4DEE4;
+}
+
+.page {
+    padding: 25px;
+    background: white;
+}
+
+.navbar {
+    min-height: 135px;
+    border-radius: 0;
+    margin-bottom: 0;
+}
+
+.page .page-header {
+    color: #818778;
+    margin: 0px 0px 20px;
+}
+
+.page .definition .glyphicon {
+    font-size: 10px;
+    margin-right: 10px;
+}
+
+.page .presentation {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #EEE;
+}
+
+.definition {
+    padding: 0 10px 10px 10px;
+}
+
+    .definition li {
+        padding-bottom: 5px;
+    }
+
+        .definition li:last-child {
+            padding-bottom: 0;
+        }
+
+.tree-container {
+    border-radius: 5px 5px 0px 0px;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+}
+
+.browser-img {
+    height: 40px;
+    width: 40px;
+}
+
+.feature {
+    padding-left: 3rem;
+}
+
+.code {
+    font-size: 12px;
+    font-family: Consolas,monaco,monospace;
+}
+
+.text-idented {
+    text-indent: 25px;
+}
+
+h3 {
+    margin-top: 1rem;
+}
+
+.code-container {
+    margin: 10px 0px 10px;
+}
+
+
+.btn-show-right {
+    position: absolute;
+    bottom: 0px;
+    right: 20px;
+}
+
+.btn-show-left {
+    position: absolute;
+    bottom: 0px;
+    left: 20px;
+}
+
+.info-container {
+    padding: 0 10px 10px 10px;
+}
+
+.info-container h3 {
+    margin-top: 0;
+}
+/*
+    --------------- Animate the code ------------------
+*/
+
+.code-container pre {
+    transition: .5s linear all;
+    overflow: hidden;
+}
+
+    .code-container pre.ng-hide {
+        height: 0;
+    }
+
+.code-example1 {
+    height: 190px;
+}
+
+.code-example2 {
+    height: 300px;
+}

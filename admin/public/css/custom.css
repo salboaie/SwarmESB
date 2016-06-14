@@ -1,0 +1,98 @@
+.log_item{
+    list-style: none;
+}
+
+.panel.logs-info{
+    position: fixed;
+    overflow: auto;
+    top: 50px;
+    bottom: 30px;
+    width:45%;
+}
+
+.app-content{
+    position: relative;
+}
+
+
+.panel.logs-info .log_item .log_item_brief_info{
+    cursor: pointer;
+}
+
+.panel.logs-info .log_item  .list-group-item:last-child{
+    border-radius: 0px;
+    border-bottom: 1px solid #d6e9ee;
+}
+
+.panel.logs-info .log_item:last-child,
+.panel.logs-info .log_item:last-child .list-group-item:last-child{
+    border-bottom: none;
+}
+
+.panel.logs-info .log_item.expanded .list-group-item{
+    background: #D6E9EE;
+}
+
+.log_list_cnt{
+    -webkit-padding-start: 0px;
+}
+
+.clearfix:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+.clearfix {
+    display: inline-block;
+}
+.clearfix {
+    display: block;
+}
+
+.app{
+    height:100%;
+}
+
+.log_container{
+    float: left;
+    display: inline-block;
+    height: 100%;
+    width: 45%;
+    position: fixed;
+    overflow: auto;
+}
+
+.leftbox{
+    float:left;
+    display:inline-block;
+    width: 10%;
+}
+
+.whyNodeSelected{
+    float: right;
+    width: 35%;
+    margin-right: 3%;
+    word-wrap: break-word;
+}
+
+.testManager{
+width: 100%;
+position: fixed;
+overflow: auto;
+bottom: 50px;
+right: 0px;
+padding-left: 200px;
+top: 50px;
+}
+
+.app-content-body{
+    position: fixed;
+    overflow: auto;
+    height: 100%;
+    width: 100%;
+    padding-bottom: 50px;
+    left: 200px;
+    right: 0;
+}

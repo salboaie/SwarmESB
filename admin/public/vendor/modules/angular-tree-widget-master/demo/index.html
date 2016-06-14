@@ -1,0 +1,388 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Angular tree widget</title>
+    <meta charset="utf-8" />
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+    <link href="dist/angular-tree-widget.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+</head>
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <h1 style="line-height: 2.5em; color:#fff">
+                    Angular tree widget
+                </h1>
+            </div>
+            <a href="https://github.com/AlexSuleap/angular-tree-widget">
+                <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png">
+            </a>
+        </div>
+    </nav>
+    <div class="container page" ng-app="treeApp">
+        <div class="row presentation" ng-controller="TreeController">
+            <div class="col-sm-6 col-md-8">
+                <div class="row definition">
+                    <h3>
+                        Pure Angular control, without any jQuery reference
+                    </h3>
+                    <div class="text-idented"><i>The tree widget control is an angular UI component, independent from jQuery, which binds data and reacts to model changes. The control is absolutely free, open source and distributed under the <a href="https://github.com/AlexSuleap/angular-tree-widget/blob/master/LICENSE">MIT license</a>.</i></div>
+                </div>
+                <div class="row definition">
+                    <h3>
+                        Features:
+                    </h3>
+                    <div class="col-xs-6">
+                        <div class="feature"><span class="glyphicon glyphicon-ok"></span><span>Reacts at model changes</span></div>
+                        <div class="feature"><span class="glyphicon glyphicon-ok"></span><span>Isolated scope</span></div>
+                        <div class="feature"><span class="glyphicon glyphicon-ok"></span><span>Easy customizable using css</span></div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div><span class="glyphicon glyphicon-ok"></span><span>Custom icons[or no icons at all]</span></div>
+                        <div><span class="glyphicon glyphicon-ok"></span><span>Multiple selection</span></div>
+                        <div><span class="glyphicon glyphicon-ok"></span><span>Disabled nodes</span></div>
+                    </div>
+                </div>
+                <div class="row definition">
+                    <h3>
+                        Instalation:
+                    </h3>
+                    <ol>
+                        <li>
+                            <a href="https://github.com/AlexSuleap/angular-tree-widget">Download</a> the project.
+                        </li>
+                        <li>
+                            Load the css file <code>angular-tree-widget.min.css</code> and the script file <code> angular-tree-widget.min.js</code> in your application.
+                        </li>
+                        <li>
+                            Add <code>'TreeWidget'</code> dependency to your application module.
+                        </li>
+                        <li>
+                            Do not forget to add references to angular, angular animate and angular recursion.
+                        </li>
+                    </ol>
+                </div>
+                <div class="row definition">
+                    <h3>
+                        Browser suport:
+                    </h3>
+                    <div>
+                        <div class="text-center" style="margin:10px 0 10px">
+                            <img class="browser-img" src="app/images/browsers/chrome.png" />
+                            <img class="browser-img" src="app/images/browsers/firefox.png" />
+                            <img class="browser-img" src="app/images/browsers/safari.png" />
+                            <img class="browser-img" src="app/images/browsers/internet_explorer.png" />
+                        </div>
+                        <div class="text-center">
+                            <i>
+                                Was tested on IE11 and all modern browser. It might work on other<br>
+                                browser and/or older versions but it wasn't tested.
+                            </i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <div class="tree-container">
+                    <tree nodes='treeNodes' options='options'></tree>
+                </div>
+            </div>
+        </div>
+        <div class="row definition" ng-controller="CodeController">
+            <div ng-controller="TreeController">
+                <div class="col-sm-6">
+                    <div class="tree-container" style="min-height:200px;">
+                        <tree nodes='basicTree'></tree>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div  class="info-container" style="min-height:200px">
+                        <h3>
+                            Basic usage:
+                        </h3>
+                        <p class="text-idented">
+                            Just add the following tag into your page: <code>&lt;tree nodes='basicTree'&gt;&lt;/tree&gt;</code>, and after that the tree will react to any model changes.
+                        </p>
+                        <div class="btn-show-left">
+                            <button class="btn btn-info" ng-click="toggleCode()">Show Code</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="code-container">
+                        <pre ng-show="codeVisible" class="code-example1">$scope.basicTree=[{
+        name: "Node 1",
+        children: [{
+            name: "Node 1.1",
+            children:[{name:"Node 1.1.1"},{name: "Node 1.1.2"}]
+        }]},{
+        name: "Node 2",
+        children: [{name: "Node 2.1"},{name: "Node 2.2"}]
+    }]</pre>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <hr />
+        <div class="row definition" ng-controller="CodeController">
+            <div ng-controller="TreeController">
+                <div class="col-sm-6">
+                    <div class="info-container" style="min-height:160px">
+                        <h3>
+                            Custom Images
+                        </h3>
+                        <p class="text-idented">
+                            Sometimes changing the image of a certain node might be required. With the angular tree widget it is as easy as setting the value of a javascript object:
+                        </p>
+                        <p>
+                            <code>image: "/demo/app/images/pdf.png"</code>
+                        </p>
+                        <button class="btn btn-info pull-right btn-show-right" ng-click="toggleCode()">Show Code</button>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="tree-container" style="min-height:160px;">
+                        <tree nodes='customImagesTree'></tree>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="code-container">
+                    <pre ng-show="codeVisible" class="code-example1"> $scope.customTree = [{
+    name: "My Files",
+    image: "/demo/app/images/disk.png",
+    children: [
+        { name: "Pro AngularJS", image: "/demo/app/images/pdf.png" },
+        { name: "Presentation", image: "/demo/app/images/ppt.png" },
+        { name: "Requirements", image: "/demo/app/images/word.png" },
+        { name: "TODO list" }]
+}];</pre>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row definition" ng-controller="CodeController">
+            <div ng-controller="TreeController">
+                <div class="col-sm-6">
+                    <div class="tree-container" style="min-height:210px;">
+                        <tree nodes='disabledNodes'></tree>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="info-container" style="min-height:210px;">
+                        <h3>
+                            Disabled Nodes
+                        </h3>
+                        <p class="text-idented">
+                            In case that you want to prevent the node selection, just set the disable property of the model:
+                            <code>disabled: true</code>
+                        </p>
+                        <button class="btn btn-info btn-show-left" ng-click="toggleCode()">Show Code</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="code-container">
+                    <pre ng-show="codeVisible" class="code-example2">$scope.disabledNodes = [{
+    name: "My Files", disabled: true,
+    children: [{
+        name: "Angular books",
+        children: [
+            { name: "Pro AngularJS", image: "/app/images/pdf.png" },
+            { name: "AngularJS: Up and Running", image: "/app/images/pdf.png" }, ]
+        }, {
+            name: "Work", disabled: true,
+            children: [
+                { name: "Presentation", image: "/app/images/ppt.png", disabled: true },
+                { name: "Requirements", image: "/app/images/word.png" },
+                { name: "TODO list", disabled: true }]
+    }]
+}];</pre>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row definition">
+            <div ng-controller="UpdatableTreeController">
+                <div class="col-sm-6">
+                    <div class="info-container" style="min-height:180px;">
+                        <h3>
+                            Changing the tree
+                        </h3>
+                        <p class="text-idented">
+                            With each model update (add/remove/rename node) the tree will automaticlay refresh itself.
+                        </p>
+                        <div>
+                            <p>
+                                Add new node under selected node<button class="btn btn-success btn-xs pull-right" ng-click="addNode()">Add</button>
+                            </p>
+                            <p>
+                                Remove selected node<button class="btn btn-danger btn-xs pull-right" ng-click="removeNode()">Remove</button>
+                            </p>
+                            <p>
+                                Rename selected node<button class="btn btn-info btn-xs pull-right" ng-click="renameNode()">Rename</button>
+                            </p>
+                        </div>
+                        <!--<button class="btn btn-info btn-show-right" ng-click="toggleCode()">Show Code</button>-->
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="tree-container" style="min-height:180px;">
+                        <tree nodes='basicTree'></tree>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="code-container">
+                    <pre ng-show="codeVisible" class="code-example2">$scope.disabledNodes = [{
+    name: "My Files", disabled: true,
+    children: [{
+        name: "Angular books",
+        children: [
+            { name: "Pro AngularJS", image: "/app/images/pdf.png" },
+            { name: "AngularJS: Up and Running", image: "/app/images/pdf.png" }, ]
+        }, {
+            name: "Work", disabled: true,
+            children: [
+                { name: "Presentation", image: "/app/images/ppt.png", disabled: true },
+                { name: "Requirements", image: "/app/images/word.png" },
+                { name: "TODO list", disabled: true }]
+    }]
+}];</pre>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row definition" ng-controller="CodeController">
+            <div ng-controller="InteractiveTree">
+                <div class="col-sm-6">
+                    <div class="tree-container" style="min-height:220px;">
+                        <tree nodes='basicTree'></tree>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="info-container" style="min-height:220px;">
+                        <h3>
+                            Events
+                        </h3>
+                        <p class="text-idented">
+                            The control supports events two events:
+                            <ul>
+                                <li><code>selection-changed</code> - click on one node</li>
+                                <li><code>expanded-state-changed</code> - click on the expand/collapse arrow</li>
+                            </ul>
+                        </p>
+                        <div>
+                            <label>Selected node: </label>
+                            <span ng-if="selectedNode" ng-bind="selectedNode.name"></span><span ng-if="!selectedNode">N/A</span>
+                        </div>
+                        <div>
+                            <label>Last expanded node: </label>
+                            <span ng-if="exapndedNode">
+                                <span ng-bind="exapndedNode.name"></span> - <span ng-if="exapndedNode.expanded">expanded</span><span ng-if="!exapndedNode.expanded">collapsed</span>
+                            </span>
+                            <span ng-if="!exapndedNode">N/A</span>
+                        </div>
+                        <button class="btn btn-info btn-show-left" ng-click="toggleCode()">Show Code</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="code-container">
+                    <pre ng-show="codeVisible" class="code-example1">
+$scope.$on('selection-changed', function (e, node) {
+    //node - selected node in tree
+    $scope.selectedNode = node;
+});
+$scope.$on('expanded-state-changed', function (e, node) {
+    // node - the node on which the expanded state changed
+    // to see the current state check the expanded property
+    //console.log(node.expanded);
+    $scope.exapndedNode = node;    
+});
+</pre>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row definition">
+            <div ng-controller="OptionsTreeController">
+                <h3>
+                    Advance use - <i>Multiple select</i> and <i>No icons</i>
+                </h3>
+                <div class="col-sm-6">
+                    <div class="info-container" style="min-height:180px;">
+                        <p class="text-idented">
+                            To enable the advance mode, you have to use the tree option. <code>&lt;tree nodes='treeNodes' options='options'&gt;&lt;/tree&gt;</code>
+                        </p>
+                        <p>
+                            <ul>
+                                <li>To enable multiple selection set <code>options.multipleSelect=true</code></li>
+                                <li>To remove the icons set <code>options.showIcon=false</code></li>
+                            </ul>
+                        </p>
+                        <p>
+                            Selected nodes:
+                        </p>
+                        <div ng-if="selectedNodes">
+                            <p ng-repeat="node in selectedNodes" class="text-idented">
+                                <span>{{node.name}}</span>
+                            </p>
+                        </div>
+                        <div ng-if="!selectedNodes || selectedNodes.length==0">
+                            <p class="text-idented">N/A</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="tree-container" style="min-height:180px;">
+                        <tree nodes='treeNodes' options="options"></tree>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row definition">
+            <div ng-controller="OptionsTreeController">
+                <div class="col-sm-6">
+                    <div class="tree-container" style="min-height:180px;">
+                        <tree nodes='treeNodes' options="options1"></tree>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="info-container" style="min-height:180px;">
+                        <h3>
+                            Advance use - <i>Expand on label click</i>
+                        </h3>
+                        <p class="text-idented">
+                            To enable the label click exapand/collapse set the <code>options.expandOnClick=true</code>
+                        </p>
+                        <div>
+                            <label>Selected node: </label>
+                            <span ng-if="selectedNode" ng-bind="selectedNode.name"></span><span ng-if="!selectedNode">N/A</span>
+                        </div>
+                        <div>
+                            <label>Last expanded node: </label>
+                            <span ng-if="exapndedNode">
+                                <span ng-bind="exapndedNode.name"></span> - <span ng-if="exapndedNode.expanded">expanded</span><span ng-if="!exapndedNode.expanded">collapsed</span>
+                            </span>
+                            <span ng-if="!exapndedNode">N/A</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="panel-footer">
+        <div class="container"><p class="text-right">© 2016 Alex Suleap. All rights reserved.</p></div>
+    </footer>
+    <script src="lib/angular.min.js"></script>
+    <script src="lib/angular-animate.min.js"></script>
+    <script src="lib/angular-recursion.js"></script>
+    <script src="dist/angular-tree-widget.js"></script>
+    <script src="app/app.js"></script>
+    <script src="app/controllers/controller.js"></script>
+</body>
+</html>

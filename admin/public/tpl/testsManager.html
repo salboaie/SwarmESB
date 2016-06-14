@@ -1,0 +1,13 @@
+<div ng-controller="testsManagerController" >
+    <div class="testManager" >
+        <div>
+            <button ng-click="runSelectedTests()" ng-show="!currentlyRunningTests">
+                Run selected tests
+            </button>
+            <button ng-click="stopRunningTests()" ng-show="currentlyRunningTests">
+                Stop running tests
+            </button>
+            <tree nodes='treeNodes' options="treeOptions"></tree>
+        </div>
+    </div>
+</div>

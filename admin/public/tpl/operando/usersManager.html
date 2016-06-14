@@ -1,0 +1,64 @@
+<div ng-controller="userManagerController">
+
+    <div class="ng-scope" ui-view=""><div class="bg-light lter b-b wrapper-md ng-scope">
+        <h1 class="m-n font-thin h3">Footable</h1>
+    </div>
+        <div class="wrapper-md ng-scope">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Footable - make HTML tables on smaller devices look awesome
+                </div>
+                <div class="panel-body b-b b-light">
+                    Search: <input id="filter" class="form-control input-sm w-sm inline m-r" type="text">
+                </div>
+                <div>
+                    <table class="table m-b-none footable-loaded footable default" ui-jq="footable" data-filter="#filter" data-page-size="5">
+                        <thead>
+                        <tr>
+                            <th class="footable-visible footable-first-column footable-sortable" data-toggle="true">
+                                First Name
+                                <span class="footable-sort-indicator"></span></th>
+                            <th class="footable-visible footable-sortable">
+                                Last Name
+                                <span class="footable-sort-indicator"></span></th>
+                            <th class="footable-visible footable-sortable" data-hide="phone,tablet">
+                                Email
+                                <span class="footable-sort-indicator"></span></th>
+                            <th class="footable-visible footable-sortable" data-hide="phone,tablet" data-name="Date Of Birth">
+                                Username
+                                <span class="footable-sort-indicator"></span></th>
+                            <th class="footable-visible footable-last-column footable-sortable" data-hide="phone">
+                                Status
+                                <span class="footable-sort-indicator"></span></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="footable-even" style="display: table-row;">
+                            <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>Isidra</td>
+                            <td class="footable-visible"><a href="">Boudreaux</a></td>
+                            <td class="footable-visible">Traffic Court Referee</td>
+                            <td class="footable-visible" data-value="78025368997">22 Jun 1972</td>
+                            <td class="footable-visible footable-last-column" data-value="1"><span class="label bg-success" title="Active">Active</span></td>
+                        </tr>
+                        <tr class="footable-odd" style="display: table-row;">
+                            <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>Shona</td>
+                            <td class="footable-visible">Woldt</td>
+                            <td class="footable-visible"><a href="">Airline Transport Pilot</a></td>
+                            <td class="footable-visible" data-value="370961043292">3 Oct 1981</td>
+                            <td class="footable-visible footable-last-column" data-value="2"><span class="label bg-light" title="Disabled">Disabled</span></td>
+                        </tr>
+
+                        </tbody>
+                        <tfoot class="hide-if-no-paging">
+                        <tr>
+                            <td colspan="5" class="text-center footable-visible">
+                                <ul class="pagination"><li class="footable-page-arrow disabled"><a data-page="first" href="#first">«</a></li><li class="footable-page-arrow disabled"><a data-page="prev" href="#prev">‹</a></li><li class="footable-page active"><a data-page="0" href="#">1</a></li><li class="footable-page"><a data-page="1" href="#">2</a></li><li class="footable-page-arrow"><a data-page="next" href="#next">›</a></li><li class="footable-page-arrow"><a data-page="last" href="#last">»</a></li></ul>
+                            </td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div></div>
+
+</div>

@@ -29,7 +29,7 @@
                         {"node":"admin/adapters/SwarmMonitor.js",                    "enabled":true  , "step":5},
                         {"core":"etc/adapters/ClientAdapter.js",                     "enabled":true  , "step":6},
                         {"core":"etc/adapters/WSServer.js",                          "enabled":true  , "step":10},
-                        {"node":"admin/adapters/TestsManager.js",                    "enabled":true, "step":5,"args":["/home/ciprian/storage/Workspace"]}
+                        {"node":"admin/adapters/TestsManager.js",                    "enabled":true, "step":5}
             ]
    },
   "ClientAdapter":{
@@ -45,7 +45,7 @@
   "WSServer":{
            "host":"0.0.0.0",
            "port":"8080",
-           "wwwroot":"/admin/public"
+           "wwwroot":"admin/public"
   },
 
   "SessionManager":{

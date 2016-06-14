@@ -1,0 +1,5 @@
+<div ng-controller='InfiniteController'>
+    <div infinite-scroll='loadMore()' infinite-scroll-distance='2'>
+        <img ng-repeat='swarm in swarms' ng-src='http://placehold.it/225x250&text={{swarm}}'>
+    </div>
+</div>

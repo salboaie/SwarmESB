@@ -1,0 +1,85 @@
+<div class=" clearfix" ng-controller="logsManagerController">
+    <div class="leftbox w-lg bg-light dk b-r bg-auto log-type">
+        <div class="wrapper-md dker b-b">
+            <div class="h4">Log types</div>
+        </div>
+        <ul class="nav nav-pills nav-stacked nav-sm">
+            <li ng-repeat="(logType,logs) in logs" ng-click="displayLogs(logType)">
+                <a>
+                    {{logType}}
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+    <div class="log_container" infinite-scroll="getMoreLogs()" infinite-scroll-distance='10' container-class="logs-info" >
+
+            <div class="panel logs-info panel-info" style="overflow-y:scroll;display: block;">
+                <div class="panel-heading">
+                    {{typeOnDisplay}}
+                </div>
+                <div class="list-group bg-black-opacity" >
+                    <div class="log_list_cnt">
+                        <li ng-repeat="log in logsToDisplay track by $index" class="log_item" ng-class="{expanded: log.expanded==true}" >
+                            <div class="list-group-item clearfix b-l-3x ng-scope" >
+                               <div class="log_item_brief_info" ng-click="expandLog(log)">
+                                <a>
+                                    <div style="float:right">
+                                        <span>{{log.timestamp}}</span>
+                                    </div>
+                                    {{log.message}}
+                                </a>
+                               </div>
+
+                                <div ng-show="log.expanded">
+                                    <div ng-show="log.stack">
+                                        <span>
+                                            Stack:
+                                        </span>
+                                        <ul>
+                                            <li ng-repeat="stackLine in log.displayStack">
+                                                {{stackLine}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <abn-tree
+                                            tree-data         = "log.whyTree"
+                                            tree-control      = "my_tree"
+                                            on-select         = "displayWhyNodeInfo(branch)"
+                                            expand-level      = "6"
+                                            icon-leaf         = "icon-control-end"
+                                            icon-expand       = "icon-arrow-down"
+                                            icon-collapse     = "icon-arrow-up">
+                                    </abn-tree>
+                                </div>
+                            </div>
+                        </li>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+    <div class="col whyNodeSelected" ng-show="whyNodeSelected" >
+        <div class="wrapper-md">
+            <div class="alert alert-info">
+                {{whyNodeInfo.message}}
+
+                <div ng-show = "whyNodeInfo.arguments">
+                    {{whyNodeInfo.arguments}}
+                </div>
+
+                <div ng-show = "whyNodeInfo.stack">
+                    <span>Stack:</span>
+                    <ul>
+                        <li ng-repeat="stackLine in whyNodeInfo.stack">
+                            {{stackLine}}
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
