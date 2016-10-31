@@ -19,7 +19,7 @@ app.controller('SigninFormController', ['$scope', '$http', '$state','authenticat
     }
 
     var successFunction = function(){
-        $state.go('app.operando');
+        $state.go('app.privatesky');
     }
 
     authenticationService.authenticateUser($scope.user.username,$scope.user.password,securityErrorFunction, errorFunction, successFunction);

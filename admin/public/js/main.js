@@ -99,7 +99,7 @@ angular.module('app')
         authenticationService.checkStatus(
           function(user){
             if($state.is('access.signin')){
-              $state.go("app.operando");
+              $state.go("app.privatesky");
             }
 
         },

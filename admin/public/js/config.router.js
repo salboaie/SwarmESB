@@ -15,7 +15,7 @@ angular.module('app')
             function ($stateProvider, $urlRouterProvider) {
 
                 $urlRouterProvider
-                    .otherwise('/app/operando');
+                    .otherwise('/app/privatesky');
 
                 $stateProvider
                     .state('app', {
@@ -23,9 +23,9 @@ angular.module('app')
                         url: '/app',
                         templateUrl: 'tpl/app.html'
                     })
-                    .state("app.operando", {
-                        url: '/operando',
-                        templateUrl: 'tpl/operando/operando.html',
+                    .state("app.privatesky", {
+                        url: '/privatesky',
+                        templateUrl: 'tpl/privatesky/privatesky.html',
                         resolve: {
                             deps: ['$ocLazyLoad',
                                 function ($ocLazyLoad) {
@@ -36,7 +36,7 @@ angular.module('app')
                     })
                     .state('app.usermanager',{
                        url:'/userManager',
-                        templateUrl:'tpl/operando/usersManager.html',
+                        templateUrl:'tpl/privatesky/usersManager.html',
                         resolve:{
                             deps:['$ocLazyLoad',
                                 function ($ocLazyLoad) {
