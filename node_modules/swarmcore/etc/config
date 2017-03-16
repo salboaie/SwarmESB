@@ -1,0 +1,47 @@
+{
+ "logsPath":"logs",
+ "verbose":false,
+ "pingTimeout":500,
+ "systemId": "dockerTestServer",
+ "Core":{
+     "coreId":"dockertest",
+     "redisHost":"localhost",
+     "redisPort":6379,
+     "paths":[
+        {"core":"etc/coreSwarms"      ,"enabled":true},
+	{"core":"etc/xSwarms"         ,"enabled":false},
+        {"core":"etc/testSwarms"      ,"enabled":true},
+        {"folder":"admin/swarms"      ,"enabled":false},
+        {"folder":"swarms"            ,"enabled":false}
+     ]
+  },
+ "Logger":{},
+ "Launcher":{
+            "stepsDelay":300,
+            "pingTimeout":2000,
+            "responseTimeout":500,
+            "serverAlias":"development",
+            "watch":[
+                        {"core":"etc/adapters/Core.js",                              "enabled":true, "step":1},
+                        {"core":"etc/adapters/DefaultLogger.js",                     "enabled":true, "step":2},
+                        {"node":"admin/adapters/UsersManager.js",                    "enabled":true  , "step":3},
+                        {"node":"adapters/argsDemo.js",                             "args":[], "enabled":false  , "step":4},
+                        {"core":"etc/adapters/WSServer.js",                          "enabled":true  , "step":9}
+            ]
+   },
+  "ClientAdapter":{
+        "startSwarmThrottler":{
+              "limit":1000,
+              "timeUnit":"minute"
+    },
+    "outletThrottler":{
+              "limit":100,
+              "timeUnit":"minute"
+           }
+  },
+  "WSServer":{
+           "host":"0.0.0.0",
+           "port":"8080"
+  }
+
+}
