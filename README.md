@@ -1,4 +1,4 @@
-#SwarmESB central repository. Refactoring and master plan:
+# SwarmESB central repository. Refactoring and master plan:
 This is the new version of SwarmESB, based on [SwarmCore] (https://github.com/salboaie/swarmcore "SwarmCore") that adds:  
  - default load distribution between Adapters (done)
  - new broadcast primitive (done)
@@ -104,7 +104,7 @@ Your adapters can use web services as a particular case of providing existing AP
 
    
     
-#Copyright
+# Copyright
 (c) Axiologic Research & Alboaie Sînică. 
 Code License: LGPL or MIT 
 The content of the README and of the wiki is Public Domain
@@ -113,7 +113,7 @@ Commercial versions derived from this project are allowed. However, it would be 
 Contact salboaie@gmail.com for details. 
 
 
-#Supporters
+# Supporters
 WebStorm, the best IDE for node.js and JS 
 * http://www.jetbrains.com
 
