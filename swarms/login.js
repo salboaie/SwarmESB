@@ -124,7 +124,7 @@ var loginSwarming = {
         this.secretToken = secretToken;
         this.swarm("reconnect");
     },
-    testCtor: function (clientSessionId, userId, authorisationToken) {
+    testCtor: function (userId, authorisationToken) {
         this.authenticated = false;
         this.userId = userId;
         this.authorisationToken = authorisationToken;
