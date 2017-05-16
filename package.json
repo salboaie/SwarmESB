@@ -52,7 +52,6 @@
 	"uuid":">=2.0.0",
     "q": "=1.2.0",
     "asynchron": ">=1.0.10",
-    "apersistence": ">=1.0.4",
     "double-check": ">=0.1.5",
     "acl-magic": ">=1.0.9",
     "clone": ">=0.1.8",
