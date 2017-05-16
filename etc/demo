@@ -29,7 +29,8 @@
                         {"node":"admin/adapters/SwarmMonitor.js",                    "enabled":true  , "step":5},
                         {"core":"etc/adapters/ClientAdapter.js",                     "enabled":true  , "step":6},
                         {"core":"etc/adapters/WSServer.js",                          "enabled":true  , "step":10},
-                        {"node":"admin/adapters/TestsManager.js",                    "enabled":true, "step":5}
+                        {"node":"admin/adapters/TestsManager.js",                    "enabled":true, "step":5},
+                        {"node":"adapters/HelloWorld.js",                      "enabled":true, "step":10}
             ]
    },
   "ClientAdapter":{
