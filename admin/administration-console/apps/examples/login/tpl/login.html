@@ -1,0 +1,32 @@
+<div class = "container" ng-app="plusprivacy_psp_login" id="psp_login">
+    <div class="wrapper" ng-controller="pspLoginController">
+        <form method="post" name="Login_Form" class="form-signin" ng-submit="submitLoginForm()" ng-cloak>
+            <h3 class="form-signin-heading">PSP Authentication</h3>
+            <hr class="colorgraph"><br>
+
+            <input type="email" class="form-control" name="Email" placeholder="Email" required="" autofocus="" ng-model="user.email"/>
+            <input type="password" class="form-control" name="Password" placeholder="Password" required="" ng-model="user.password"/>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" ng-model="user.remember"> Remember me
+                </label>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-12">
+                    <button class="btn btn-lg btn-primary btn-block"  id="login-btn" name="Submit" value="Login" type="Submit" >Login</button>
+                </div>
+            </div>
+
+            <div ng-show="authenticationError == true" ng-cloak>
+                <div class="alert alert-danger" role="alert" id="login_error">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    {{errorResponse}}
+                </div>
+            </div>
+            <ui-loader ng-cloak ng-if="requestProcessed"></ui-loader>
+
+        </form>
+
+    </div>
+</div>

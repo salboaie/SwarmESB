@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>TITLE</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link rel="stylesheet" href="apps/examples/angulr-theme/css/bootstrap.css" type="text/css">
+	<link rel="stylesheet" href="apps/examples/angulr-theme/css/bootstrap.css" type="text/css">
+	<link rel="stylesheet" href="apps/examples/angulr-theme/css/animate.css" type="text/css">
+	<link rel="stylesheet" href="apps/examples/angulr-theme/css/font-awesome.min.css" type="text/css">
+	<link rel="stylesheet" href="apps/examples/angulr-theme/css/simple-line-icons.css" type="text/css">
+	<link rel="stylesheet" href="apps/examples/angulr-theme/css/font.css" type="text/css">
+	<link rel="stylesheet" href="apps/examples/angulr-theme/css/app.css" type="text/css">
+	<link rel="stylesheet" href="apps/examples/angulr-theme/css/main.custom.css" type="text/css">
+
+	<!-- Swarms stuff -->
+	<script src="https://cdn.socket.io/socket.io-1.0.6.js"></script>
+	<script src="https://rawgit.com/salboaie/WSSwarmClient/master/src/SwarmDebug.js"></script>
+	<script src="js/base/SwarmClient.js"></script>
+	<!-- / Swarms stuff -->
+
+	<!-- Cordova stuff-->
+	<script src="cordova.js"></script>
+	<script src="cordova_plugins.js"></script>
+	<!-- / Cordova stuff-->
+</head>
+<body>
+<div class="app app-header-fixed hidden" id="app">
+	<!-- navbar -->
+	<div class="app-header navbar">
+		<div class="navbar-header bg-black">
+
+			<button class="dropdown pull-right visible-xs" dropdown="">
+				<a class="dropdown-toggle clear" data-toggle="dropdown" data-target=".dropdown-menu" aria-expanded="false" style="padding-top: 2px;">
+					<i class="glyphicon glyphicon-cog"></i>
+				</a>
+
+				<!-- dropdown -->
+				<ul class="dropdown-menu animated fadeInRight" style="margin-top: 0;">
+					<li><a href="apps/examples/ProfilePage/index.html" target="app-content">Profile</a></li>
+					<li class="divider"></li>
+					<li><a href="" class="app-user-logout">Logout</a></li>
+				</ul>
+				<!-- / dropdown -->
+			</button>
+
+
+			<button class="pull-left visible-xs" data-toggle="collapse" data-target=".app-aside" ui-scroll="app"
+					id="menuButton">
+				<i class="glyphicon glyphicon-align-justify"></i>
+			</button>
+			<!-- brand -->
+			<a href class="navbar-brand text-lt">
+				<span class="hidden-folded m-l-xs app-brand">LOGO</span>
+			</a>
+			<!-- / brand -->
+		</div>
+
+		<!-- navbar collapse -->
+		<div class="minimized pos-rlt navbar-collapse box-shadow bg-white-only">
+			<!-- nabar right -->
+			<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown dk" dropdown="" id="app-user-dropdown">
+					<a class="dropdown-toggle clear" data-toggle="dropdown" data-target=".dropdown-menu" aria-expanded="false">
+						<i class="glyphicon glyphicon-cog"></i>
+					</a>
+
+					<!-- dropdown -->
+					<ul class="dropdown-menu animated fadeInRight">
+						<li><a href="apps/examples/ProfilePage/index.html" target="app-content">Profile</a></li>
+						<li class="divider"></li>
+						<li><a href="" class="app-user-logout">Logout</a></li>
+					</ul>
+					<!-- / dropdown -->
+				</li>
+			</ul>
+			<!-- / navbar right -->
+		</div>
+		<!-- / navbar collapse -->
+	</div>
+	<!-- / navbar -->
+
+	<!-- menu -->
+	<div class="app-aside hidden-xs bg-black">
+		<div class="aside-wrap">
+			<div class="navi-wrap">
+				<!-- profile -->
+				<div class="profileSection" style="text-align: center; margin-bottom: 20px;">
+					<div>
+						<a href="apps/examples/ProfilePage/index.html" target="app-content">
+							<img src="apps/examples/angulr-theme/img/avatar.png" style="border-radius: 100%; max-width: 40%" class="app-avatar"/>
+						</a>
+					</div>
+					<div>
+						<a href="apps/examples/ProfilePage/index.html" target="app-content"><h5 class="app-username" style="margin-bottom: 0px;">Swarm Name</h5></a>
+					</div>
+					<div>
+						<h6 class="app-userrole" style="margin-top: 5px;">Role</h6>
+					</div>
+				</div>
+
+
+				<!-- nav -->
+				<!-- list -->
+				<ul class="nav" id="app-menu">
+					<li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+						<span>Menu</span>
+					</li>
+				</ul>
+				<!-- nav -->
+			</div>
+		</div>
+		<div class="wrapper app-aside-footer">
+			<div>0.0.1</div>
+		</div>
+	</div>
+	<!-- / menu -->
+
+	<!-- content -->
+	<div class="app-content">
+		<iframe name="app-content"></iframe>
+	</div>
+	<!-- /content -->
+
+	<!-- footer -->
+	<div class="app-footer wrapper">
+		<a href="" ui-scroll="app" class="m-l-sm text-muted pull-right">
+			<i class="fa fa-long-arrow-up"></i>
+		</a>
+	</div>
+	<!-- / footer -->
+</div>
+
+<!-- login screen -->
+<div id="login-screen" class="hidden">
+	<div class="fade-in-right-big smooth" style="position: absolute; top: 100px; z-index: 99999999999; width: 100%;">
+		<div class="container w-xxl w-auto-xs">
+			<a href="" class="navbar-brand block m-t app-brand">LOGO</a>
+			<div class="m-b-lg">
+
+
+				<form id="login-form" class="form-validation" method="post">
+					<div class="text-danger wrapper text-center" id="errors-placeholder"></div>
+					<div class="list-group list-group-sm">
+						<div class="list-group-item">
+							<input type="text" placeholder="Username" class="form-control no-border" name="username">
+						</div>
+						<div class="list-group-item">
+							<input type="password" placeholder="Password" class="form-control no-border"
+								   name="password">
+						</div>
+					</div>
+					<button type="submit" class="btn btn-lg btn-primary btn-block">Log in</button>
+					<div class="text-center m-t m-b">
+						<a id="reminder">Forgot password?</a>
+					</div>
+					<div class="line line-dashed"></div>
+				</form>
+
+			</div>
+			<div class="text-center">
+				<p></p>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- / login screen -->
+
+<!-- register screen -->
+<div id="register-screen" class="hidden">
+	<div class="fade-in-right-big smooth dinamic-top">
+		<div class="container w-xxl w-auto-xs">
+			<a href="" class="navbar-brand block m-t app-brand dinamic-top">LOGO</a>
+			<div class="m-b-lg">
+				<p class="text-center">Create an account</p>
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<form id="register-form" class="form-validation" method="post">
+							<div class="text-danger wrapper text-center" id="register-errors-placeholder"></div>
+							<div class="list-group list-group-sm">
+								<div class="list-group-item">
+									<label>Firstname*</label>
+									<input type="text" class="form-control" name="firstName">
+								</div>
+								<div class="list-group-item">
+									<label>Lastname*</label>
+									<input type="text" class="form-control" name="lastName">
+								</div>
+								<div class="list-group-item">
+									<label>Email*</label>
+									<input type="text" class="form-control" name="email">
+								</div>
+								<div class="list-group-item">
+									<label>Password*</label>
+									<input id="confirm" type="password" class="form-control" name="password">
+								</div>
+								<div class="list-group-item">
+									<label>Confirm password*</label>
+									<input type="password" class="form-control" name="repeat_password">
+								</div>
+							</div>
+							<div class="col-xs-offset-1 col-sm-offset-1">
+								<button type="submit" class="btn btn-lg btn-primary col-xs-5">Create</button>
+								<button name="cancel" class="btn btn-lg btn-default col-xs-5 col-sm-offset-1 col-xs-offset-1">Cancel</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="text-center">
+				<p></p>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- / register screen -->
+
+<script src="apps/examples/angulr-theme/vendor/jquery/jquery.min.js"></script>
+<script src="apps/examples/angulr-theme/vendor/jquery/validation/jquery.validate.min.js"></script>
+<script src="apps/examples/angulr-theme/vendor/libs/screenfull.min.js"></script>
+<script src="apps/examples/angulr-theme/vendor/bootstrap/v3/bootstrap.js"></script>
+<script src="apps/examples/angulr-theme/vendor/bootstrap/bootstrapNotify/bootstrap-notify.min.js"></script>
+
+<!-- App scripts -->
+<script src="js/Utils.js"></script>
+<script src="config.js"></script>
+<script src="js/IFrameWatcher.js"></script>
+<script src="js/CommunicationService.js"></script>
+<script src="js/SwarmHub.js"></script>
+<script src="js/Avatar.js"></script>
+<script src="js/MenuCtrl.js"></script>
+<script src="js/AuthenticationCtrl.js"></script>
+<script src="js/Notifications.js"></script>
+<script src="js/App.js"></script>
+<!-- / App scripts -->
+</body>
+</html>

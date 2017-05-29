@@ -1,42 +1,98 @@
+/*
+ * Copyright (c) 2016 ROMSOFT.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the The MIT License (MIT).
+ * which accompanies this distribution, and is available at
+ * http://opensource.org/licenses/MIT
+ *
+ * Contributors:
+ *    RAFAEL MASTALERU (ROMSOFT)
+ * Initially developed in the context of OPERANDO EU project www.operando.eu
+ */
+
 var core = require("swarmcore");
 core.createAdapter("SessionManager");
 
-var apersistence = require('apersistence');
 var container = require("safebox").container;
-
 var myCfg = getMyConfig("SessionManager");
-
-var sessionMaxIdleTime = 8640;//one day
+var jwt = require('jsonwebtoken');
+var sessionMaxIdleTime = 94608000;//one year
+var sessionMinIdleTime = 8640;//one day
+var persistence = undefined;
+var flow = require("callflow");
 
 if (myCfg.sessionTime != undefined) {
     sessionMaxIdleTime = myCfg.sessionTime;
 }
 
-var flow = require("callflow");
 
-apersistence.registerModel("DefaultSession", "Redis", {
-    ctor: function () {
-    },
-    userId: {
-        type: "string",
-        index :"true"
-    },
-    sessionId: {
-        type: "string",
-        pk: true,
-        index: true
-    },
-    expirationDate: {
-        type: "string"
-    },
-    ipAddress:{
-        type:"string"
-    }
-}, function(err, model){
-    if(err){
-        console.log(model);
-    }
+function registerModels(callback){
+    var models = [
+        {
+            modelName:"DefaultSession",
+            dataModel : {
+                userId: {
+                    type: "string",
+                    index :true,
+                    length:254
+                },
+                sessionId: {
+                    type: "string",
+                    pk: true,
+                    index: true,
+                    length:254
+                },
+                expirationDate: {
+                    type: "datetime"
+                },
+                ipAddress:{
+                    type:"string",
+                    length:254
+                }
+            }
+        }
 
+    ];
+
+    flow.create("registerModels",{
+        begin:function(){
+            this.errs = [];
+            var self = this;
+            models.forEach(function(model){
+                persistence.registerModel(model.modelName,model.dataModel,self.continue("registerDone"));
+            });
+
+        },
+        registerDone:function(err,result){
+            if(err) {
+                this.errs.push(err);
+            }
+        },
+        end:{
+            join:"registerDone",
+            code:function(){
+                if(callback && this.errs.length>0){
+                    callback(this.errs);
+                }else{
+                    callback(null);
+                }
+            }
+        }
+    })();
+}
+
+container.declareDependency("SessionManagerAdapter", ["mysqlPersistence"], function (outOfService, mysqlPersistence) {
+    if (!outOfService) {
+        persistence = mysqlPersistence;
+        registerModels(function(errs){
+            if(errs){
+                console.error(errs);
+            }
+        });
+
+    } else {
+        console.log("Disabling persistence...");
+    }
 });
 
 
@@ -47,37 +103,104 @@ createOrUpdateSession = function(sessionData, callback){
                 callback(new Error('Empty userId'), null);
             }
             else {
-                redisPersistence.lookup.async("DefaultSession", sessionData.sessionId, this.continue("createSession"));
+                persistence.lookup("DefaultSession", sessionData.sessionId, this.continue("createSession"));
             }
         },
         createSession: function (err, session) {
-            sessionData.expirationDate = parseInt(Date.now()) + parseInt(sessionMaxIdleTime);
-            redisPersistence.externalUpdate(session, sessionData);
-            redisPersistence.saveObject(session, callback);
+            this.sessionIsNew = false;
+            if(persistence.isFresh(session)){
+                this.sessionIsNew = true;
+            }
+
+            var currentDate = new Date();
+            var currentDateTime = currentDate.getTime();
+            sessionData.expirationDate = new Date(currentDateTime + parseInt(sessionMaxIdleTime));
+            persistence.externalUpdate(session, sessionData);
+            console.log("Before save",session);
+            persistence.saveObject(session, this.continue("createAuthenticationToken"));
+        },
+        createAuthenticationToken :function(err, session){
+            if(err){
+                callback(err, null);
+            }else{
+                if (this.sessionIsNew === true) {
+                    var token = jwt.sign(
+                        {
+                            sessionId: session.sessionId,
+                            userId: session.userId
+                        }, 'pulsatileTinnitus',{expiresIn:60});
+                    session['authenticationToken'] = token;
+                }
+
+                callback(null, session);
+            }
         }
     })();
-}
+};
 
-deleteSession = function (sessionId, userId, callback) {
+generateAuthenticationToken = function(userId, sessionId, callback){
+    var token = jwt.sign(
+        {
+            sessionId: sessionId,
+            userId: userId
+        }, 'pulsatileTinnitus', {expiresIn: 60});
+    if (token) {
+        callback(null, token);
+    }
+    else {
+        callback(new Error("couldNotGenerateToken"), null);
+    }
+};
+
+validateAuthenticationToken = function(userId, currentSession, authenticationToken, callback){
+    flow.create("validateAuthenticationToken",{
+        begin:function(){
+            var self = this;
+            jwt.verify(authenticationToken, 'pulsatileTinnitus', function(err, decoded) {
+                if(err){
+                    callback(err);
+                }
+                else {
+                    if (decoded['userId'] === userId) {
+                        self.next("createSession");
+                    }
+                    else {
+                        callback(new Error("userIdTokenMismatch"));
+                    }
+                }
+            });
+        },
+        createSession:function(){
+            var sessionData = {
+                sessionId:currentSession,
+                userId:userId
+            };
+            createOrUpdateSession(sessionData, callback);
+        }
+
+    })();
+};
+
+deleteSession = function (sessionId, callback) {
     flow.create("delete session", {
         begin: function () {
-            redisPersistence.findById("DefaultSession", sessionId, this.continue("deleteSession"));
+            persistence.lookup("DefaultSession", sessionId, this.continue("deleteSession"));
         },
         deleteSession: function (err, session) {
             if (err) {
                 callback(err, null);
             }
             else {
-                if (redisPersistence.isFresh(session)) {
+                if (persistence.isFresh(session)) {
                     callback(new Error("Could not find a session with id " + sessionId), null);
                 }
                 else {
-                    redisPersistence.deleteById("DefaultSession", sessionId, callback);
+                    persistence.deleteById("DefaultSession", sessionId, callback);
                 }
             }
         }
     })();
-}
+};
 
 getUserBySession = function (sessionId, callback) {
 
@@ -87,7 +210,8 @@ getUserBySession = function (sessionId, callback) {
                 callback(new Error("sessionId is required"), null);
             }
             else {
-                redisPersistence.findById("DefaultSession", sessionId, this.continue("getUser"));
+                console.log("Session",sessionId);
+                persistence.findById("DefaultSession", sessionId, this.continue("getUser"));
             }
         },
         getUser:function(err, session){
@@ -99,30 +223,18 @@ getUserBySession = function (sessionId, callback) {
             }
         }
     })();
-}
+};
 
-deleteUserSessions = function(sessionId,callback){
-    var f = flow.create("delete all user sessions", {
-        begin:function(sessionId, callback){
-            this.callback = callback;
-            if (!sessionId) {
-                callback(new Error("sessionId is required"), null);
-            }
-            else{
-                redisPersistence.findById("DefaultSession", sessionId, this.continue("findSessions"));
-            }
-        },
-        findSessions: function(err, session) {
-            if (err) {
-                this.callback(err, null);
-            }
-            else if(session != null && session.userId) {
-                redisPersistence.filter("DefaultSession", {"userId": session.userId}, this.continue("deleteUserSessions"));
-            }
+deleteUserSessions = function(session, callback){
+    flow.create("delete all user sessions", {
+        begin:function(){
+
+            persistence.filter("DefaultSession", {"userId": session.userId}, this.continue("deleteUserSessions"));
+
         },
         deleteUserSessions: function (err, sessions) {
             if (err) {
-                this.callback(err, null);
+                callback(err, null);
             } else {
                 var self = this;
                 sessions.forEach(function(session){
@@ -132,21 +244,19 @@ deleteUserSessions = function(sessionId,callback){
         },
         deleteSingleSession:function(session){
             console.log(session);
-            redisPersistence.delete(session);
+            persistence.delete(session);
         },
 
         end:{
             join:"deleteSingleSession",
             code:function(err, response){
-                this.callback(err, response);
+                callback(err, response);
             }
         }
-    });
-    try{f(sessionId,callback)}catch(e){console.log(e);}
+    })();
+};
 
-}
-
-sessionIsValid = function (newSession, sessionId, userId, callback) {
+sessionIsValid = function (sessionId, userId, callback) {
 
     flow.create("validate session", {
         begin: function () {
@@ -161,36 +271,35 @@ sessionIsValid = function (newSession, sessionId, userId, callback) {
                 return;
             }
 
-            redisPersistence.findById("DefaultSession", sessionId, this.continue("validateSession"));
+            persistence.lookup("DefaultSession", sessionId, this.continue("validateSession"));
 
         },
         validateSession: function (err, session) {
+
             if (err) {
                 callback(err, session);
             }
-            else if (!session || redisPersistence.isFresh(session)) {
-                callback(new Error("Session not found"), false);
+            else if (!session || persistence.isFresh(session)) {
+                callback(new Error("Session not found"), null);
             }
             else {
-                if (parseInt(session.expirationDate) < parseInt(Date.now())) {
-                    callback(new Error("Session is expired"), false);
+                if (session.expirationDate < new Date() || session.userId !== userId) {
+                    persistence.delete(session, function(){
+                        callback(new Error("Session is expired"), false);
+                    });
                 }
                 else {
-                    session.expirationDate = parseInt(Date.now()) + parseInt(sessionMaxIdleTime);
-                    session.sessionId = newSession;
-                    redisPersistence.saveObject(session, callback);
+                    var currentDate = new Date();
+                    var currentDateTime = currentDate.getTime();
+                    var expirationDate = new Date(currentDateTime + parseInt(sessionMaxIdleTime));
+
+                    session['expirationDate'] = expirationDate;
+                    persistence.saveObject(session, callback);
                 }
             }
         }
     })();
+};
 
-}
 
 
-container.declareDependency("SessionManagerAdapter", ["redisPersistence"], function (outOfService, redisPersistence) {
-    if (!outOfService) {
-        console.log("Enabling persistence...", redisPersistence);
-    } else {
-        console.log("Disabling persistence...");
-    }
-})

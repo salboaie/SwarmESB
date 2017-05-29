@@ -1,0 +1,8 @@
+.form-group{
+    padding: 5px 0px;
+}
+.form-group:after{
+    content: "";
+    display: inline-block;
+    clear:both;
+}

@@ -1,0 +1,26 @@
+<div ng-controller="formRenderedController" class="container">
+    <legend>
+        <form class="navbar-form" role="search">
+            <div class="input-group add-on">
+                Insert the email address of the user
+                <input type="email" ng-model="userEmail" required>
+                <button class="btn btn-primary ng-click-active" type="button" ng-click="retrieveAnswers()">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+            </div>
+        </form>
+    </legend>
+
+    <div ng-repeat="form in forms" >
+        <form novalidate class="form-horizontal" ng-show="form.show" name="form.id">
+            <legend ng-click="form.expand=!form.expand"> {{form.name}}
+            </legend>
+
+            <div ng-show="form.expand">
+                <fieldset disabled>
+                    <fg-form fg-form-data="form.data" fg-schema="form.structure">
+                </fieldset>
+            </div>
+        </form>
+    </div>
+</div>

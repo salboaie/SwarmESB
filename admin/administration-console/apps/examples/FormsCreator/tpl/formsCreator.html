@@ -1,0 +1,55 @@
+<div ng-controller="formCreatorController" class="container">
+        <legend>
+            <form class = "button-box col-lg-12" name="FormCreator">
+
+                <legend>
+                    Create form from an existing template or a complete new one:
+                    <select ng-model="form" class="btn btn-primary"  ng-change="formChanged()">
+                        <option ng-repeat="form in forms" value="{{form}}">{{form.name}}
+                        </option>
+                    </select>
+                    <button class="btn btn-primary ng-click-active" type="button" ng-click="createNewForm()">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </legend>
+
+                <legend >Choose a group of users
+                        <select ng-model="form.zone" class="btn btn-primary" required>
+                            <option ng-repeat="zone in zones" value="{{zone}}">{{zone}}</option>
+                        </select>
+                </legend>
+
+                <legend  >The name of the new form
+                    <input type="text" btn btn-primary ng-model="form.name" required>
+                </legend>
+
+            </form>
+        </legend>
+
+    <div fg-tabs>
+        <div fg-tabs-pane="Schema Editor">
+            <form novalidate class="form-horizontal" >
+                <div
+                        fg-edit
+                        fg-schema="form.structure">
+                </div>
+                <legend>
+                        <button  class="btn btn-lg btn-primary" ng-click="submitForm()" ng-disabled='FormCreator.$invalid || waitingForConfirmation' type="button">Submit form</button>
+                </legend>
+            </form>
+        </div>
+
+        <div fg-tabs-pane="Preview">
+            <form novalidate class="form-horizontal" name="exampleForm">
+                <legend> {{form.name}}
+                </legend>
+                <fieldset>
+                    <div fg-form
+                         fg-form-data="form.data"
+                         fg-schema="form.structure">
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,535 @@
+/*!
+   angular-form-gen v0.1.0-beta.7
+   (c) 2015 (null) McNull https://github.com/McNull/angular-form-gen
+   License: MIT
+*/
+
+.fg-field-required .control-label:after {
+    content: ' *';
+    color: #888;
+}
+
+.fg-legend-extra {
+    color: #999;
+    font-weight: lighter;
+    display: inline-block;
+}
+
+.fg-dropdown {
+    z-index: 50;
+}
+
+.fg-dropdown.open {
+    position: absolute;
+}
+
+.fg-dropdown .dropdown-menu {
+    position: static;
+    top: 0; left: 0;
+    float: none;
+    max-height: 250px;
+    overflow-y: auto;
+}
+.form .fg-edit {
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
+.fg-edit-canvas .fg-field, .fg-edit-palette .fg-field {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    position: relative;
+}
+
+.fg-edit-canvas .fg-field, .fg-edit-palette .fg-field:hover {
+    background-color: #f5f5f5;
+}
+
+.fg-edit-canvas-field .form-group, .fg-edit-palette .form-group {
+    margin-top: 5px;
+    margin-bottom: 0px;
+}
+
+.fg-field {
+    min-height: 25px;
+}
+
+.fg-edit-canvas .fg-field.error {
+    background-color: #f2dede;
+    border-color: #b94a48;
+}
+
+.fg-field-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index:10;
+    /*-moz-opacity: 0.0;*/
+    /*opacity:.0;*/
+
+    /* Needed by IE */
+    filter: alpha(opacity=0);
+    background: #FFF;
+    background-color: rgba(255, 255, 255, 0.0);
+    cursor: move;
+}
+
+.fg-field-overlay .btn-toolbar {
+    position: absolute;
+    margin: 0;
+    /*    display: none;*/
+    top: -10px;
+}
+
+/*.fg-field:hover .btn-toolbar {
+    display: block;
+}
+*/
+.fg-field-overlay .btn-toolbar-right {
+    right: 5px;
+}
+
+.fg-field-overlay .btn-toolbar-left {
+    left: 5px;
+}
+
+.fg-field-overlay .btn-toolbar .btn[disabled] {
+    -moz-opacity: 1.0;
+    opacity: 1.0;
+    filter: alpha(opacity=100);
+    color: #ccc;
+    cursor: not-allowed;
+    pointer-events: auto;
+}
+
+.fg-field-inner .controls > div > .radio:first-child,
+.fg-field-inner .controls > div > .checkbox:first-child {
+    padding-top: 5px;
+}
+
+.fg-form .radio, .fg-form .checkbox {
+    margin-top: 0px;
+    margin-bottom: 5px;
+}
+
+.form-horizontal .fg-form .radio, .form-horizontal .fg-form .checkbox {
+    margin-bottom: 0px;
+}
+
+.fg-validation-summary {
+    margin-top: 10px;
+}
+/*.jsonify {*/
+/*position: relative;*/
+/*margin: 15px 0;*/
+/*padding: 39px 19px 14px;*/
+/*background-color: #fff;*/
+/*border: 1px solid #ddd;*/
+/*-webkit-border-radius: 4px;*/
+/*-moz-border-radius: 4px;*/
+/*border-radius: 4px;*/
+/*}*/
+
+/*.jsonify-label {*/
+/*position: absolute;*/
+/*top: -1px;*/
+/*left: -1px;*/
+/*padding: 3px 7px;*/
+/*font-size: 12px;*/
+/*font-weight: bold;*/
+/*background-color: #f5f5f5;*/
+/*border: 1px solid #ddd;*/
+/*color: #9da0a4;*/
+/*-webkit-border-radius: 4px 0 4px 0;*/
+/*-moz-border-radius: 4px 0 4px 0;*/
+/*border-radius: 4px 0 4px 0;*/
+/*}*/
+
+/*.jsonify-button {*/
+/*display: none;*/
+/*cursor: pointer;*/
+/*}*/
+
+/*.jsonify:hover .jsonify-button {*/
+/*display: inline-block;*/
+/*}*/
+
+.jsonify {
+    margin-top: 10px;
+    position: relative;
+}
+
+.jsonify .btn-toolbar-right {
+    right: 5px;
+}
+.jsonify .btn-toolbar {
+    position: absolute;
+    margin: 0px;
+    top: -10px;
+}
+.fg-tabs > .nav-tabs {
+    margin-bottom: 0px;
+}
+
+.fg-tabs .tab-content {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-top: none;
+    border-radius: 0px 0px 4px 4px;
+}
+
+.fg-edit-canvas .fg-field-properties .control-group {
+    margin-bottom: 10px;
+}
+
+.fg-edit-canvas .fg-field.fg-edit-canvas-field {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+/*.fg-edit-canvas .control-label {*/
+/*width: 130px;*/
+/*}*/
+
+/*.fg-edit-canvas .controls {*/
+/*margin-left: 150px;*/
+/*}*/
+
+.fg-edit-canvas-area {
+    min-height: 340px;
+    /*position: relative;*/
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    padding: 20px;
+}
+
+.fg-edit-canvas-area-empty {
+    /*position: absolute;*/
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    top: 20px;
+    margin: 0;
+    /*padding: 0;*/
+}
+
+.fg-edit-canvas-area-empty-x {
+    font-size: 200px;
+    line-height: 200px;
+}
+
+
+.fg-drag-placeholder {
+    margin-bottom: 0;
+    opacity: 0.0;
+    -webkit-filter: aplha(opacity(0));
+    filter: aplha(opacity(0));
+    transition: height 0ms linear, opacity 0ms;
+    height: 0px;
+    display: none;
+}
+
+/*.fg-edit-canvas-dragging {*/
+/*background-color: teal;*/
+/*}*/
+
+.fg-edit-canvas-dragging .fg-drag-placeholder {
+    display: block;
+    transition: height 100ms linear, opacity 500ms, margin-bottom 100ms;
+}
+
+.fg-drag-placeholder-visible {
+
+    margin-bottom: 20px;
+    border-radius: 4px;
+    border: dashed 1px #3a87ad;
+    background-color: #d9edf7;
+    height: 74px;
+    opacity: 1.0;
+    -webkit-filter: aplha(opacity(100));
+    filter: aplha(opacity(100));
+}
+
+.fg-field-overlay-drag-top, .fg-field-overlay-drag-bottom {
+    height: 50%;
+}
+
+.fg-field-properties .fg-field-not-in-cache {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 0px;
+}
+
+.fg-edit-canvas .fg-field.dragging {
+    display: none;
+}
+
+/* Landscape phones and down */
+/*@media (max-width: 480px) {*/
+
+/**/
+/*.fg-edit-canvas .controls {*/
+/*margin-left: 0px;*/
+/*}*/
+/*}*/
+
+@media (max-width: 768px) {
+    .fg-edit-canvas-area {
+        /*padding-bottom: 0;*/
+        min-height: inherit;
+        padding: 0px;
+        border: none;
+
+    }
+
+    .fg-edit-canvas-area-empty {
+        position: static;
+        margin-bottom: 20px;
+    }
+}
+
+/*.fg-edit-palette .controls {*/
+/*margin-left: 0;*/
+/*width: 100%;*/
+/*}*/
+
+/*.fg-edit-palette .control-label {*/
+/*float: none;*/
+/*width: 100%;*/
+/*padding-top: 0;*/
+/*text-align: left;*/
+/*}*/
+
+/*.fg-edit-palette .fg-field-inner > div {*/
+/*margin-left: 0;*/
+/*width: 100%;*/
+/*float: none;*/
+/*}*/
+
+.fg-edit-palette .form-group {
+    margin: 0px;
+}
+.fg-field-drag {
+    opacity: 0.8;
+}
+
+.fg-edit-palette legend {
+    position: relative;
+    cursor: pointer;
+}
+
+.fg-edit-palette legend .caret {
+    border-top: 4px solid #999;
+}
+
+.fg-edit-palette legend:hover {
+    color: #333;
+}
+
+.fg-edit-palette legend:hover .caret {
+    border-top: 4px solid #333;
+}
+
+.fg-edit-palette legend .dropdown-menu {
+    font-size: 14px;
+    line-height: 20px;
+    right: auto;
+    left: auto;
+}
+
+
+/*@media (min-width: 768px) and (max-width: 979px) {*/
+/*.fg-edit-palette select,*/
+/*.fg-edit-palette input,*/
+/*.fg-edit-palette textarea {*/
+/*width: 190px;*/
+/*}*/
+
+/*.fg-edit-palette input[type="checkbox"],*/
+/*.fg-edit-palette input[type="button"],*/
+/*.fg-edit-palette input[type="radio"] {*/
+/*width: auto;*/
+/*}*/
+/*}*/
+
+
+
+
+.form .control-label, .fg-edit-palette .control-label {
+    float: none;
+    width: 100%;
+    text-align: left;
+    padding: 0;
+}
+
+.form .fg-field-inner > div, .form .fg-property-field > div, .fg-edit-palette .fg-field-inner > div {
+    margin-left: 0;
+    width: 100%;
+    float: none;
+    padding: 0;
+}
+
+
+.fg-field-properties-container {
+    max-height: 0;
+    overflow: hidden;
+    transition: .5s;
+    opacity: 0;
+}
+
+.fg-field-properties-container.visible {
+    max-height: 1000px;
+    opacity: 1;
+}
+
+/*.fg-field-properties .jsonify {
+	margin-left: 20px;
+	margin-right: 20px;
+}*/
+
+.fg-field-properties {
+    position: relative;
+    margin: 15px 0;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #fff;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    -webkit-touch-callout: initial;
+    -webkit-user-select: initial;
+    -khtml-user-select: initial;
+    -moz-user-select: text;
+    -ms-user-select: initial;
+    user-select: initial;
+
+    z-index: 20; /* above .fg-field-overlay */
+}
+
+/*.fg-field-properties form {*/
+/*margin-bottom: 0;*/
+/*}*/
+
+.table-field-options {
+
+}
+
+.table-field-options td, .table-field-options th {
+    vertical-align: middle;
+    padding: 5px;
+}
+
+.table-field-options td {
+    border: 0;
+    line-height: 30px;
+}
+
+.table-field-options th {
+}
+
+.table-field-options input[type="checkbox"],
+.table-field-options input[type="radio"] {
+    margin-top: 0;
+}
+
+.table-field-options th.table-field-options-padding {
+    width: 100%;
+}
+
+/*.fg-field-properties .control-label {*/
+/*width: 110px;*/
+/*}*/
+
+.fg-field-properties .fg-tabs {
+    margin-bottom: 10px;
+}
+
+/*.fg-field-properties .fg-tabs-pane {*/
+/*margin-top: 10px;*/
+/*}*/
+
+/*.fg-field-properties .fg-tabs .tab-content {
+	padding-top: 20px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+	border: 1px solid #ddd;
+	border-top: none;
+	border-radius: 0px 0px 4px 4px;
+}*/
+
+/*.fg-field-properties .fg-tabs .nav-tabs a {
+	color: #999;
+	font-weight: 300;
+}
+.fg-field-properties .fg-tabs .nav-tabs a:hover {
+	background-color: inherit;
+	color: #333;
+}
+.fg-field-properties .fg-tabs .nav-tabs .active a {
+	color: #333;
+	font-weight: normal;
+	border-bottom: 1px solid #fff !important;
+}
+*/
+@media (min-width: 480px) and (max-width: 979px) {
+
+    .table-field-options input[type="text"] {
+        width: 130px;
+    }
+}
+
+/*@media (max-width: 767px) {
+	.table-field-options input[type="text"] {
+		width: 90px;
+	}
+}*/
+
+@media (max-width: 480px) {
+
+    .table-field-options input[type="text"] {
+        width: 90px;
+    }
+
+    .fg-field-properties {
+        padding: 10px;
+    }
+
+    /*.fg-field-properties form {*/
+    /*margin: 0;*/
+    /*}*/
+}
+
+
+
+
+
+.table-field-options .form-control {
+    width: auto;
+}
+/*.fg-property-field-validation + .fg-property-field-validation,*/
+/*.fg-property-field-validation + div > .fg-property-field-validation {*/
+/*border-top: 1px solid #cccccc;*/
+/*padding-top: 10px;*/
+/*}*/
+
+.fg-property-field-validation {
+    padding: 5px 0;
+}
+
+.fg-property-field-validation div.checkbox {
+    padding-top: 0;
+}
+/*# sourceMappingURL=angular-form-gen.css.map */

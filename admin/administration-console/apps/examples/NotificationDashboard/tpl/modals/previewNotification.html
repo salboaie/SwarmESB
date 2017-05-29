@@ -1,0 +1,42 @@
+<div class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="close(false)" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">This is what your notification looks like</h4>
+            </div>
+
+
+            <div class="modal-body">
+                <div class="list-group-item">
+                    <div ng-show="notification.zone">
+                        {{previewNotification.zone}}
+                    </div>
+                    <div ng-show="notification.title">
+                        {{previewNotification.title}}
+                    </div>
+                    <div ng-show="notification.description">
+                        {{previewNotification.description}}
+                    </div>
+                    <div ng-show="notification.action">
+                        {{previewNotification.action}}
+                    </div>
+                </div>
+
+                <div class="list-group-item">
+                    <h4>Please attach an expiration date to the notification:</h4>
+                    <input type="date" ng-model="notification.expirationDate" placeholder="yyyy-MM-dd">
+                </div>
+            </div>
+
+
+
+            <div class="modal-footer">
+
+                <div>
+                    <button class="btn btn-lg btn-primary btn-block" ng-click="send()" >Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

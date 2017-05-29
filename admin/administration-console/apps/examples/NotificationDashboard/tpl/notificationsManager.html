@@ -1,0 +1,52 @@
+<div ng-controller="notificationsController">
+    <div class="ng-scope" ui-view="">
+        <div class="bg-light lter b-b wrapper-md ng-scope">
+            <h1 class="m-n font-thin h3">Notifications Manager</h1>
+        </div>
+        <div class="wrapper-md ng-scope">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Send Notifications
+                </div>
+
+                <form name="CreateNotification" class="form-validation">
+                    <div class="list-group list-group-sm">
+                        <div class="list-group-item">
+                           <input placeholder="Title" class="form-control no-border" ng-model="notification.title" required>
+                        </div>
+                        <div class="list-group-item">
+                            <label>Zone:</label>
+                            <select ng-model="notification.zone" required>
+                                <option ng-repeat="zone in zones" value="{{zone}}">{{zone}}</option>
+                            </select>
+                        </div>
+                        <div class="list-group-item">
+                            <input  placeholder="Description" class="form-control no-border" ng-model="notification.description">
+                        </div>
+
+                        <div class="list-group-item">
+                            <label>Action:</label>
+                            <div class="list-group-item">
+                                <select ng-model="notification.actionType">
+                                    <option value="openUrl">Open url</option>
+                                    <option value="runSwarm">Execute flow</option>
+                                </select>
+                            </div >
+                            <div class="list-group-item" ng-show="notification.actionType">
+                                <input   placeholder="Action argument" class="form-control no-border" ng-model="notification.actionArgument">
+                                <label style="{color:red}" ng-show="errorOccured">An error occured</label>
+                                <label style="{color:green}" ng-show="notificationWasSent">Notification was sent</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="panel-body b-b b-light">
+                    <div class="col-lg-6" style="float: right">
+                        <button style="float: right" class="btn btn-lg btn-primary" ng-click="sendNotification()" ng-disabled='CreateNotification.$invalid' type="button">Send notification</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

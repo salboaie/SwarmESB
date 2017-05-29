@@ -1,0 +1,165 @@
+<div ng-controller="accessManagerController">
+
+    <div class="ng-scope" ui-view="">
+        <div class="bg-light lter b-b wrapper-md ng-scope">
+            <h1 class="m-n font-thin h3">Access List Manager</h1>
+        </div>
+        <div class="wrapper-md ng-scope">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Search, Create, Update or Remove Access Rules
+                </div>
+
+                <div class="panel-body b-b b-light" ng-show="!advancedSearching">
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="searchFilter.zone" placeholder="Search for...">
+                              <span class="input-group-btn">
+                                <button class="btn btn-primary" ng-click="performSearch()" type="button">Search</button>
+                                  <button class="btn btn-primary" ng-click="advancedSearching=!advancedSearching" type="button"><span class="glyphicon glyphicon-fullscreen"></span></button>
+                              </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-body b-b b-light" ng-show="advancedSearching">
+                    <div class="col-lg-6">
+                        <form name="form" class="form-validation">
+                            <div class="list-group list-group-sm">
+                                <input  placeholder="Zone" class="form-control " ng-model="searchFilter.zone">
+                                <input type="text" placeholder="Context type" class="form-control" ng-model="searchFilter.contextType">
+                                <input placeholder="Context" class="form-control " ng-model="searchFilter.context">
+                                <input type="text" placeholder="Subcontext type" class="form-control " ng-model="searchFilter.subcontextType">
+                                <input  placeholder="Subcontext" class="form-control " ng-model="searchFilter.subcontext">
+                                <input type="text" placeholder="Action" class="form-control " ng-model="searchFilter.action">
+                            </div>
+                        </form>
+
+                        <span class="input-group-btn" >
+                                <button class="btn btn-primary" ng-click="performSearch()" type="button">Search</button>
+                                <button class="btn btn-primary" ng-click="advancedSearching=!advancedSearching" type="button"><span class="glyphicon glyphicon-fullscreen"></span></button>
+                        </span>
+                    </div>
+                </div>
+
+                <div >
+                    <table class="table m-b-none footable-loaded footable default" ui-jq="footable" data-filter="#filter" data-page-size="config.pageSize">
+
+                        <thead>
+                            <tr>
+                                <th class="footable-visible footable-first-column footable-sortable" data-toggle="true">
+                                    Type
+                                    <span class="footable-sort-indicator"></span></th>
+                                <th class="footable-visible footable-first-column footable-sortable" data-toggle="true">
+                                    Zone
+                                    <span class="footable-sort-indicator"></span></th>
+                                <th class="footable-visible footable-sortable">
+                                    Context type
+                                    <span class="footable-sort-indicator"></span></th>
+                                <th class="footable-visible footable-sortable">
+                                    Context
+                                    <span class="footable-sort-indicator"></span></th>
+                                <th class="footable-visible footable-sortable" data-hide="phone,tablet">
+                                    Subcontext type
+                                    <span class="footable-sort-indicator"></span></th>
+                                <th class="footable-visible footable-sortable" data-hide="phone,tablet" data-name="Date Of Birth">
+                                    Subcontext
+                                    <span class="footable-sort-indicator"></span></th>
+                                <th class="footable-visible footable-last-column footable-sortable" data-hide="phone">
+                                    Action
+                                    <span class="footable-sort-indicator"></span></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr ng-repeat="rule in rulesToDisplay.slice((currentPage-1)*itemsPerPage,currentPage*itemsPerPage)" class="footable-even" style="display: table-row">
+
+                                <td class="footable-visible footable-first-column" ng-if="rule.type==='white_list'"
+                                    style=' display: inline-block;
+                                            padding:10px 11px;
+                                            margin:0 auto;
+                                            border-radius:50%;
+                                            background-color:lawngreen;
+                                            left:20px;
+                                            position:relative'></td>
+                                <td class="footable-visible footable-first-column" ng-if="rule.type==='black_list'"
+                                    style=' display: inline-block;
+                                            padding:10px 11px;
+                                            margin:0 auto;
+                                            border-radius:50%;
+                                            background-color:orangered;
+                                            left:20px;
+                                            position:relative'></td>
+
+                                <td class="footable-visible footable-first-column"><span class="footable-toggle" >{{rule.zone}}</span></td>
+
+                                <td class="footable-visible" >{{rule.contextType}}</td>
+                                <td class="footable-visible" >{{rule.context}}</td>
+                                <td class="footable-visible" >{{rule.subcontextType}}</td>
+                                <td class="footable-visible" >{{rule.subcontext}}</td>
+                                <td class="footable-visible ">{{rule.action}}</td>
+                                <td class="footable-visible footable-last-column">
+                                    <button class="label bg-white" ng-click="editRule(rule)">Update</button></td>
+                                <td class="footable-visible footable-last-column">
+                                    <button class="label bg-white" ng-click="removeRule(rule)">Remove</button></td>
+                            </tr>
+                        </tbody>
+
+                        <tfoot ng-show="maxNrOfPages>1" class="hide-if-no-paging">
+                            <tr>
+                                <td colspan="5" class="text-center footable-visible">
+                                    <ul class="pagination">
+                                        <li ng-show="currentPage>1" class="footable-page-arrow">
+                                            <a ng-click="changePage(1)">«</a>
+                                        </li>
+                                        <li ng-show="currentPage>1" class="footable-page-arrow">
+                                            <a ng-click="changePage(currentPage-1)">‹</a>
+                                        </li>
+
+                                        <li ng-if="currentPage>1" class="footable-page">
+                                            <a data-page="0" ng-click="changePage(currentPage-1)">{{currentPage-1}}</a>
+                                        </li>
+
+                                        <li class="footable-page active">
+                                            <a>{{currentPage}}</a>
+                                        </li>
+                                        <li ng-if="currentPage<maxNrOfPages" class="footable-page">
+                                            <a ng-click="changePage(currentPage+1)">{{currentPage+1}}</a>
+                                        </li>
+
+                                        <li ng-show="currentPage<maxNrOfPages" class="footable-page-arrow">
+                                            <a ng-click="changePage(currentPage+1)">›</a>
+                                        </li>
+                                        <li ng-show="currentPage<maxNrOfPages" class="footable-page-arrow">
+                                            <a ng-click="changePage(maxNrOfPages)">»</a>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tfoot>
+
+                    </table>
+
+                </div>
+
+                <div class="panel-body b-b b-light">
+                    <div class="col-lg-6" style="float: right">
+                        <button style="float: right" class="btn btn-sm btn-primary" ng-click="addException()" type="button">Add exception</button>
+                    </div>
+                    <div class="col-lg-6" style="float: right">
+                        <button style="float: right" class="btn btn-sm btn-primary" ng-click="createRule()" type="button">Create rule</button>
+                    </div>
+                    <div class="col-lg-6" style="float: right">
+                        <button style="float: right" class="btn btn-sm btn-primary" ng-click="addSwarmException()" type="button">Add swarm exception</button>
+                    </div>
+                    <div class="col-lg-6" style="float: right">
+                        <button style="float: right" class="btn btn-sm btn-primary" ng-click="createSwarmRule()" type="button">Create swarm rule</button>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>

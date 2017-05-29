@@ -12,7 +12,14 @@
         {"core":"etc/testSwarms"      ,"enabled":true},
         {"folder":"admin/swarms"      ,"enabled":true},
         {"folder":"swarms"            ,"enabled":true}
-     ]
+     ],
+     "checkAccess":false,
+     "redisHost":"localhost",
+     "redisPort":6379,
+     "mysqlHost":"localhost",
+     "mysqlPort":"3306",
+     "mysqlDatabasePassword":"operando",
+     "mysqlDatabaseName":"SwarmESB"
   },
  "Logger":{},
  "Launcher":{
@@ -24,12 +31,13 @@
                         {"core":"etc/adapters/Core.js",                              "enabled":true, "step":1},
                         {"core":"etc/relay/RedisRelay.js",                           "enabled":true, "args":["-n", "RESEARCH", "-r", "localhost", "-p", "6379" ], "step":2},
                         {"core":"etc/adapters/DefaultLogger.js",                     "enabled":true, "step":3},
-                        {"node":"admin/adapters/UsersManager.js",                    "enabled":true  , "step":4},
+                        {"node":"admin/adapters/UsersManager/UsersManager.js",                    "enabled":true  , "step":4},
                         {"node":"admin/adapters/SessionManager.js",                  "enabled":true  , "step":4},
                         {"node":"admin/adapters/SwarmMonitor.js",                    "enabled":true  , "step":5},
                         {"core":"etc/adapters/ClientAdapter.js",                     "enabled":true  , "step":6},
                         {"core":"etc/adapters/WSServer.js",                          "enabled":true  , "step":10},
                         {"node":"admin/adapters/TestsManager.js",                    "enabled":true, "step":5},
+                        {"node":"admin/adapters/FormsAdapter.js",                    "enabled":true, "step":5},
                         {"node":"adapters/HelloWorld.js",                      "enabled":true, "step":10}
             ]
    },
@@ -46,7 +54,7 @@
   "WSServer":{
            "host":"0.0.0.0",
            "port":"8080",
-           "wwwroot":"admin/public"
+           "wwwroot":"admin/administration-console"
   },
 
   "SessionManager":{

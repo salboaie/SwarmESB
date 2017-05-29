@@ -1,0 +1,44 @@
+<div ng-controller="formRenderedController" class="container">
+    <legend>
+        <div class="row">
+            <div class="col-sm-offset-3 col-sm-5">
+                Please submit answers to the following forms</div>
+        </div>
+    </legend>
+
+    <div ng-repeat="form in forms">
+        <form novalidate class="form-horizontal" ng-show="form.show" name="form.id">
+
+            <legend ng-click="form.expand=!form.expand"> {{form.name}}
+            </legend>
+
+            <div ng-show="form.expand">
+
+                 <fieldset ng-show="form.canModify" >
+                     <fg-form fg-form-data="form.data" fg-schema="form.structure">
+                 </fieldset>
+                <fieldset disabled ng-show="!form.canModify" >
+                    <fg-form fg-form-data="form.data" fg-schema="form.structure">
+                </fieldset>
+
+                <button class="btn btn-primary ng-click-active"
+                        type="button"
+                        ng-click="form.canModify=true"
+                        ng-show="!form.canModify"
+                        ng-disabled="form.id.$invalid"
+                        style="float:right">
+                    Edit
+                </button>
+                <button class="btn btn-primary ng-click-active"
+                        type="button"
+                        ng-click="submitForm(form)"
+                        ng-show="form.canModify"
+                        ng-disabled="form.id.$invalid"
+                        style="float:right">
+                    Submit
+                </button>
+
+            </div>
+        </form>
+    </div>
+</div>

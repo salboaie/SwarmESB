@@ -1,0 +1,46 @@
+<div class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="close(false)" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">{{labels.welcomeMessage}}</h4>
+            </div>
+
+            <div class="modal-body">
+                <form name="form" class="form-validation">
+                    <div class="list-group list-group-sm">
+
+                        <div class="list-group-item" ng-show="predefinedInputs.action===undefined">
+                            <input  placeholder={{labels.action}} class="form-control no-border" ng-model="rule.action" required>
+                        </div>
+
+                        <div class="list-group-item" ng-show="predefinedInputs.zone===undefined">
+                            Select zone
+                            <select ng-model="rule.zone" class="btn btn-primary" required>
+                                <option ng-repeat="zone in zones" value="{{zone}}">{{zone}}</option>
+                            </select>
+                        </div>
+
+                        <div class="list-group-item" ng-show="predefinedInputs.contextType===undefined">
+                            <input  placeholder={{labels.contextType}} class="form-control no-border" ng-model="rule.contextType" required>
+                        </div>
+                        <div class="list-group-item" ng-show="predefinedInputs.context===undefined">
+                            <input  placeholder={{labels.context}} class="form-control no-border" ng-model="rule.context" >
+                        </div>
+                        <div class="list-group-item" ng-show="predefinedInputs.subcontextType===undefined">
+                            <input  placeholder={{labels.subcontextType}} class="form-control no-border" ng-model="rule.subcontextType" >
+                        </div>
+                        <div class="list-group-item" ng-show="predefinedInputs.subcontext===undefined">
+                            <input   placeholder={{labels.subcontext}} class="form-control no-border" ng-model="rule.subcontext" >
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-lg btn-primary btn-block" ng-click="createRule()" ng-disabled='form.$invalid'>{{labels.createMessage}}</button>
+            </div>
+        </div>
+    </div>
+</div>

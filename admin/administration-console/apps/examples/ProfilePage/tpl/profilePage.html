@@ -1,0 +1,82 @@
+<div ng-controller="profilePageController">
+
+	<div class="ng-scope" ui-view="">
+		<!--Page titlte-->
+		<div class="bg-light lter b-b wrapper-md ng-scope pageTitle">
+			<h1 class="m-n font-thin h3">Profile Page Settings</h1>
+		</div>
+
+		<div ng-show="fetching">
+			<div class="wrapper-md ng-scope">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						Fetching...
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="wrapper-md ng-scope" style="padding-left:20px; padding-right: 20px;" ng-hide="fetching">
+			<div class="panel panel-default">
+				<div class="panel-heading font-bold">
+					Your account details
+				</div>
+				<div class="panel-body">
+					<form name="form" class="form-validation" novalidate>
+						<div ng-repeat="prop in model.details" >
+							<div class="form-group">
+								<label class="col-sm-2 control-label" style="margin-top:5px; margin-bottom:0;">{{prop.nice}}</label>
+								<div ng-class="{'has-error': form[prop.name].$dirty && form[prop.name].$invalid}" class="col-sm-10">
+									<input id="{{prop.name}}" name="{{prop.name}}" ng-model="userData[prop.name]"
+										   type="{{prop.type}}" class="form-control"
+										   placeholder="{{prop.placeholder}}" required>
+									<span class="help-block"
+										  ng-show="form[prop.name].$dirty && form[prop.name].$invalid">
+										<span ng-repeat="err in prop.error"
+											  ng-show="form[prop.name].$dirty && form[prop.name].$invalid">
+											<span ng-show="form[prop.name].$error[err.type]">{{err.message}}</span>
+										</span>
+									</span>
+								</div>
+							</div>
+						</div>
+					</form>
+					<div class="clearfix"></div>
+					<div class="alert alert-info" ng-show="form.$invalid">All field are required.</div>
+					<div class="col-sm-offset-2 col-sm-10" style="margin-top: 5px;">
+						<button class="btn btn-primary" ng-click="saveAcctDetails(userData)" ng-disabled='form.$invalid'>Save</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="panel panel-default">
+				<div class="panel-heading font-bold">
+					Change your password
+				</div>
+				<div class="panel-body">
+					<form name="formpwd" class="form-validation" id="formpwd" novalidate>
+						<div ng-repeat="prop in model.changepwd" >
+							<div class="form-group">
+								<label class="col-sm-2 control-label" style="margin-top:5px; margin-bottom:0;">{{prop.nice}}</label>
+								<div ng-class="{'has-error': formpwd[prop.name].$dirty && formpwd[prop.name].$invalid}" class="col-sm-10">
+									<input id="{{prop.name}}" name="{{prop.name}}" ng-model="userData[prop.name]" pw-check="{{prop.match}}" type="{{prop.type}}" class="form-control" placeholder="{{prop.placeholder}}" required/>
+									<span class="help-block" ng-show="formpwd[prop.name].$dirty && formpwd[prop.name].$invalid">
+										<span ng-repeat="err in prop.error" ng-show="formpwd[prop.name].$dirty && formpwd[prop.name].$invalid">
+											<span ng-show="formpwd[prop.name].$error[err.type]">{{err.message}}</span>
+										</span>
+									</span>
+								</div>
+							</div>
+						</div>
+					</form>
+					<div class="clearfix"></div>
+					<div class="alert alert-info" ng-show="formpwd.$invalid" style="margin-top: 10px;">All field are required.</div>
+					<div class="col-sm-offset-2 col-sm-10" style="margin-top: 5px;">
+						<button class="btn btn-primary" ng-click="changePassword(userData)" ng-disabled='formpwd.$invalid'>Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

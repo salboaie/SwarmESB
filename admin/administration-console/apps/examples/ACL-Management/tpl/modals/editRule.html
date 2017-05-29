@@ -1,0 +1,45 @@
+<div class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="close(false)" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">{{welcomeMessage}}</h4>
+            </div>
+            <div class="modal-body">
+                <form name="form" class="form-validation">
+                    <div class="list-group list-group-sm">
+
+                        <div class="list-group-item">
+                            <input placeholder="Action" class="form-control no-border" ng-model="rule.action" required>
+                        </div>
+
+                        <div class="list-group-item" ng-show="predefinedInputs.zone===undefined">
+                            <select ng-model="rule.zone" class="btn btn-primary" required>
+                                <option ng-repeat="zone in zones" value="{{zone}}">{{zone}}</option>
+                            </select>
+                        </div>
+
+                        <div class="list-group-item">
+                            <input placeholder="Context type" class="form-control no-border" ng-model="rule.contextType" required>
+                        </div>
+                        <div class="list-group-item">
+                            <input placeholder="Context" class="form-control no-border" ng-model="rule.context" >
+                        </div>
+                        <div class="list-group-item">
+                            <input placeholder="Subcontext Type" class="form-control no-border" ng-model="rule.subcontextType" >
+                        </div>
+                        <div class="list-group-item">
+                            <input  placeholder="Subcontext" class="form-control no-border" ng-model="rule.subcontext" >
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+
+            <div class="modal-footer">
+                <button class="btn btn-lg btn-primary btn-block" ng-click="updateRule()" ng-disabled='form.$invalid'>{{createMessage}}</button>
+            </div>
+        </div>
+    </div>
+</div>

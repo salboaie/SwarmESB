@@ -1,0 +1,115 @@
+<div ng-controller="userManagerController">
+
+	<div class="ng-scope" ui-view="">
+		<!--Page titlte-->
+		<div class="bg-light lter b-b wrapper-md ng-scope pageTitle">
+			<h1 class="m-n font-thin h3">Users Manager</h1>
+		</div>
+
+		<!--Preloading/ Not loading message placeholder-->
+		<div ng-show="fetching">
+			<div class="wrapper-md ng-scope">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						Fetching...
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="wrapper-md ng-scope" ng-hide="fetching">
+
+			<!--A small title for users section-->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					Search, Create or Update Users
+				</div>
+
+				<!--Search section | The simple one-->
+				<div class="panel-body b-b b-light">
+					<div class="col-lg-6">
+						<div class="input-group">
+							<input id="filter" type="text" class="form-control" ng-model="searchFilter.username"
+								   placeholder="Search for...">
+							<span class="input-group-btn">
+                                <button class="btn btn-primary" ng-click="startFilter()" type="button">Search</button>
+                              </span>
+						</div>
+					</div>
+				</div>
+
+				<!--The advanced search section | Not using, to be deleted-->
+				<div class="panel-body b-b b-light" ng-show="advancedSearching">
+					<div class="col-lg-6">
+						<!--Search BTN-->
+						<span class="input-group-btn">
+                                <button class="btn btn-primary" ng-click="performSearch()" type="button">Search</button>
+                                <button class="btn btn-primary" ng-click="advancedSearching=!advancedSearching"
+										type="button"><span class="glyphicon glyphicon-fullscreen"></span></button>
+                        </span>
+					</div>
+				</div>
+
+				<!--Create new user button-->
+				<div class="panel-body b-b b-light">
+					<div class="col-lg-6" style="float: right">
+						<button style="float: right" class="btn btn-default btn-primary" ng-click="createUser()"
+								type="button">Create new user
+						</button>
+					</div>
+				</div>
+
+				<div>
+					<!--USERS TABLE | Generated with footable JS Lib-->
+					<table class="table footable m-b-none default table-striped" data-filter="#filter" data-filtering="true" data-paging="true" data-sorting="true" data-page-size="5" data-limit-navigation="3" id="usersTable">
+						<thead>
+						<tr>
+							<th data-hide="phone,tablet">First Name</th>
+							<th data-hide="phone,tablet">Last Name</th>
+							<th data-hide="phone,tablet">Email</th>
+							<th>Username</th>
+							<th data-hide="phone,tablet">Role</th>
+							<th data-sort-initial="true">Status</th>
+							<th data-sort-ignore="true">Actions</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr ng-repeat="user in usersToDisplay track by $index" class="footable-even"
+							style="display: table-row;" redraw-table>
+
+							<td>{{user.firstName}}</td>
+							<td>{{user.lastName}}</td>
+							<td>{{user.email}}</td>
+							<td>{{user.username}}</td>
+							<td>{{user.zones.capitalize()}}</td>
+							<td>
+								<span ng-switch="user.is_active">
+									<span ng-switch-when="true" class="label bg-success">Active</span>
+									<span ng-switch-when="false" class="label bg-dark">Banned</span>
+								</span>
+							<td>
+								<input type="button" class="btn btn-info btn-xs" ng-click="editUser(user)" value="Edit">
+							</td>
+
+						</tr>
+						</tbody>
+
+						<tfoot>
+						<tr class="footable-row-detail">
+							<td colspan="5">
+								<div class="text-center hide-if-no-paging">
+									<ul class="pagination"></ul>
+								</div>
+							</td>
+						</tr>
+						</tfoot>
+
+					</table>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+</div>
+
