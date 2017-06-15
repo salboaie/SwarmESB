@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<script src="https://cdn.socket.io/socket.io-1.0.6.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.1/socket.io.js"></script>
 <script src="https://rawgit.com/salboaie/WSSwarmClient/master/src/SwarmDebug.js"></script>
 <script src="https://rawgit.com/salboaie/WSSwarmClient/master/src/SwarmClient.js"></script>
 <script src="https://rawgit.com/salboaie/WSSwarmClient/master/src/SwarmHub.js"></script>
@@ -34,7 +34,7 @@
     <script type="text/javascript">
 
 
-                var client = new SwarmClient("localhost", 8080,
+                var client = new SwarmClient(window.location.hostname, 8080,
                     "testUser", "ok", "testTenant", "testCtor",
                     function securityErrorFunction(err){
                         alert(err);
