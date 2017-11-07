@@ -69,7 +69,9 @@
     "safebox": ">=0.2.1",
     "transrest": ">=0.5.0",
     "mysql":">=0.0.0",
-    "swarm-winston": "git+https://mastaleru@github.com/CiprianTalmacel/swarm-winston.git#master"
+    "swarm-winston": "git+https://mastaleru@github.com/CiprianTalmacel/swarm-winston.git#master",
+    "urlencode": "=1.1.0",
+    "jsonwebtoken":"=8.1.0"
   },
   "optionalDependencies": {},
   "_engineSupported": true,
