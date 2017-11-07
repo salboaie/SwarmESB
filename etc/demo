@@ -14,12 +14,14 @@
         {"folder":"swarms"            ,"enabled":true}
      ],
      "checkAccess":false,
-     "redisHost":"localhost",
-     "redisPort":6379,
-     "mysqlHost":"localhost",
-     "mysqlPort":"3306",
-     "mysqlDatabasePassword":"operando",
-     "mysqlDatabaseName":"SwarmESB"
+     "mysqlConfig":{
+         "host":"localhost",
+         "port":"3306",
+         "user":"root",
+         "password":"",
+         "database":"swarm",
+         "connectionLimit":2
+     }
   },
  "Logger":{},
  "Launcher":{
