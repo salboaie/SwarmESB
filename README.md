@@ -4,7 +4,7 @@ This is the new version of SwarmESB, based on [SwarmCore] (https://github.com/sa
  - new broadcast primitive (done)
  - "do" syntax to describe guaranteed message delivery (at least once)  
  - allow creation of personalised/custom ESBs that can use other middleware than Redis (done)
- - refactoring in progress to grow it around a DI container for better stability (almoust done)
+ - refactoring in progress to grow it around a DI container for better stability (almost done)
  - based on a new powerful ACl module (acl-magic module/done)
  - deployment support for docker containers (done)
  - UI with system monitoring (done)
