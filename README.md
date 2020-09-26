@@ -1,4 +1,4 @@
-#SwarmESB central repository. Refactoring and master plan:
+# SwarmESB central repository. Refactoring and master plan:
 This is the new version of SwarmESB, based on [SwarmCore] (https://github.com/salboaie/swarmcore "SwarmCore") that adds:  
  - default load distribution between Adapters (done)
  - new broadcast primitive (done)
